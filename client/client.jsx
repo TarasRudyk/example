@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
-import Demo from './demo.jsx';
+import Karma from './karma.jsx';
 
 Meteor.startup(() => {
-  ReactDOM.render(<Demo />, document.getElementById('react-app'));
+  ReactDOM.render(<Karma />, document.getElementById('app'));
 });
