@@ -1,30 +1,18 @@
 {
-    "name": "karma",
+    "name": "Karma",
+    "version": "0.0.1",
     "private": true,
     "scripts": {
-        "start": "meteor --production",
         "lint": "eslint . --ext .jsx,.js; true"
     },
+    "main": "server/main.js",
+    "browser": "client/main.jsx",
     "dependencies": {
         "meteor-node-stubs": "~0.2.0",
         "react": "^15.3.2",
         "react-addons-pure-render-mixin": "^15.3.2",
         "react-dom": "^15.3.2"
     },
-    "description": "",
-    "version": "1.0.0",
-    "main": "server/server.js",
-    "browser": "client/client.jsx",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/tarasbilozir/karma.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/tarasbilozir/karma/issues"
-    },
-    "homepage": "https://github.com/tarasbilozir/karma#readme",
     "devDependencies": {
         "babel": "^6.3.26",
         "babel-core": "^6.3.26",
