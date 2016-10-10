@@ -1,6 +1,0 @@
-{
-  "root": "./",
-  "devServer": {
-    "host": "localhost"
-  }
-}
