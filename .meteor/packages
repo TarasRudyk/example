@@ -14,7 +14,8 @@ kadira:flow-router
 tap:i18n
 static-html
 service-configuration
-accounts-password
 aldeed:simple-schema
 aldeed:collection2
 mdg:validated-method
+accounts-password
+meteortoys:allthings@3.0.0
