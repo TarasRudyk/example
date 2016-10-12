@@ -59,6 +59,8 @@ export const register = (email, password, isUsernameTaken) => {
 }
 
 export const saveData = (fullName, username) => {
+  check(fullName, String);
+  check(username, String);
 
   if (!fullName || !username) {
     return TAPi18n.__('Please fill all fields.')
@@ -69,8 +71,7 @@ export const saveData = (fullName, username) => {
     username: username
   }, (err) => {
     if (err) {
-      console.error(error);
-      return TAPi18n.__('Error occured.');
+      return err.reason;
     } else {
       FlowRouter.go('/');
     }
