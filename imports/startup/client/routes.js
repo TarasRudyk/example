@@ -1,23 +1,7 @@
-import {
-  Meteor
-}
-from 'meteor/meteor';
-import {
-  Tracker
-}
-from 'meteor/tracker';
-import {
-  Accounts
-}
-from 'meteor/accounts-base';
-import {
-  FlowRouter
-}
-from 'meteor/kadira:flow-router';
-import {
-  mount
-}
-from 'react-mounter';
+import { Meteor } from 'meteor/meteor';
+import { Tracker } from 'meteor/tracker';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+import { mount } from 'react-mounter';
 import React from 'react';
 
 import MainLayout from '/imports/ui/layouts/main.jsx';
@@ -29,7 +13,7 @@ import UserInfo from '/imports/ui/containers/pages/user-info.js';
 FlowRouter.route('/', {
   action() {
     mount(MainLayout, {
-      content: < Home / >
+      content: <Home / >
     });
   }
 });
@@ -37,7 +21,7 @@ FlowRouter.route('/', {
 FlowRouter.route('/signin', {
   action() {
     mount(MainLayout, {
-      content: < Signin / >
+      content: <Signin / >
     });
   }
 });
@@ -45,15 +29,21 @@ FlowRouter.route('/signin', {
 FlowRouter.route('/signup', {
   action() {
     mount(MainLayout, {
-      content: < Signup / >
+      content: <Signup / >
     });
+  }
+});
+
+FlowRouter.route('/logout', {
+  action() {
+    Meteor.logout();
   }
 });
 
 FlowRouter.route('/user-info', {
   action() {
     mount(MainLayout, {
-      content: < UserInfo / >
+      content: <UserInfo / >
     });
   }
 });

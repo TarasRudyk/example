@@ -1,51 +1,39 @@
 import React from 'react';
 
+import { signin } from '/imports/api/users/actions.js';
+
 export default class Signin extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            message: ''
-        };
+    this.state = {
+      message: ''
+    };
 
-        this.login = this.login.bind(this);
-    }
-    render() {
-        return (
-            <div className="page-content">
-                <form onSubmit={this.login}>
-                    <input type="email" name="email" ref="email" placeholder="Email"/>
-                    <input type="password" name="password" ref="password" placeholder="Password"/>
-                    <input type="submit" value="Submit"/>
-                </form>
-                <label>{this.state.message}</label>
-            </div>
-        );
-    }
-    login(event) {
-        event.preventDefault();
-        const email = this.refs.email.value.trim().toLowerCase(),
-            password = this.refs.password.value.trim();
+    this.signin = this.signin.bind(this);
+  }
+  signin(event) {
+    event.preventDefault();
 
-        if (email && password) {
-            Meteor.loginWithPassword(email, password, (data) => {
-                if (!data && this.props.userData && this.props.userData.profile && this.props.userData.profile.username && this.props.userData.profile.fullName) {
-                    FlowRouter.go('/');
-                }
-                else if (data) {
-                    this.setState({message: 'Wrong email or password.'});
-                }
-                else if (!data && this.props.userData && this.props.userData.profile && !this.props.userData.profile.username || !data && this.props.userData && this.props.userData.profile && !this.props.userData.profile.fullName) {
-                    FlowRouter.go('/user-info');
-                }
-            });
-        }
-        else {
-            this.setState({message: 'Please fill all fields.'});
-        }
-    }
+    const email = this.refs.email.value.trim().toLowerCase(),
+          password = this.refs.password.value.trim();
+    
+    signin(email, password, this.props.userData);
+  }
+  render() {
+    return (
+      <div className="page-content">
+        <form onSubmit={this.signin}>
+          <input type="email" name="email" ref="email" placeholder="Email"/>
+          <input type="password" name="password" ref="password" placeholder="Password"/>
+          <input type="submit" value="Submit"/>
+        </form>
+        <label>{this.state.message}</label>
+      </div>
+    );
+  }
 }
 
 Signin.propTypes = {
-    userData: React.PropTypes.object
+  userData: React.PropTypes.object
 };
