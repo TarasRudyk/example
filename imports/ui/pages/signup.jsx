@@ -1,6 +1,5 @@
 import React from 'react';
 import { Accounts } from 'meteor/accounts-base';
-import md5 from 'js-md5';
 import { register } from '/imports/api/users/actions.js';
 
 export default class Signup extends React.Component {
