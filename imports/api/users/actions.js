@@ -33,6 +33,10 @@ export const signin = (email, password, userInfo) => {
 };
 
 export const register = (email, password, isUsernameTaken) => {
+  check(email, String);
+  check(password, String);
+  check(isUsernameTaken, Match.Optional(String));
+
   if (email && password) {
     Accounts.createUser({
       email: email,
@@ -40,17 +44,17 @@ export const register = (email, password, isUsernameTaken) => {
       profile: {
         avatar: `https://www.gravatar.com/avatar/${md5(email)}`
       }
-    }, (error) => {
-      if (!error) {
-        FlowRouter.go('/user-info');
+    }, (err) => {
+      if (err) {
+        return err.reason;
       } else {
-        this.setState({message: error.reason});
+        FlowRouter.go('/user-info');
       }
     });
   } else if (!isUsernameTaken) {
-    this.setState({message: 'Please fill all fields.'});
+      return TAPi18n.__('Please fill all fields.');
   } else if (isUsernameTaken) {
-    this.setState({message: 'Username is already taken.'});
+      return TAPi18n.__('Username is already taken.');
   }
 }
 

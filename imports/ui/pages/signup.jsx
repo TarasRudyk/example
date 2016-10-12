@@ -5,23 +5,21 @@ import { register } from '/imports/api/users/actions.js';
 export default class Signup extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       showPass: false,
       firstStep: true,
       message: ''
     };
-
     this.register = this.register.bind(this);
     this.togglePassVisibility = this.togglePassVisibility.bind(this);
   }
   register(event) {
     event.preventDefault();
-
-    const isUsernameTaken = !this.state.firstStep ?
-          Meteor.users.findOne({'profile.username':this.refs.username.value.trim()}) : undefined;
     const email = this.refs.email.value.trim().toLowerCase(),
           password = this.refs.password.value.trim();
+    const isUsernameTaken = !this.state.firstStep ?
+          Meteor.users.findOne({'profile.username': this.refs.username.value.trim() }) : undefined;
+
     register(email, password, isUsernameTaken)
   }
   togglePassVisibility(event) {
