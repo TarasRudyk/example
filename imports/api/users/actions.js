@@ -31,6 +31,28 @@ export const signin = (email, password, userInfo) => {
   });
 };
 
+export const register = (email, password, isUsernameTaken) => {
+  if (email && password) {
+    Accounts.createUser({
+      email: email,
+      password: password,
+      profile: {
+        avatar: `https://www.gravatar.com/avatar/${md5(email)}`
+      }
+    }, (error) => {
+      if (!error) {
+        FlowRouter.go('/user-info');
+      } else {
+        this.setState({message: error.reason});
+      }
+    });
+  } else if (!isUsernameTaken) {
+    this.setState({message: 'Please fill all fields.'});
+  } else if (isUsernameTaken) {
+    this.setState({message: 'Username is already taken.'});
+  }
+}
+
 export const logout = () => {
   Meteor.logout()
 };
