@@ -24,8 +24,19 @@ export default class Signin extends React.Component {
     return (
       <div className="page-content">
         <form onSubmit={this.signin}>
-          <input type="email" name="email" ref="email" placeholder="Email"/>
-          <input type="password" name="password" ref="password" placeholder="Password"/>
+          <input type="email"
+                 name="email"
+                 ref="email"
+                 placeholder="Email"
+                 required={true}
+                 minLength={6}
+                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"/>
+          <input type="password"
+                 name="password"
+                 ref="password"
+                 placeholder="Password"
+                 required={true}
+                 minLength={6}/>
           <input type="submit" value="Submit"/>
         </form>
         <label>{this.state.message}</label>
