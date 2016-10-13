@@ -5,7 +5,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import md5 from 'js-md5';
 
 export const signin = (email, password, userInfo) => {
-  check(email, ValidEmail);
+  check(email, String);
   check(password, String);
   check(userInfo, Match.OneOf(Object, null));
 
