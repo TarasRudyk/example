@@ -30,3 +30,10 @@ Projects.schema = new SimpleSchema({
 });
 
 Projects.attachSchema(Projects.schema);
+
+Projects.publicFields = {
+  name: 1,
+  description: 1,
+  creationDate: 1,
+  active: 1
+};
