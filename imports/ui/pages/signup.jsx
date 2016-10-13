@@ -1,44 +1,26 @@
 import React from 'react';
 import { Accounts } from 'meteor/accounts-base';
-import md5 from 'js-md5';
+import { register } from '/imports/api/users/actions.js';
 
 export default class Signup extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       showPass: false,
       firstStep: true,
       message: ''
     };
-
     this.register = this.register.bind(this);
     this.togglePassVisibility = this.togglePassVisibility.bind(this);
   }
   register(event) {
     event.preventDefault();
+    const email = this.refs.email.value.trim().toLowerCase(),
+          password = this.refs.password.value.trim();
+    const isUsernameTaken = !this.state.firstStep ?
+          Meteor.users.findOne({'profile.username': this.refs.username.value.trim() }) : undefined;
 
-    const isUsernameTaken = !this.state.firstStep ? Meteor.users.findOne({'profile.username':this.refs.username.value.trim()}) : undefined;
-
-    if (this.refs.email.value.trim() && this.refs.password.value.trim()) {
-      Accounts.createUser({
-        email: this.refs.email.value.trim().toLowerCase(),
-        password: this.refs.password.value.trim(),
-        profile: {
-          avatar: `https://www.gravatar.com/avatar/${md5(this.refs.email.value.trim().toLowerCase())}`
-        }
-      }, (error) => {
-        if (!error) {
-          FlowRouter.go('/user-info');
-        } else {
-          this.setState({message: error.reason});
-        }
-      });
-    } else if (!isUsernameTaken) {
-      this.setState({message: 'Please fill all fields.'});
-    } else if (isUsernameTaken) {
-      this.setState({message: 'Username is already taken.'});
-    }
+    register(email, password, isUsernameTaken)
   }
   togglePassVisibility(event) {
     this.setState({showPass: event.target.checked});

@@ -17,7 +17,7 @@ export default class Signin extends React.Component {
 
     const email = this.refs.email.value.trim().toLowerCase(),
           password = this.refs.password.value.trim();
-    
+
     signin(email, password, this.props.userData);
   }
   render() {
