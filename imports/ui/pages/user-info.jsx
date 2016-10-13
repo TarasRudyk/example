@@ -25,11 +25,21 @@ export default class UserInfo extends React.Component {
             src={this.props.userData && this.props.userData.profile &&
               this.props.userData.profile.avatar ?
               this.props.userData.profile.avatar : ''}></img>
-          <input type="text" ref="full-name" placeholder="Enter new full name"
-             defaultValue={this.props.userData && this.props.userData.profile
-               && this.props.userData.profile.fullName ?
-               this.props.userData.profile.fullName : ''} />
-          <input type="text" ref="username" placeholder="Enter new username"
+          <input
+            type="text"
+            ref="full-name"
+            placeholder="Enter new full name"
+            minLength={3}
+            maxLength={15}
+            defaultValue={this.props.userData && this.props.userData.profile
+             && this.props.userData.profile.fullName ?
+             this.props.userData.profile.fullName : ''} />
+          <input
+            type="text"
+            ref="username"
+            placeholder="Enter new username"
+            minLength={3}
+            maxLength={10}
             defaultValue={this.props.userData && this.props.userData.profile
               && this.props.userData.profile.username ?
               this.props.userData.profile.username : ''} />

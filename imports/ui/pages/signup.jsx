@@ -44,7 +44,7 @@ export default class Signup extends React.Component {
             placeholder="Password"
             required={true}
             minLength={6}
-            pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"/>
+            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"/>
           <input type="checkbox" onChange={this.togglePassVisibility} />Show password
           <input type="submit" value="Submit"/>
         </form>
