@@ -35,8 +35,7 @@ export default class Signin extends React.Component {
                  name="password"
                  ref="password"
                  placeholder="Password"
-                 required={true}
-                 minLength={6}/>
+                 required={true}/>
           <input type="submit" value="Submit"/>
         </form>
         <label>{this.state.message}</label>
