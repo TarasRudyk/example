@@ -1,3 +1,9 @@
 {
-    "karma": "karma"
+  "title": "Karma",
+  "header-nav": {
+    "projects": "Projects",
+    "people": "People",
+    "collection": "Collection",
+    "leaderboard": "Leaderboard"
+  }
 }
