@@ -29,8 +29,22 @@ export default class Signup extends React.Component {
     return (
       <div className="page-content">
         <form onSubmit={this.register}>
-          <input type="email" name="email" ref="email" placeholder="Email"/>
-          <input type={this.state.showPass ? 'text' : 'password'} ref="password" placeholder="Password"/>
+          <input
+            type="email"
+            name="email"
+            ref="email"
+            placeholder="Email"
+            required={true}
+            minLength={6}
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"/>
+          <input
+            type={this.state.showPass ? 'text' : 'password'}
+            name="password"
+            ref="password"
+            placeholder="Password"
+            required={true}
+            minLength={6}
+            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"/>
           <input type="checkbox" onChange={this.togglePassVisibility} />Show password
           <input type="submit" value="Submit"/>
         </form>

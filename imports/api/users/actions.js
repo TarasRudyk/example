@@ -9,6 +9,11 @@ export const signin = (email, password, userInfo) => {
   check(password, String);
   check(userInfo, Match.OneOf(Object, null));
 
+  function isEmailValid(email) {
+   let pattern =/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
+   return pattern.test(email);
+  }
+
   let loginError;
 
   if (!email) {
@@ -18,18 +23,22 @@ export const signin = (email, password, userInfo) => {
   if (!password) {
     return TAPi18n.__('auth.passwordRequired');
   }
-
-  Meteor.loginWithPassword(email, password, (err) => {
-    if (err) {
-      return err.reason;
-    } else {
-      if (userInfo && userInfo.profile && userInfo.profile.username && userInfo.profile.fullName) {
-        FlowRouter.go('/');
+  if (isEmailValid(email)) {
+    Meteor.loginWithPassword(email, password, (err) => {
+      if (err) {
+        return err.reason;
       } else {
-        FlowRouter.go('/user-info');
+        if (userInfo && userInfo.profile && userInfo.profile.username && userInfo.profile.fullName) {
+          FlowRouter.go('/');
+        } else {
+          FlowRouter.go('/user-info');
+        }
       }
-    }
-  });
+    });
+  }else{
+    return TAPi18n.__('email dont match with requirment pattern')
+    console.log("email dont match with requirment pattern")
+  }
 };
 
 export const register = (email, password, isUsernameTaken) => {
@@ -37,19 +46,34 @@ export const register = (email, password, isUsernameTaken) => {
   check(password, String);
   check(isUsernameTaken, Match.Optional(String));
 
-  Accounts.createUser({
-    email: email,
-    password: password,
-    profile: {
-      avatar: `https://www.gravatar.com/avatar/${md5(email)}`
-    }
-  }, (err) => {
-    if (err) {
-      return err.reason;
-    } else {
-      FlowRouter.go('/user-info');
-    }
-  });
+  function isEmailValid(email) {
+   let pattern =/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
+   return pattern.test(email);
+  }
+
+  function isPasswordValid(password) {
+    let pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+    return pattern.test(password)
+  }
+
+  if (isEmailValid(email) && isPasswordValid(password)) {
+    Accounts.createUser({
+      email: email,
+      password: password,
+      profile: {
+        avatar: `https://www.gravatar.com/avatar/${md5(email)}`
+      }
+    }, (err) => {
+      if (err) {
+        return err.reason;
+      } else {
+        FlowRouter.go('/user-info');
+      }
+    });
+  }else{
+    return TAPi18n.__('email or password dont match with pattern')
+    console.log('email or password dont match with pattern')
+  }
   if (!isUsernameTaken) {
     return TAPi18n.__('Please fill all fields.')
   }
