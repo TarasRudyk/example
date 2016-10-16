@@ -8,7 +8,7 @@ export default class Landing extends React.Component {
   }
   render() {
     return (
-      <div className="page-content">
+      <div className="page-landing">
         <a href="/signin">Sign in</a>
         <a href="/signup">Register</a>
       </div>
