@@ -3,19 +3,19 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 Meteor.users.schema = new SimpleSchema({
   _id: {
-    type: String,
+    type: String
   },
   createdAt: {
-    type: Date,
+    type: Date
   },
   services: {
     type: Object,
     optional: true,
-    blackbox: true,
+    blackbox: true
   },
   profile: {
     type: Object,
-    optional: true,
+    optional: true
   },
   'profile.fullName': {
     type: String
@@ -28,17 +28,17 @@ Meteor.users.schema = new SimpleSchema({
   },
   emails: {
     type: Array,
-    optional: true,
+    optional: true
   },
   'emails.$': {
-    type: Object,
+    type: Object
   },
   'emails.$.address': {
     type: String,
-    regEx: SimpleSchema.RegEx.Email,
+    regEx: SimpleSchema.RegEx.Email
   },
   'emails.$.verified': {
-    type: Boolean,
+    type: Boolean
   }
 });
 

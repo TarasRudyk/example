@@ -19,5 +19,5 @@ export default class Home extends React.Component {
 }
 
 Home.propTypes = {
-  user: React.PropTypes.bool
+  user: React.PropTypes.object
 };

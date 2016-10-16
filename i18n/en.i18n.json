@@ -7,9 +7,9 @@
     "leaderboard": "Leaderboard"
   },
   "auth": {
-    "emailRequired": "Email required",
     "emailIncorrect": "Email incorrect",
-    "passwordRequired": "Password required",
-    "passwordIncorrect": "Password incorrect"
+    "passwordIncorrect": "Password incorrect",
+    "usernameIncorrect": "Username incorrect",
+    "fullnameIncorrect": "Full name incorrect"
   }
 }

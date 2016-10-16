@@ -8,7 +8,6 @@ import MainLayout from '/imports/ui/layouts/main.jsx';
 import Home from '/imports/ui/containers/pages/home.js';
 import Signin from '/imports/ui/containers/pages/signin.js';
 import Signup from '/imports/ui/containers/pages/signup.js';
-import UserInfo from '/imports/ui/containers/pages/user-info.js';
 
 FlowRouter.route('/', {
   action() {
@@ -37,14 +36,6 @@ FlowRouter.route('/signup', {
 FlowRouter.route('/logout', {
   action() {
     Meteor.logout();
-  }
-});
-
-FlowRouter.route('/user-info', {
-  action() {
-    mount(MainLayout, {
-      content: <UserInfo / >
-    });
   }
 });
 

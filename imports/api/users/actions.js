@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { check, Match } from 'meteor/check';
+import { check } from 'meteor/check';
 import { Accounts } from 'meteor/accounts-base';
 import { TAPi18n } from 'meteor/tap:i18n';
 import { FlowRouter } from 'meteor/kadira:flow-router';
@@ -7,91 +7,75 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import md5 from 'js-md5';
 import formatValidation from 'string-format-validation';
 
-export const signin = (email, password, userInfo) => {
+export const signin = (email, password) => {
   check(email, String);
   check(password, String);
-  check(userInfo, Match.OneOf(Object, null));
 
-  if (!email) {
-    return TAPi18n.__('auth.emailRequired');
+  if (!formatValidation.validate({ type: 'email' }, email)) {
+    console.log(TAPi18n.__('auth.emailIncorrect'));
+    return false;
   }
 
-  if (!password) {
-    return TAPi18n.__('auth.passwordRequired');
+  if (!formatValidation.validate({ min: 3, max: 25 }, password)) {
+    console.log(TAPi18n.__('auth.passwordIncorrect'));
+    return false;
   }
 
-  if (formatValidation.validate({ type: 'email' }, email)) {
-    return TAPi18n.__('auth.emailIncorrect');
-  }
-
-  Meteor.loginWithPassword(email, password, (err) => {
+  return Meteor.loginWithPassword(email, password, (err) => {
     if (err) {
       console.log(err);
-    } else {
-      if (userInfo && userInfo.profile && userInfo.profile.username && userInfo.profile.fullName) {
-        FlowRouter.go('/');
-      } else {
-        FlowRouter.go('/user-info');
-      }
+      return false;
     }
+
+    FlowRouter.go('/');
+    return true;
   });
 };
 
-export const signup = (email, password) => {
+export const signup = (email, username, fullname, password) => {
   check(email, String);
+  check(username, String);
+  check(fullname, String);
   check(password, String);
 
-  if (!email) {
-    return TAPi18n.__('auth.emailRequired');
+  if (!formatValidation.validate({ type: 'email' }, email)) {
+    console.log(TAPi18n.__('auth.emailIncorrect'));
+    return false;
   }
 
-  if (!password) {
-    return TAPi18n.__('auth.passwordRequired');
+  if (!formatValidation.validate({ min: 3, max: 25 }, username)) {
+    console.log(TAPi18n.__('auth.usernameIncorrect'));
+    return false;
   }
 
-  if (formatValidation.validate({ type: 'email' }, email)) {
-    return TAPi18n.__('auth.emailIncorrect');
+  if (!formatValidation.validate({ min: 3, max: 25 }, fullname)) {
+    console.log(TAPi18n.__('auth.fullnameIncorrect'));
+    return false;
   }
 
-  if (formatValidation.validate({ min: 3, max: 25 }, password)) {
-    return TAPi18n.__('auth.passwordIncorrect');
+  if (!formatValidation.validate({ min: 3, max: 25 }, password)) {
+    console.log(TAPi18n.__('auth.passwordIncorrect'));
+    return false;
   }
 
-  Accounts.createUser({
+  return Accounts.createUser({
     email,
+    username,
     password,
     profile: {
-      avatar: `https://www.gravatar.com/avatar/${md5(email)}`
+      avatar: `https://www.gravatar.com/avatar/${md5(email)}`,
+      fullname
     }
   }, (err) => {
     if (err) {
-      return err.reason;
+      console.log(err.reason);
+      return false;
     }
+    FlowRouter.go('/');
+    return true;
   });
-
-  FlowRouter.go('/user-info');
 };
 
-export const saveData = (fullName, username) => {
-  check(fullName, String);
-  check(username, String);
-
-  if (!fullName || !username) {
-    return TAPi18n.__('Please fill all fields.')
-  }
-
-  Meteor.call('editUserData', {
-    fullName: fullName,
-    username: username
-  }, (err) => {
-    if (err) {
-      return err.reason;
-    } else {
-      FlowRouter.go('/');
-    }
-  });
-}
-
 export const logout = () => {
-  Meteor.logout()
+  Meteor.logout();
 };
