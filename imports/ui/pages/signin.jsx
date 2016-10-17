@@ -51,10 +51,11 @@ export default class Signin extends React.Component {
               value={this.state.password}
               onChange={this.handleChange}
             />
+            <a href="/" className="button">Back</a>
             <input
               type="submit"
               value="Sign in"
-              className="button"
+              className="button green"
             />
           </form>
         </div>

@@ -13,8 +13,8 @@ export default class Landing extends React.Component {
           <div className="page-title">
             <h1>Landing page</h1>
           </div>
-          <a href="/signin" className="button">Sign in</a> &nbsp;
-          <a href="/signup" className="button">Register</a>
+          <a href="/signin" className="button green">Sign in</a> &nbsp;
+          <a href="/signup" className="button blue">Register</a>
         </div>
       </main>
     );

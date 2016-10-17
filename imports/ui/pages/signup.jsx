@@ -78,7 +78,8 @@ export default class Signup extends React.Component {
               value={this.state.password}
               onChange={this.handleChange}
             />
-            <div className="show-password">
+
+            <div className="show-password hidden">
               <input
                 id="show-password"
                 type="checkbox"
@@ -87,10 +88,12 @@ export default class Signup extends React.Component {
               />
               <label htmlFor="show-password">Show password</label>
             </div>
+
+            <a href="/" className="button">Back</a>
             <input
               type="submit"
               value="Sign up"
-              className="button"
+              className="button green"
             />
           </form>
         </div>
