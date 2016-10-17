@@ -38,57 +38,63 @@ export default class Signup extends React.Component {
   }
   render() {
     return (
-      <div className="page-signup">
-        <form onSubmit={this.onSubmit}>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            required
-            minLength={6}
-            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-            value={this.state.email}
-            onChange={this.handleChange}
-          />
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            required
-            minLength={6}
-            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-            value={this.state.username}
-            onChange={this.handleChange}
-          />
-          <input
-            type="text"
-            name="fullname"
-            placeholder="Full name"
-            required
-            minLength={6}
-            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-            value={this.state.fullname}
-            onChange={this.handleChange}
-          />
-          <input
-            type={this.state.showPass ? 'text' : 'password'}
-            name="password"
-            placeholder="Password"
-            required
-            minLength={6}
-            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
-            value={this.state.password}
-            onChange={this.handleChange}
-          />
-          <input
-            type="checkbox"
-            checked={this.state.showPass}
-            onChange={this.togglePassVisibility}
-          />
-          Show password
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
+      <main className="page-content page-signin">
+        <div className="container">
+          <div className="page-title">
+            <h1>Sign up</h1>
+          </div>
+          <form onSubmit={this.onSubmit}>
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              required
+              minLength={6}
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              required
+              value={this.state.username}
+              onChange={this.handleChange}
+            />
+            <input
+              type="text"
+              name="fullname"
+              placeholder="Full name"
+              required
+              value={this.state.fullname}
+              onChange={this.handleChange}
+            />
+            <input
+              type={this.state.showPass ? 'text' : 'password'}
+              name="password"
+              placeholder="Password"
+              required
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
+            <div className="show-password">
+              <input
+                id="show-password"
+                type="checkbox"
+                checked={this.state.showPass}
+                onChange={this.togglePassVisibility}
+              />
+              <label htmlFor="show-password">Show password</label>
+            </div>
+            <input
+              type="submit"
+              value="Sign up"
+              className="button"
+            />
+          </form>
+        </div>
+      </main>
     );
   }
 }

@@ -8,7 +8,7 @@ import MainLayout from '/imports/ui/containers/layouts/main';
 import Home from '/imports/ui/containers/pages/home';
 import Signin from '/imports/ui/pages/signin';
 import Signup from '/imports/ui/pages/signup';
-import UserInterface from '/imports/ui/pages/user-interface';
+import Elements from '/imports/ui/pages/elements';
 
 const checkLoggedIn = () => {
   if (!Meteor.userId()) {
@@ -35,10 +35,10 @@ FlowRouter.route('/', {
   }
 });
 
-privateRoutes.route('/user-interface', {
+privateRoutes.route('/elements', {
   action() {
     mount(MainLayout, {
-      content: <UserInterface />
+      content: <Elements />
     });
   }
 });
@@ -67,5 +67,8 @@ FlowRouter.route('/logout', {
   }
 });
 
-Accounts.onLogin(() => FlowRouter.go('/'));
+Accounts.onLogin(() => {
+  const path = FlowRouter.current().path;
+  FlowRouter.go(path);
+});
 Accounts.onLogout(() => FlowRouter.go('/'));

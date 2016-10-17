@@ -8,14 +8,13 @@ export default class Dashboard extends React.Component {
   }
   render() {
     return (
-      <div className="page page-dashboard">
+      <main className="page-content page-dashboard">
         <div className="container">
           <div className="page-title">
             <h1>Dashboard</h1>
           </div>
-          <a href="/logout">Log out</a>
         </div>
-      </div>
+      </main>
     );
   }
 }

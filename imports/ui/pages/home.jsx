@@ -7,13 +7,18 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.getContent = this.getContent.bind(this);
+  }
+  getContent() {
+    if (this.props.userIsLogin) {
+      return <Dashboard />;
+    }
+
+    return <Landing />;
   }
   render() {
     return (
-      <div className="page-content">
-        {this.props.userIsLogin ? <Dashboard /> : <Landing />}
-      </div>
+      this.getContent()
     );
   }
 }
