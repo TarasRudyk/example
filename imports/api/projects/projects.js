@@ -1,20 +1,22 @@
-import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+
+const Projects = new Mongo.Collection('projects');
 
 Projects.schema = new SimpleSchema({
   _id: {
-    type: String,
+    type: String
   },
   name: {
-    type: String,
+    type: String
   },
   description: {
     type: String,
-    optional: true,
+    optional: true
   },
   ownerId: {
     type: String
-  }
+  },
   creationDate: {
     type: Date
   },
@@ -25,8 +27,8 @@ Projects.schema = new SimpleSchema({
     type: Array
   },
   taskIds: {
-    type: Array,
-  },
+    type: Array
+  }
 });
 
 Projects.attachSchema(Projects.schema);
@@ -37,3 +39,11 @@ Projects.publicFields = {
   creationDate: 1,
   active: 1
 };
+
+Projects.deny({
+  insert() { return true; },
+  update() { return true; },
+  remove() { return true; }
+});
+
+export default Projects;
