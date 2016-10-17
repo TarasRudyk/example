@@ -69,6 +69,12 @@ FlowRouter.route('/logout', {
 
 Accounts.onLogin(() => {
   const path = FlowRouter.current().path;
+
+  if (path === '/signin' || path === '/signup') {
+    FlowRouter.go('/');
+    return;
+  }
+
   FlowRouter.go(path);
 });
 Accounts.onLogout(() => FlowRouter.go('/'));

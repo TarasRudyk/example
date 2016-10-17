@@ -1,14 +1,27 @@
 import React from 'react';
 
 const Elements = () => (
-  <div className="page-user-interface">
-    <div className="page-title">
-      <h1>UI kit</h1>
+  <main className="page-content page-elements">
+    <div className="container">
+      <div className="page-title">
+        <h1>UI style guide <span>Version 0.1</span></h1>
+      </div>
+      <div className="page-content">
+        <div className="page-title">
+          <h2>Colours</h2>
+        </div>
+        <div className="page-title">
+          <h2>Typography &ndash; Open Sans</h2>
+        </div>
+        <div className="page-title">
+          <h2>Forms</h2>
+        </div>
+        <div className="page-title">
+          <h2>Lists</h2>
+        </div>
+      </div>
     </div>
-    <div className="page-content">
-      ds
-    </div>
-  </div>
+  </main>
 );
 
 export default Elements;
