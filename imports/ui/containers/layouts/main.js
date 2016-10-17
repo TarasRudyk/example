@@ -1,10 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import Signin from '/imports/ui/pages/signin';
+import MainLayout from '/imports/ui/layouts/main';
 
 export default createContainer(() => {
+  const userIsLogin = !!Meteor.userId();
+
   return {
-    userData: Meteor.user()
+    userIsLogin
   };
-}, Signin);
+}, MainLayout);

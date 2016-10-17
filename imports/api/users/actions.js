@@ -1,107 +1,79 @@
 import { Meteor } from 'meteor/meteor';
-import { check, Match } from 'meteor/check';
+import { check } from 'meteor/check';
+import { Accounts } from 'meteor/accounts-base';
 import { TAPi18n } from 'meteor/tap:i18n';
-import { FlowRouter } from 'meteor/kadira:flow-router';
-import md5 from 'js-md5';
 
-export const signin = (email, password, userInfo) => {
+import md5 from 'js-md5';
+import formatValidation from 'string-format-validation';
+
+export const signin = (email, password) => {
   check(email, String);
   check(password, String);
-  check(userInfo, Match.OneOf(Object, null));
 
-  function isEmailValid(email) {
-   let pattern =/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
-   return pattern.test(email);
+  if (!formatValidation.validate({ type: 'email' }, email)) {
+    console.log(TAPi18n.__('auth.emailIncorrect'));
+    return false;
   }
 
-  let loginError;
-
-  if (!email) {
-    return TAPi18n.__('auth.emailRequired');
+  if (!formatValidation.validate({ min: 3, max: 25 }, password)) {
+    console.log(TAPi18n.__('auth.passwordIncorrect'));
+    return false;
   }
 
-  if (!password) {
-    return TAPi18n.__('auth.passwordRequired');
-  }
-  if (isEmailValid(email)) {
-    Meteor.loginWithPassword(email, password, (err) => {
-      if (err) {
-        return err.reason;
-      } else {
-        if (userInfo && userInfo.profile && userInfo.profile.username && userInfo.profile.fullName) {
-          FlowRouter.go('/');
-        } else {
-          FlowRouter.go('/user-info');
-        }
-      }
-    });
-  }else{
-    return TAPi18n.__('email dont match with requirment pattern')
-    console.log("email dont match with requirment pattern")
-  }
+  return Meteor.loginWithPassword(email, password, (err) => {
+    if (err) {
+      console.log(err);
+      return false;
+    }
+
+    return true;
+  });
 };
 
-export const register = (email, password, isUsernameTaken) => {
+export const signup = (email, username, fullname, password) => {
   check(email, String);
-  check(password, String);
-  check(isUsernameTaken, Match.Optional(String));
-
-  function isEmailValid(email) {
-   let pattern =/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
-   return pattern.test(email);
-  }
-
-  function isPasswordValid(password) {
-    let pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
-    return pattern.test(password)
-  }
-
-  if (isEmailValid(email) && isPasswordValid(password)) {
-    Accounts.createUser({
-      email: email,
-      password: password,
-      profile: {
-        avatar: `https://www.gravatar.com/avatar/${md5(email)}`
-      }
-    }, (err) => {
-      if (err) {
-        return err.reason;
-      } else {
-        FlowRouter.go('/user-info');
-      }
-    });
-  }else{
-    return TAPi18n.__('email or password dont match with pattern')
-    console.log('email or password dont match with pattern')
-  }
-  if (!isUsernameTaken) {
-    return TAPi18n.__('Please fill all fields.')
-  }
-  if (isUsernameTaken) {
-    return TAPi18n.__('Username is already taken.')
-  }
-}
-
-export const saveData = (fullName, username) => {
-  check(fullName, String);
   check(username, String);
+  check(fullname, String);
+  check(password, String);
 
-  if (!fullName || !username) {
-    return TAPi18n.__('Please fill all fields.')
+  if (!formatValidation.validate({ type: 'email' }, email)) {
+    console.log(TAPi18n.__('auth.emailIncorrect'));
+    return false;
   }
 
-  Meteor.call('editUserData', {
-    fullName: fullName,
-    username: username
+  if (!formatValidation.validate({ min: 3, max: 25 }, username)) {
+    console.log(TAPi18n.__('auth.usernameIncorrect'));
+    return false;
+  }
+
+  if (!formatValidation.validate({ min: 3, max: 25 }, fullname)) {
+    console.log(TAPi18n.__('auth.fullnameIncorrect'));
+    return false;
+  }
+
+  if (!formatValidation.validate({ min: 3, max: 25 }, password)) {
+    console.log(TAPi18n.__('auth.passwordIncorrect'));
+    return false;
+  }
+
+  return Accounts.createUser({
+    email,
+    username,
+    password,
+    profile: {
+      avatar: `https://www.gravatar.com/avatar/${md5(email)}`,
+      fullname
+    }
   }, (err) => {
     if (err) {
-      return err.reason;
-    } else {
-      FlowRouter.go('/');
+      console.log(err.reason);
+      return false;
     }
+
+    return true;
   });
-}
+};
 
 export const logout = () => {
-  Meteor.logout()
+  Meteor.logout();
 };

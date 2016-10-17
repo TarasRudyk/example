@@ -1,59 +1,103 @@
 import React from 'react';
-import { Accounts } from 'meteor/accounts-base';
-import { register } from '/imports/api/users/actions.js';
+
+import { signup } from '/imports/api/users/actions';
 
 export default class Signup extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      showPass: false,
-      firstStep: true,
-      message: ''
+      email: '',
+      username: '',
+      fullname: '',
+      password: '',
+      showPass: false
     };
-    this.register = this.register.bind(this);
+
+    this.handleChange = this.handleChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.togglePassVisibility = this.togglePassVisibility.bind(this);
   }
-  register(event) {
+  onSubmit(event) {
     event.preventDefault();
-    const email = this.refs.email.value.trim().toLowerCase(),
-          password = this.refs.password.value.trim();
-    const isUsernameTaken = !this.state.firstStep ?
-          Meteor.users.findOne({'profile.username': this.refs.username.value.trim() }) : undefined;
 
-    register(email, password, isUsernameTaken)
+    const email = this.state.email.trim().toLowerCase();
+    const username = this.state.username.trim();
+    const fullname = this.state.fullname.trim();
+    const password = this.state.password.trim();
+
+    signup(email, username, fullname, password);
+  }
+  handleChange({ target }) {
+    this.setState({
+      [target.name]: target.value
+    });
   }
   togglePassVisibility(event) {
-    this.setState({showPass: event.target.checked});
+    this.setState({ showPass: event.target.checked });
   }
   render() {
     return (
-      <div className="page-content">
-        <form onSubmit={this.register}>
-          <input
-            type="email"
-            name="email"
-            ref="email"
-            placeholder="Email"
-            required={true}
-            minLength={6}
-            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"/>
-          <input
-            type={this.state.showPass ? 'text' : 'password'}
-            name="password"
-            ref="password"
-            placeholder="Password"
-            required={true}
-            minLength={6}
-            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"/>
-          <input type="checkbox" onChange={this.togglePassVisibility} />Show password
-          <input type="submit" value="Submit"/>
-        </form>
-        <label>{this.state.message}</label>
-      </div>
+      <main className="page-content page-signin">
+        <div className="container">
+          <div className="page-title">
+            <h1>Sign up</h1>
+          </div>
+          <form onSubmit={this.onSubmit}>
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              required
+              minLength={6}
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              required
+              value={this.state.username}
+              onChange={this.handleChange}
+            />
+            <input
+              type="text"
+              name="fullname"
+              placeholder="Full name"
+              required
+              value={this.state.fullname}
+              onChange={this.handleChange}
+            />
+            <input
+              type={this.state.showPass ? 'text' : 'password'}
+              name="password"
+              placeholder="Password"
+              required
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
+
+            <div className="show-password hidden">
+              <input
+                id="show-password"
+                type="checkbox"
+                checked={this.state.showPass}
+                onChange={this.togglePassVisibility}
+              />
+              <label htmlFor="show-password">Show password</label>
+            </div>
+
+            <a href="/" className="button">Back</a>
+            <input
+              type="submit"
+              value="Sign up"
+              className="button green"
+            />
+          </form>
+        </div>
+      </main>
     );
   }
 }
-
-Signup.propTypes = {
-  userData: React.PropTypes.object
-};

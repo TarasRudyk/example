@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Header from '/imports/ui/components/header';
+
 export default class MainLayout extends React.Component {
   constructor(props) {
     super(props);
@@ -8,7 +10,8 @@ export default class MainLayout extends React.Component {
   }
   render() {
     return (
-      <div id="page">
+      <div className="the-karma">
+        {this.props.userIsLogin ? <Header /> : ''}
         {this.props.content}
       </div>
     );
@@ -16,5 +19,6 @@ export default class MainLayout extends React.Component {
 }
 
 MainLayout.propTypes = {
-  content: React.PropTypes.element
+  content: React.PropTypes.element,
+  userIsLogin: React.PropTypes.bool
 };

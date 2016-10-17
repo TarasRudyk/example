@@ -5,5 +5,11 @@
     "people": "People",
     "collection": "Collection",
     "leaderboard": "Leaderboard"
+  },
+  "auth": {
+    "emailIncorrect": "Email incorrect",
+    "passwordIncorrect": "Password incorrect",
+    "usernameIncorrect": "Username incorrect",
+    "fullnameIncorrect": "Full name incorrect"
   }
 }

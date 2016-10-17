@@ -4,10 +4,9 @@ import { createContainer } from 'meteor/react-meteor-data';
 import Home from '/imports/ui/pages/home';
 
 export default createContainer(() => {
-  const user = Meteor.userId() ? true : false;
+  const userIsLogin = !!Meteor.userId();
 
   return {
-    loggingIn: Meteor.loggingIn(),
-    user
+    userIsLogin
   };
 }, Home);
