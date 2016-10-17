@@ -50,6 +50,7 @@
       "no-underscore-dangle": 0,
       "new-cap": 0,
       "import/no-absolute-path": 0,
+      "import/prefer-default-export": 0,
       "import/no-unresolved": 0,
       "import/no-extraneous-dependencies": 0,
       "import/extensions": 0,
@@ -63,6 +64,10 @@
       "func-names": [
         "error",
         "never"
+      ],
+      "no-param-reassign": [
+        "error",
+        { "props": false }
       ]
     }
   }

@@ -13,10 +13,11 @@ kadira:flow-router
 tap:i18n
 static-html
 service-configuration
-aldeed:simple-schema
+aldeed:simple-schema@1.5.3
 aldeed:collection2
 mdg:validated-method
 fourseven:scss
 seba:minifiers-autoprefixer
 accounts-password
 meteortoys:allthings@3.0.0
+matb33:collection-hooks

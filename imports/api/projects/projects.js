@@ -1,12 +1,15 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-const Projects = new Mongo.Collection('projects');
+export const Projects = new Mongo.Collection('projects');
+
+Projects.deny({
+  insert() { return true; },
+  update() { return true; },
+  remove() { return true; }
+});
 
 Projects.schema = new SimpleSchema({
-  _id: {
-    type: String
-  },
   name: {
     type: String
   },
@@ -24,10 +27,12 @@ Projects.schema = new SimpleSchema({
     type: Boolean
   },
   userIds: {
-    type: Array
+    type: [String],
+    optional: true
   },
   taskIds: {
-    type: Array
+    type: [String],
+    optional: true
   }
 });
 
@@ -39,11 +44,3 @@ Projects.publicFields = {
   creationDate: 1,
   active: 1
 };
-
-Projects.deny({
-  insert() { return true; },
-  update() { return true; },
-  remove() { return true; }
-});
-
-export default Projects;
