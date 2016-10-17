@@ -12,12 +12,12 @@ export default class Home extends React.Component {
   render() {
     return (
       <div className="page-content">
-        {this.props.user ? <Dashboard /> : <Landing />}
+        {this.props.userIsLogin ? <Dashboard /> : <Landing />}
       </div>
     );
   }
 }
 
 Home.propTypes = {
-  user: React.PropTypes.object
+  userIsLogin: React.PropTypes.bool
 };

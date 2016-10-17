@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Accounts } from 'meteor/accounts-base';
 import { TAPi18n } from 'meteor/tap:i18n';
-import { FlowRouter } from 'meteor/kadira:flow-router';
 
 import md5 from 'js-md5';
 import formatValidation from 'string-format-validation';
@@ -27,7 +26,6 @@ export const signin = (email, password) => {
       return false;
     }
 
-    FlowRouter.go('/');
     return true;
   });
 };
@@ -71,7 +69,7 @@ export const signup = (email, username, fullname, password) => {
       console.log(err.reason);
       return false;
     }
-    FlowRouter.go('/');
+
     return true;
   });
 };

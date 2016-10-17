@@ -1,11 +1,9 @@
 @mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg) {
   $src: null;
-
 	$extmods: (
 		eot: "?",
 		svg: "#" + str-replace($name, " ", "_")
 	);
-
 	$formats: (
 		otf: "opentype",
 		ttf: "truetype"
@@ -23,4 +21,12 @@
 		font-weight: $weight;
 		src: $src;
 	}
+}
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { signup } from '/imports/api/users/actions.js';
+import { signup } from '/imports/api/users/actions';
 
 export default class Signup extends React.Component {
   constructor(props) {
@@ -38,7 +38,7 @@ export default class Signup extends React.Component {
   }
   render() {
     return (
-      <div className="page-content">
+      <div className="page-signup">
         <form onSubmit={this.onSubmit}>
           <input
             type="email"
@@ -92,7 +92,3 @@ export default class Signup extends React.Component {
     );
   }
 }
-
-Signup.propTypes = {
-  user: React.PropTypes.object
-};

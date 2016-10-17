@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { signin } from '/imports/api/users/actions.js';
+import { signin } from '/imports/api/users/actions';
 
 export default class Signin extends React.Component {
   constructor(props) {
@@ -29,7 +29,7 @@ export default class Signin extends React.Component {
   }
   render() {
     return (
-      <div className="page-content">
+      <div className="page-signin">
         <form onSubmit={this.onSubmit}>
           <input
             type="email"
@@ -57,7 +57,3 @@ export default class Signin extends React.Component {
     );
   }
 }
-
-Signin.propTypes = {
-  user: React.PropTypes.object
-};

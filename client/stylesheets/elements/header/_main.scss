@@ -1,0 +1,49 @@
+header {
+	background: #fff;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	padding: 16px 0;
+
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+	nav {
+		font-size: 14px;
+
+		&:after {
+			content: "";
+			display: table;
+			clear: both;
+		}
+		a {
+			display: block;
+			float: left;
+			margin: 9px 16px 9px 0;
+			line-height: 1;
+		}
+		.nav-logo {
+			margin: 0 14px 0 0;
+
+			img {
+				display: block;
+			}
+		}
+		.nav-user-avatar {
+			display: block;
+			width: 32px;
+			height: 32px;
+			border-radius: 50%;
+			background: #eee;
+			margin: 0 0 0 14px;
+			overflow: hidden;
+		}
+		&.nav-left {
+			float: left;
+		}
+		&.nav-right {
+			float: right;
+			margin: 0 14px 0 0;
+		}
+	}
+}
