@@ -2,9 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 Meteor.users.schema = new SimpleSchema({
-  _id: {
-    type: String
-  },
   createdAt: {
     type: Date
   },
@@ -13,18 +10,9 @@ Meteor.users.schema = new SimpleSchema({
     optional: true,
     blackbox: true
   },
-  profile: {
-    type: Object,
+  username: {
+    type: String,
     optional: true
-  },
-  'profile.fullName': {
-    type: String
-  },
-  'profile.username': {
-    type: String
-  },
-  'profile.avatar': {
-    type: String
   },
   emails: {
     type: Array,
@@ -39,6 +27,26 @@ Meteor.users.schema = new SimpleSchema({
   },
   'emails.$.verified': {
     type: Boolean
+  },
+  profile: {
+    type: Object,
+    optional: true
+  },
+  'profile.fullName': {
+    type: String
+  },
+  'profile.username': {
+    type: String
+  },
+  'profile.avatar': {
+    type: String
+  },
+  colors: {
+    type: [Object]
+  },
+  projects: {
+    type: [Object],
+    optional: true
   }
 });
 

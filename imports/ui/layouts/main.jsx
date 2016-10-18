@@ -2,8 +2,6 @@ import React from 'react';
 
 import Header from '/imports/ui/components/header';
 
-import { create } from '/imports/api/projects/actions';
-
 export default class MainLayout extends React.Component {
   constructor(props) {
     super(props);
@@ -11,7 +9,6 @@ export default class MainLayout extends React.Component {
     this.state = {};
   }
   render() {
-    create();
     return (
       <div className="the-karma">
         {this.props.userIsLogin ? <Header /> : ''}
