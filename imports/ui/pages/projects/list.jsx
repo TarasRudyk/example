@@ -61,6 +61,8 @@ export default class Projects extends React.Component {
                 </div>
               </div>
             </div>
+
+            <a href="/project/create" className="button green">Create new project</a>
           </div>
         </div>
       </main>

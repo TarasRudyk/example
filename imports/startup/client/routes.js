@@ -9,6 +9,7 @@ import Home from '/imports/ui/containers/pages/home';
 import Signin from '/imports/ui/pages/signin';
 import Signup from '/imports/ui/pages/signup';
 import Projects from '/imports/ui/containers/pages/projects/list';
+import ProjectCreate from '/imports/ui/containers/pages/project/create';
 import Elements from '/imports/ui/pages/elements';
 
 const checkLoggedIn = () => {
@@ -48,6 +49,14 @@ privateRoutes.route('/projects', {
   action() {
     mount(MainLayout, {
       content: <Projects />
+    });
+  }
+});
+
+privateRoutes.route('/project/create', {
+  action() {
+    mount(MainLayout, {
+      content: <ProjectCreate />
     });
   }
 });

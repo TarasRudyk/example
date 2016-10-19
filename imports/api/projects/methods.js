@@ -4,18 +4,18 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 
 import { Projects } from './projects';
 
-export const createProject = new ValidatedMethod({
+export const create = new ValidatedMethod({
   name: 'projects.create',
   validate: new SimpleSchema({
     name: { type: String },
-    description: { type: String }
+    description: { type: String, optional: true }
   }).validator(),
   run({ name, description }) {
     if (!this.userId) {
       throw new Meteor.Error('User not authorized');
     }
 
-    if (Projects.find({ name }).count()) {
+    if (Projects.find({ name, ownerId: this.userId }).count()) {
       throw new Meteor.Error('Project with the same name exists');
     }
 
