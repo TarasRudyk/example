@@ -1,0 +1,54 @@
+.project-item {
+  display: table;
+  width: 100%;
+  font-family: 'Open Sans Regular';
+
+  .project-item-color {
+    display: table-cell;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    padding: 0 14px 0 0;
+
+    .ring {
+      overflow: hidden;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 5px solid #eee;
+      text-indent: 9999px;
+    }
+  }
+  .project-item-information {
+    display: table-cell;
+    vertical-align: middle;
+
+    .project-item-title {
+      font-size: 22px;
+    }
+    .project-item-subtitle {
+      margin: 6px 0 0;
+      font-size: 12px;
+    }
+  }
+  .project-item-statistics {
+    display: table-cell;
+    vertical-align: middle;
+    overflow: hidden;
+
+    .project-item-stat-block {
+      font-family: 'Open Sans Light';
+      float: right;
+      text-align: center;
+      font-size: 28px;
+      padding: 15px;
+      margin: 0 5px;
+      background: #fff;
+
+      span {
+        display: block;
+        font-size: 12px;
+      }
+    }
+  }
+}
