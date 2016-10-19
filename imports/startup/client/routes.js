@@ -8,6 +8,7 @@ import MainLayout from '/imports/ui/containers/layouts/main';
 import Home from '/imports/ui/containers/pages/home';
 import Signin from '/imports/ui/pages/signin';
 import Signup from '/imports/ui/pages/signup';
+import Projects from '/imports/ui/containers/pages/projects/list';
 import Elements from '/imports/ui/pages/elements';
 
 const checkLoggedIn = () => {
@@ -39,6 +40,14 @@ privateRoutes.route('/elements', {
   action() {
     mount(MainLayout, {
       content: <Elements />
+    });
+  }
+});
+
+privateRoutes.route('/projects', {
+  action() {
+    mount(MainLayout, {
+      content: <Projects />
     });
   }
 });
