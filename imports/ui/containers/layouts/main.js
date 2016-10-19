@@ -5,8 +5,10 @@ import MainLayout from '/imports/ui/layouts/main';
 
 export default createContainer(() => {
   const userIsLogin = !!Meteor.userId();
+  const user = Meteor.user();
 
   return {
-    userIsLogin
+    userIsLogin,
+    user
   };
 }, MainLayout);

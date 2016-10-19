@@ -30,7 +30,7 @@ header {
 			}
 		}
 		.nav-user-avatar {
-			display: block;
+			display: inline-block;
 			width: 32px;
 			height: 32px;
 			border-radius: 50%;
@@ -38,11 +38,35 @@ header {
 			margin: 0 0 0 14px;
 			overflow: hidden;
 		}
+		.nav-user-inbox, .nav-user-messages {
+			position: relative;
+			display: inline-block;
+			margin: 5px 0 0 10px;
+			color: #c5cdd7;
+
+			span {
+				position: absolute;
+				font-size: 8px;
+				background: #45b931;
+				color: #fff;
+				left: 14px;
+				top: 0;
+				padding: 2px 3px;
+				border-radius: 4px;
+			}
+			&:hover {
+				color: #838f9e;
+			}
+			&.active {
+				color: #45b931;
+			}
+		}
 		&.nav-left {
 			float: left;
 		}
 		&.nav-right {
 			float: right;
+			text-align: right;
 			margin: 0 14px 0 0;
 		}
 	}
