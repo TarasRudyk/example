@@ -39,6 +39,12 @@ const Elements = () => (
 
         <div className="page-title">
           <h2>Lists</h2>
+
+          <div className="list">
+            <div className="list-item">Default list item</div>
+            <div className="list-item clickable">Clickable list item</div>
+            <div className="list-item disabled">Disabled list item</div>
+          </div>
         </div>
       </div>
     </div>
