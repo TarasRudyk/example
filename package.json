@@ -16,6 +16,7 @@
     "react-addons-pure-render-mixin": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-mounter": "^1.2.0",
+    "react-notification": "^6.3.0",
     "string-format-validation": "^2.0.2"
   },
   "devDependencies": {
@@ -46,6 +47,7 @@
       "import/resolver": "meteor"
     },
     "rules": {
+      "meteor/no-session": 0,
       "space-before-function-paren": "error",
       "no-underscore-dangle": 0,
       "new-cap": 0,
@@ -67,7 +69,9 @@
       ],
       "no-param-reassign": [
         "error",
-        { "props": false }
+        {
+          "props": false
+        }
       ]
     }
   }

@@ -3,6 +3,8 @@ import { check } from 'meteor/check';
 import { Accounts } from 'meteor/accounts-base';
 import { TAPi18n } from 'meteor/tap:i18n';
 
+import { addNotification } from '/imports/api/notifications/actions';
+
 import md5 from 'js-md5';
 import formatValidation from 'string-format-validation';
 
@@ -11,18 +13,18 @@ export const signin = (email, password) => {
   check(password, String);
 
   if (!formatValidation.validate({ type: 'email' }, email)) {
-    console.log(TAPi18n.__('auth.emailIncorrect'));
+    addNotification(TAPi18n.__('auth.emailIncorrect'));
     return false;
   }
 
   if (!formatValidation.validate({ min: 3, max: 25 }, password)) {
-    console.log(TAPi18n.__('auth.passwordIncorrect'));
+    addNotification(TAPi18n.__('auth.passwordIncorrect'));
     return false;
   }
 
   return Meteor.loginWithPassword(email, password, (err) => {
     if (err) {
-      console.log(err);
+      addNotification(err.reason);
       return false;
     }
 
@@ -37,22 +39,22 @@ export const signup = (email, username, fullname, password) => {
   check(password, String);
 
   if (!formatValidation.validate({ type: 'email' }, email)) {
-    console.log(TAPi18n.__('auth.emailIncorrect'));
+    addNotification(TAPi18n.__('auth.emailIncorrect'));
     return false;
   }
 
   if (!formatValidation.validate({ min: 3, max: 25 }, username)) {
-    console.log(TAPi18n.__('auth.usernameIncorrect'));
+    addNotification(TAPi18n.__('auth.usernameIncorrect'));
     return false;
   }
 
   if (!formatValidation.validate({ min: 3, max: 25 }, fullname)) {
-    console.log(TAPi18n.__('auth.fullnameIncorrect'));
+    addNotification(TAPi18n.__('auth.fullnameIncorrect'));
     return false;
   }
 
   if (!formatValidation.validate({ min: 3, max: 25 }, password)) {
-    console.log(TAPi18n.__('auth.passwordIncorrect'));
+    addNotification(TAPi18n.__('auth.passwordIncorrect'));
     return false;
   }
 
@@ -66,7 +68,7 @@ export const signup = (email, username, fullname, password) => {
     }
   }, (err) => {
     if (err) {
-      console.log(err.reason);
+      addNotification(err.reason);
       return false;
     }
 

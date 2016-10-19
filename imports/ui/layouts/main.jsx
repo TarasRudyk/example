@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Header from '/imports/ui/components/header';
+import Notifications from '/imports/ui/containers/components/notifications';
 
 export default class MainLayout extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ export default class MainLayout extends React.Component {
       <div className="the-karma">
         {this.props.userIsLogin ? <Header /> : ''}
         {this.props.content}
+        <Notifications />
       </div>
     );
   }
