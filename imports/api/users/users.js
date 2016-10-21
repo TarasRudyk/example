@@ -56,5 +56,7 @@ Meteor.users.publicFields = {
   createdAt: 1,
   services: 1,
   profile: 1,
-  emails: 1
+  emails: 1,
+  colors: 1,
+  projects: 1
 };
