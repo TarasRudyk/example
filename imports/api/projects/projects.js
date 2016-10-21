@@ -21,7 +21,7 @@ Projects.after.insert((userId, doc) => {
 
   userProjects.push(doc._id);
 
-  Meteor.users.update({ _id: userId }, { $set: { colors: userColors, project: userProjects } });
+  Meteor.users.update({ _id: userId }, { $set: { colors: userColors, projects: userProjects } });
 });
 
 Projects.deny({
@@ -61,10 +61,3 @@ Projects.schema = new SimpleSchema({
 });
 
 Projects.attachSchema(Projects.schema);
-
-Projects.publicFields = {
-  name: 1,
-  description: 1,
-  creationDate: 1,
-  active: 1
-};
