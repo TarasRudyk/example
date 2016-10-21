@@ -39,6 +39,7 @@ export default class CreateProject extends React.Component {
               type="text"
               name="name"
               placeholder="Name"
+              autoFocus
               value={this.state.email}
               onChange={this.handleChange}
               onCopy={this.handleChange}

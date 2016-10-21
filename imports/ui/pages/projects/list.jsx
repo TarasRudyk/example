@@ -14,15 +14,15 @@ export default class Projects extends React.Component {
         <div className="container">
           <div className="page-title">
             <h1>Projects</h1>
-            <div className="list">
-              {this.props.projects.map((p, i) => (
-                <ProjectItem
-                  key={i}
-                  project={p}
-                />
-              ))}
-            </div>
-            <a href="/project/create" className="button green">Create new project</a>
+          </div>
+          <a href="/project/create" className="button green">Create new project</a>
+          <div className="list">
+            {this.props.projects.map((p, i) => (
+              <ProjectItem
+                key={i}
+                project={p}
+              />
+            ))}
           </div>
         </div>
       </main>

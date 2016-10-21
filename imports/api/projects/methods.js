@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { _ } from 'lodash';
+import randomArray from 'unique-random-array';
 
 import { Projects } from './projects';
 
@@ -21,8 +22,11 @@ export const create = new ValidatedMethod({
     }
 
     const colors = Meteor.user().colors;
-    const unusedColors = _.filter(colors, color => !color.used);
-    const randomInt = Math.floor(Math.random() * (unusedColors.length + 1)) + 0;
+    const unusedColors = _.filter(colors, { used: false });
+    const randomColors = randomArray(unusedColors);
+    const selectedColor = randomColors();
+    const colorIndex = _.findIndex(colors, { used: false, color: selectedColor.color });
+    const resultColor = colors[colorIndex].color;
 
     return Projects.insert({
       name,
@@ -31,7 +35,7 @@ export const create = new ValidatedMethod({
       ownerName: Meteor.user().profile.fullname,
       active: true,
       creationDate: new Date(),
-      color: colors[randomInt].color
+      color: resultColor
     });
   }
 });

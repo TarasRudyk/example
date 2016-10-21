@@ -19,7 +19,8 @@
     "react-dom": "^15.3.2",
     "react-mounter": "^1.2.0",
     "react-notification": "^6.3.0",
-    "string-format-validation": "^2.0.2"
+    "string-format-validation": "^2.0.2",
+    "unique-random-array": "^1.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.0.0",
