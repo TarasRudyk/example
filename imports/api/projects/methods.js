@@ -28,6 +28,7 @@ export const create = new ValidatedMethod({
       name,
       description,
       ownerId: this.userId,
+      ownerName: Meteor.user().profile.fullname,
       active: true,
       creationDate: new Date(),
       color: colors[randomInt].color

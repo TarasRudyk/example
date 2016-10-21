@@ -10,18 +10,16 @@ Projects.after.insert((userId, doc) => {
   if (!userId) {
     throw new Meteor.Error('User not authorized');
   }
+
   const userColors = Meteor.user().colors;
   const projectColor = doc.color;
-  const colorIndex = _.findIndex(userColors, { used: false, color: projectColor });
-  const userProjects = Meteor.user().projects;
+  const index = _.findIndex(userColors, { used: false, color: projectColor });
 
-  if (colorIndex > -1) {
-    userColors[colorIndex] = { used: true, color: projectColor };
+  if (index > -1) {
+    userColors[index] = { used: true, color: projectColor };
   }
 
-  userProjects.push(doc._id);
-
-  Meteor.users.update({ _id: userId }, { $set: { colors: userColors, projects: userProjects } });
+  Meteor.users.update({ _id: userId }, { $set: { colors: userColors } });
 });
 
 Projects.deny({
@@ -38,7 +36,13 @@ Projects.schema = new SimpleSchema({
     type: String,
     optional: true
   },
+  color: {
+    type: String
+  },
   ownerId: {
+    type: String
+  },
+  ownerName: {
     type: String
   },
   creationDate: {
@@ -47,16 +51,13 @@ Projects.schema = new SimpleSchema({
   active: {
     type: Boolean
   },
-  userIds: {
+  usersIds: {
     type: [String],
     optional: true
   },
-  taskIds: {
+  tasksIds: {
     type: [String],
     optional: true
-  },
-  color: {
-    type: String
   }
 });
 

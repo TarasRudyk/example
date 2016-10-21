@@ -1,14 +1,16 @@
+/* eslint-disable prefer-arrow-callback */
+
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
 import { Projects } from '../projects';
 
-Meteor.publish('projects.my', () => {
-  Projects.find({ ownerId: this.userId });
+Meteor.publish('projects', function () {
+  return Projects.find({ ownerId: this.userId });
 });
 
-Meteor.publish('projects.byId', (projectId) => {
-  check(projectId, String);
+Meteor.publish('projects.byIds', function (projectsIds) {
+  check(projectsIds, [String]);
 
-  Projects.find({ _id: projectId });
+  return Projects.find({ _id: { $in: projectsIds } });
 });
