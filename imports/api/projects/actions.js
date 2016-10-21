@@ -20,8 +20,7 @@ export const createProject = (name, description) => {
       addNotification(err.error);
     }
     if (res) {
-      // FlowRouter.go(`/project/${res}`);
-      FlowRouter.go('/projects');
+      FlowRouter.go(`/project/${res}`);
     }
   });
 };

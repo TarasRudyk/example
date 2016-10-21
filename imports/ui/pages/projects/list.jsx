@@ -11,12 +11,18 @@ export default class Projects extends React.Component {
   render() {
     return (
       <main className="page-content page-projects">
-        <div className="container">
-          <div className="page-title">
-            <h1>Projects</h1>
+        <div className="page-separator">
+          <div className="container">
+            <div className="page-title">
+              <h1>Projects <span>all your projects</span></h1>
+              <div className="page-title-right-block">
+                <a href="/projects/create" className="button green">New project</a>
+              </div>
+            </div>
           </div>
-          <a href="/project/create" className="button green">Create new project</a>
-          <div className="list">
+        </div>
+        <div className="list">
+          <div className="container">
             {this.props.projects.map((p, i) => (
               <ProjectItem
                 key={i}
