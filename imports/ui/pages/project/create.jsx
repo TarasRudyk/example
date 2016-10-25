@@ -1,6 +1,8 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 
 import { createProject } from '/imports/api/projects/actions';
+import { createNotification } from '/imports/api/notifications/actions';
 
 export default class CreateProject extends React.Component {
   constructor(props) {
@@ -19,6 +21,8 @@ export default class CreateProject extends React.Component {
 
     const name = this.state.name.trim();
     const description = this.state.description.trim();
+
+    createNotification('You were added to the project', 'projects', '/projects/invitation/username', Meteor.userId());
 
     createProject(name, description);
   }

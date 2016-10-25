@@ -12,7 +12,9 @@ export default class MainLayout extends React.Component {
   render() {
     return (
       <div className="the-karma">
-        {this.props.userIsLogin ? <Header user={this.props.user} userIsLogin={this.props.userIsLogin} /> : ''}
+        {this.props.userIsLogin ?
+          <Header user={this.props.user} userIsLogin={this.props.userIsLogin} notificationsCount={this.props.notificationsCount} /> : ''
+        }
         {this.props.content}
         <Notices />
       </div>
@@ -23,5 +25,6 @@ export default class MainLayout extends React.Component {
 MainLayout.propTypes = {
   content: React.PropTypes.element,
   userIsLogin: React.PropTypes.bool,
-  user: React.PropTypes.object
+  user: React.PropTypes.object,
+  notificationsCount: React.PropTypes.number
 };

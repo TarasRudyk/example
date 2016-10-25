@@ -53,12 +53,17 @@ header {
 				top: 0;
 				padding: 2px 3px;
 				border-radius: 4px;
+				display: none;
 			}
 			&:hover {
 				color: #838f9e;
 			}
 			&.active {
 				color: #45b931;
+
+				span {
+					display: block;
+				}
 			}
 		}
 		&.nav-left {
