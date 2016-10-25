@@ -1,6 +1,6 @@
 import React from 'react';
 
-import UsersSearch from '/imports/ui/containers/components/users-search/main';
+import UserSearch from '/imports/ui/containers/components/user-search/main';
 
 export default class SingleProject extends React.Component {
   constructor(props) {
@@ -35,7 +35,7 @@ export default class SingleProject extends React.Component {
               <h2>Users</h2>
             </div>
 
-            <UsersSearch />
+            <UserSearch />
           </div>
         </div>
       </main>
