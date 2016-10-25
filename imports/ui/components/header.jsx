@@ -37,8 +37,6 @@ export default class Header extends React.Component {
             <a href="/">People</a>
             <a href="/">Collections</a>
             <a href="/">Leaderboard</a>
-            <a href="/elements">Elements</a>
-            <a href="/logout">Log out</a>
           </nav>
           <nav className="nav-right">
             <a href="/notifications" className={this.getNotificationsClass()}>
@@ -48,9 +46,16 @@ export default class Header extends React.Component {
             <a href="/" className="nav-user-inbox">
               <i className="material-icons">inbox</i>
             </a>
-            <a href="/" className="nav-user-avatar">
-              <img src={this.getAvatar()} width="32px" height="32px" alt="User avatar" />
-            </a>
+            <div className="nav-user-avatar">
+              <a href="/">
+                <img src={this.getAvatar()} width="32px" height="32px" alt="User avatar" />
+              </a>
+              <div className="nav-user-submenu">
+                <a href="/">Profile</a>
+                <a href="/elements">Elements</a>
+                <a href="/logout">Log out</a>
+              </div>
+            </div>
           </nav>
         </div>
       </header>
