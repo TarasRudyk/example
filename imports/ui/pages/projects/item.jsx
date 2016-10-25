@@ -8,16 +8,16 @@ export default class ProjectItem extends React.Component {
     this.state = {};
   }
   render() {
-    const { name, ownerName, color } = this.props.project;
+    const { _id, name, ownerName, color } = this.props.project;
 
     return (
       <div className="list-item">
         <div className="project-item">
           <div className="project-item-color">
-            <div className="ring" style={{ borderColor: color }}>#e32636</div>
+            <div className="ring" style={{ borderColor: color }}>{color}</div>
           </div>
           <div className="project-item-information">
-            <div className="project-item-title"><a href="/">{name}</a></div>
+            <div className="project-item-title"><a href={`/project/${_id}`}>{name}</a></div>
             <div className="project-item-subtitle">Owner: <a href="/">{ownerName}</a></div>
           </div>
           <div className="project-item-statistics">

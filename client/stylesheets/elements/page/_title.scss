@@ -1,12 +1,16 @@
 .page-title {
-  margin: 0 0 20px;
   font-family: 'Open Sans Light';
   color: #000;
+  display: table;
+  width: 100%;
 
   h1, h2, h3 {
+    display: table-cell;
+    vertical-align: middle;
+
     span {
       display: block;
-      margin: 8px 0 0;
+      margin: 6px 0 0;
       color: #657587;
     }
   }
@@ -15,12 +19,12 @@
     padding: 20px 0;
 
     span {
-      font-size: 18px;
+      font-size: 16px;
     }
   }
   h2 {
     font-size: 22px;
-    padding: 10px 0;
+    padding: 20px 0;
 
     span {
       font-size: 16px;
@@ -28,10 +32,19 @@
   }
   h3 {
     font-size: 18px;
-    padding: 5px 0;
+    padding: 15px 0;
 
     span {
       font-size: 14px;
+    }
+  }
+  .page-title-right-block {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+
+    .button {
+      margin-bottom: 0;
     }
   }
 }

@@ -14,3 +14,9 @@ Meteor.publish('projects.byIds', function (projectsIds) {
 
   return Projects.find({ _id: { $in: projectsIds } });
 });
+
+Meteor.publish('project', function (id) {
+  check(id, String);
+
+  return Projects.find({ _id: id, ownerId: this.userId });
+});

@@ -8,6 +8,7 @@ import MainLayout from '/imports/ui/containers/layouts/main';
 import Home from '/imports/ui/containers/pages/home';
 import Signin from '/imports/ui/pages/signin';
 import Signup from '/imports/ui/pages/signup';
+import Project from '/imports/ui/containers/pages/project/project';
 import Projects from '/imports/ui/containers/pages/projects/list';
 import ProjectCreate from '/imports/ui/containers/pages/project/create';
 import Elements from '/imports/ui/pages/elements';
@@ -53,10 +54,18 @@ privateRoutes.route('/projects', {
   }
 });
 
-privateRoutes.route('/project/create', {
+privateRoutes.route('/projects/create', {
   action() {
     mount(MainLayout, {
       content: <ProjectCreate />
+    });
+  }
+});
+
+privateRoutes.route('/project/:id', {
+  action(params) {
+    mount(MainLayout, {
+      content: <Project {...params} />
     });
   }
 });

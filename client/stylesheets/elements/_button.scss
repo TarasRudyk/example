@@ -25,6 +25,10 @@
     background: #838f9e;
   }
 
+  &:last-child {
+    margin-right: 0;
+  }
+
   &.green {
     background: #45b931;
     border-color: #45b931;
@@ -52,6 +56,21 @@
 
     &:active {
       background: #1da9fc;
+    }
+  }
+
+  &.red {
+    background: #f14142;
+    border-color: #f14142;
+    color: #fff;
+
+    &:hover {
+      background: #c71c1f;
+      border-color: #c71c1f;
+    }
+
+    &:active {
+      background: #f14142;
     }
   }
 }
