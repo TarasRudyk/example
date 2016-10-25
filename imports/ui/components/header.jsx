@@ -45,9 +45,8 @@ export default class Header extends React.Component {
               <i className="material-icons">notifications_none</i>
               <span>{this.getNotificationsCount()}</span>
             </a>
-            <a href="/" className="nav-user-inbox active">
+            <a href="/" className="nav-user-inbox">
               <i className="material-icons">inbox</i>
-              <span>13</span>
             </a>
             <a href="/" className="nav-user-avatar">
               <img src={this.getAvatar()} width="32px" height="32px" alt="User avatar" />
