@@ -1,5 +1,7 @@
 import React from 'react';
 
+import UsersSearch from '/imports/ui/containers/components/users-search/main';
+
 export default class SingleProject extends React.Component {
   constructor(props) {
     super(props);
@@ -32,6 +34,8 @@ export default class SingleProject extends React.Component {
             <div className="page-title">
               <h2>Users</h2>
             </div>
+
+            <UsersSearch />
           </div>
         </div>
       </main>
