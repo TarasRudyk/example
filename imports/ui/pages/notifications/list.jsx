@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { allReadNotifications } from '/imports/api/notifications/actions';
+
 import NotificationItem from '/imports/ui/pages/notifications/item';
 
 export default class Notifications extends React.Component {
@@ -15,6 +17,9 @@ export default class Notifications extends React.Component {
           <div className="container">
             <div className="page-title">
               <h1>Notifications <span>all your notifications</span></h1>
+              <div className="page-title-right-block">
+                <button className="button green" onClick={allReadNotifications}>All read</button>
+              </div>
             </div>
           </div>
         </div>

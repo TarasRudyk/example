@@ -11,8 +11,15 @@ export const createNotification = (description, type, action, recipientId) => {
 
   return Meteor.call('notification.create', { description, type, action, recipientId }, (err) => {
     if (err) {
-      console.log(err);
-      addNotice(err.error);
+      addNotice(err.message);
+    }
+  });
+};
+
+export const allReadNotifications = () => {
+  Meteor.call('notification.allRead', {}, (err) => {
+    if (err) {
+      addNotice(err.message);
     }
   });
 };
