@@ -1,0 +1,38 @@
+.page-dashboard {
+  .page-dashboard-content {
+    position: relative;
+    height: calc(100vh - 68px);
+
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  }
+  .page-dashboard-calendar {
+    height: 100%;
+  }
+  .page-dashboard-tasks {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 280px;
+    overflow: hidden;
+    height: 100%;
+    border-left: 1px solid #eceded;
+
+    .page-title {
+      padding: 0 15px;
+      box-sizing: border-box;
+    }
+    .page-dashboard-tasks-list {
+      padding: 0 15px;
+    }
+  }
+  .page-dashboard-tasks-inner {
+    width: 100%;
+    padding: 0 100px 0 0;
+    height: 100%;
+    overflow-y: auto;
+  }
+}
