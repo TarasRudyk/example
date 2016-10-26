@@ -1,13 +1,16 @@
 import React from 'react';
 
+
 export default class SingleProject extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
 
-    this.state = {};
+    };
   }
   render() {
-    const { name, ownerName, description } = this.props.project;
+    const { _id, name, ownerName, description } = this.props.project;
+
     return (
       <main className="page-content page-project">
         <div className="page-separator">
@@ -15,8 +18,8 @@ export default class SingleProject extends React.Component {
             <div className="page-title">
               <h1>{name} <span>Owner: {ownerName}</span></h1>
               <div className="page-title-right-block">
-                <a href="/" className="button green">Edit</a>
-                <a href="/" className="button red">Remove</a>
+                <a href={`/project/edit/${_id}`} className="button green">Edit</a>
+                <div className="button red">Remove</div>
               </div>
             </div>
           </div>

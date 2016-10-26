@@ -3,7 +3,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 import { Projects } from '/imports/api/projects/projects';
 
-import SingleProject from '/imports/ui/pages/project/project';
+import EditProject from '/imports/ui/pages/project/edit';
 
 export default createContainer(({ id }) => {
   const projectHandle = Meteor.subscribe('project', id);
@@ -11,4 +11,4 @@ export default createContainer(({ id }) => {
   return {
     project
   };
-}, SingleProject);
+}, EditProject);

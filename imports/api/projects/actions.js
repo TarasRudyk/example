@@ -24,3 +24,19 @@ export const createProject = (name, description) => {
     }
   });
 };
+
+
+export const editProject = (name, description, projectId) => {
+  check(name, String);
+  check(description, String);
+  check(projectId, String);
+
+  return Meteor.call('project.edit', { name, description, projectId }, (err, res) => {
+    if (err) {
+      addNotice(err.error);
+    }
+    if (res) {
+      FlowRouter.go(`/project/${projectId}`);
+    }
+  });
+};

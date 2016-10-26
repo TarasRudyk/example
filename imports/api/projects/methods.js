@@ -39,3 +39,23 @@ export const create = new ValidatedMethod({
     });
   }
 });
+
+export const edit = new ValidatedMethod({
+  name: 'project.edit',
+  validate: new SimpleSchema({
+    name: { type: String },
+    description: { type: String, optional: true },
+    projectId: { type: String }
+  }).validator(),
+  run({ name, description, projectId }) {
+    if (!this.userId) {
+      throw new Meteor.Error('User not authorized');
+    }
+
+    if (Projects.find({ name, ownerId: this.userId }).count()) {
+      throw new Meteor.Error('Project with the same name exists');
+    }
+    return Projects.update({ _id: projectId }, { $set: { name, description } });
+  }
+
+});
