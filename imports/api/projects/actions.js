@@ -3,7 +3,6 @@ import { check } from 'meteor/check';
 import { TAPi18n } from 'meteor/tap:i18n';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import formatValidation from 'string-format-validation';
-
 import { addNotice } from '/imports/api/notices/actions';
 
 export const createProject = (name, description) => {
@@ -25,7 +24,6 @@ export const createProject = (name, description) => {
   });
 };
 
-
 export const editProject = (name, description, projectId) => {
   check(name, String);
   check(description, String);
@@ -37,6 +35,19 @@ export const editProject = (name, description, projectId) => {
     }
     if (res) {
       FlowRouter.go(`/project/${projectId}`);
+    }
+  });
+};
+
+export const deleteProject = (projectId) => {
+  check(projectId, String);
+
+  return Meteor.call('project.delete', { projectId }, (err, res) => {
+    if (err) {
+      addNotice(err.error);
+    }
+    if (res) {
+      FlowRouter.go('/projects');
     }
   });
 };

@@ -61,3 +61,18 @@ export const edit = new ValidatedMethod({
   }
 
 });
+
+export const deactivate = new ValidatedMethod({
+  name: 'project.delete',
+  validate: new SimpleSchema({
+    projectId: { type: String }
+  }).validator(),
+  run({ projectId }) {
+    const project = Projects.findOne({ _id: projectId });
+    if (project.ownerId !== this.userId) {
+      throw new Meteor.Error('This is not your project');
+    }
+
+    return Projects.update({ _id: projectId }, { $set: { active: false } });
+  }
+});
