@@ -28,6 +28,7 @@ export default class UserSearch extends React.Component {
     if (target.value && target.value.length > 3) {
       getLocalState().set('username-search', target.value);
     } else {
+      getLocalState().set('username-search', '');
       this.setState({
         users: []
       });
@@ -43,9 +44,11 @@ export default class UserSearch extends React.Component {
           onChange={this.handleChange}
           onCopy={this.handleChange}
         />
-        {this.state.users.map((u, i) => (
-          <UserSearchItem key={i} user={u} />
-        ))}
+        <div className="user-search-items" style={{ display: this.state.users.length ? 'block' : 'none' }}>
+          {this.state.users.map((u, i) => (
+            <UserSearchItem key={i} user={u} />
+          ))}
+        </div>
       </div>
     );
   }
