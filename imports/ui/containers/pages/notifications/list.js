@@ -2,19 +2,13 @@ import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Notifications } from '/imports/api/notifications/notifications';
-
-import MainLayout from '/imports/ui/layouts/main';
+import NotificationsList from '/imports/ui/pages/notifications/list';
 
 export default createContainer(() => {
-  const userIsLogin = !!Meteor.userId();
-  const user = Meteor.user();
-
   const notificationsHandle = Meteor.subscribe('notifications');
-  const notificationsCount = notificationsHandle.ready() ? Notifications.find().count() : 0;
+  const notifications = notificationsHandle.ready() ? Notifications.find().fetch() : [];
 
   return {
-    userIsLogin,
-    user,
-    notificationsCount
+    notifications
   };
-}, MainLayout);
+}, NotificationsList);

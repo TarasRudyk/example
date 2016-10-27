@@ -5,6 +5,8 @@ export default class Header extends React.Component {
     super(props);
 
     this.getAvatar = this.getAvatar.bind(this);
+    this.getNotificationsCount = this.getNotificationsCount.bind(this);
+    this.getNotificationsClass = this.getNotificationsClass.bind(this);
   }
   getAvatar() {
     if (this.props.userIsLogin && this.props.user) {
@@ -12,6 +14,16 @@ export default class Header extends React.Component {
     }
 
     return '/images/avatar.png';
+  }
+  getNotificationsCount() {
+    if (this.props.notificationsCount > 9) {
+      return '9+';
+    }
+
+    return this.props.notificationsCount;
+  }
+  getNotificationsClass() {
+    return this.props.notificationsCount ? 'nav-user-messages active' : 'nav-user-messages';
   }
   render() {
     return (
@@ -25,21 +37,25 @@ export default class Header extends React.Component {
             <a href="/">People</a>
             <a href="/">Collections</a>
             <a href="/">Leaderboard</a>
-            <a href="/elements">Elements</a>
-            <a href="/logout">Log out</a>
           </nav>
           <nav className="nav-right">
-            <a href="/" className="nav-user-messages active">
+            <a href="/notifications" className={this.getNotificationsClass()}>
               <i className="material-icons">notifications_none</i>
-              <span>2</span>
+              <span>{this.getNotificationsCount()}</span>
             </a>
-            <a href="/" className="nav-user-inbox active">
+            <a href="/" className="nav-user-inbox">
               <i className="material-icons">inbox</i>
-              <span>13</span>
             </a>
-            <a href="/" className="nav-user-avatar">
-              <img src={this.getAvatar()} width="32px" height="32px" alt="User avatar" />
-            </a>
+            <div className="nav-user-avatar">
+              <a href="/">
+                <img src={this.getAvatar()} width="32px" height="32px" alt="User avatar" />
+              </a>
+              <div className="nav-user-submenu">
+                <a href="/">Profile</a>
+                <a href="/elements">Elements</a>
+                <a href="/logout">Log out</a>
+              </div>
+            </div>
           </nav>
         </div>
       </header>
@@ -49,5 +65,6 @@ export default class Header extends React.Component {
 
 Header.propTypes = {
   userIsLogin: React.PropTypes.bool,
-  user: React.PropTypes.object
+  user: React.PropTypes.object,
+  notificationsCount: React.PropTypes.number
 };
