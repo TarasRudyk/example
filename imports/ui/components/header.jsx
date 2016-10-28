@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { toggleSideContent } from '/imports/api/side-content/actions';
+
 export default class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -8,6 +10,7 @@ export default class Header extends React.Component {
     this.getUsername = this.getUsername.bind(this);
     this.getNotificationsCount = this.getNotificationsCount.bind(this);
     this.getNotificationsClass = this.getNotificationsClass.bind(this);
+    this.toggleSideContent = this.toggleSideContent.bind(this);
   }
   getAvatar() {
     if (this.props.userIsLogin && this.props.user) {
@@ -32,6 +35,11 @@ export default class Header extends React.Component {
   }
   getNotificationsClass() {
     return this.props.notificationsCount ? 'nav-user-messages active' : 'nav-user-messages';
+  }
+  toggleSideContent(event) {
+    event.preventDefault();
+
+    toggleSideContent('All task');
   }
   render() {
     return (
@@ -62,7 +70,7 @@ export default class Header extends React.Component {
               <a href="/" className="nav-user-inbox">
                 <i className="material-icons">inbox</i>
               </a>
-              <a href="/" className="nav-user-all-tasks">
+              <a href="" className="nav-user-all-tasks" onClick={this.toggleSideContent}>
                 <i className="material-icons">view_agenda</i>
               </a>
             </div>

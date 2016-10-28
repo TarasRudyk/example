@@ -2,6 +2,7 @@ import React from 'react';
 
 import Header from '/imports/ui/components/header';
 import Notices from '/imports/ui/containers/components/notices';
+import SideContent from '/imports/ui/containers/components/side-content';
 
 export default class MainLayout extends React.Component {
   constructor(props) {
@@ -27,7 +28,7 @@ export default class MainLayout extends React.Component {
         {this.getHeader()}
         <div className="page">
           {this.props.content}
-          <div className="page-side-content" />
+          <SideContent />
         </div>
         <Notices />
       </div>
