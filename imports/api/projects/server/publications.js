@@ -6,7 +6,7 @@ import { check } from 'meteor/check';
 import { Projects } from '../projects';
 
 Meteor.publish('projects', function () {
-  return Projects.find({ ownerId: this.userId });
+  return Projects.find({ ownerId: this.userId, active: true });
 });
 
 Meteor.publish('projects.byIds', function (projectsIds) {

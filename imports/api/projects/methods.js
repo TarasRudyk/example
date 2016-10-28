@@ -39,3 +39,40 @@ export const create = new ValidatedMethod({
     });
   }
 });
+
+export const edit = new ValidatedMethod({
+  name: 'project.edit',
+  validate: new SimpleSchema({
+    name: { type: String },
+    description: { type: String, optional: true },
+    projectId: { type: String }
+  }).validator(),
+  run({ name, description, projectId }) {
+    if (!this.userId) {
+      throw new Meteor.Error('User not authorized');
+    }
+
+    const project = Projects.findOne({ name, ownerId: this.userId, active: true });
+    if (project && project._id !== projectId) {
+      throw new Meteor.Error('Project with the same name exists');
+    }
+
+    return Projects.update({ _id: projectId }, { $set: { name, description } });
+  }
+
+});
+
+export const deactivate = new ValidatedMethod({
+  name: 'project.delete',
+  validate: new SimpleSchema({
+    projectId: { type: String }
+  }).validator(),
+  run({ projectId }) {
+    const project = Projects.findOne({ _id: projectId });
+    if (project.ownerId !== this.userId) {
+      throw new Meteor.Error('This is not your project');
+    }
+
+    return Projects.update({ _id: projectId }, { $set: { active: false } });
+  }
+});

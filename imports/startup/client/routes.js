@@ -12,6 +12,7 @@ import Notifications from '/imports/ui/containers/pages/notifications/list';
 import Project from '/imports/ui/containers/pages/project/project';
 import Projects from '/imports/ui/containers/pages/projects/list';
 import ProjectCreate from '/imports/ui/containers/pages/project/create';
+import ProjectEdit from '/imports/ui/containers/pages/project/edit';
 import Elements from '/imports/ui/pages/elements';
 
 const checkLoggedIn = () => {
@@ -75,6 +76,14 @@ privateRoutes.route('/project/:id', {
   action(params) {
     mount(MainLayout, {
       content: <Project {...params} />
+    });
+  }
+});
+
+privateRoutes.route('/project/edit/:id', {
+  action(params) {
+    mount(MainLayout, {
+      content: <ProjectEdit {...params} />
     });
   }
 });
