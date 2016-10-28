@@ -14,7 +14,7 @@ import Projects from '/imports/ui/containers/pages/projects/list';
 import ProjectCreate from '/imports/ui/containers/pages/project/create';
 import ProjectEdit from '/imports/ui/containers/pages/project/edit';
 import Elements from '/imports/ui/pages/elements';
-import ProfileEdit from '/imports/ui/pages/profile/profile-edit';
+import ProfileEdit from '/imports/ui/containers/pages/profile/profile-edit';
 import Profile from '/imports/ui/containers/pages/profile/profile';
 
 const checkLoggedIn = () => {

@@ -76,8 +76,12 @@ export const signup = (email, username, fullname, password) => {
   });
 };
 
-export const changeEmail = (email) => {
+export const changeEmail = (email = '') => {
   check(email, String);
+
+  if (!email) {
+    return false;
+  }
 
   if (!formatValidation.validate({ type: 'email' }, email)) {
     addNotice(TAPi18n.__('auth.emailIncorrect'));
@@ -86,15 +90,19 @@ export const changeEmail = (email) => {
 
   return Meteor.call('user.changeEmail', { email }, (err) => {
     if (err) {
-      addNotice(err.error);
+      addNotice(err.reason);
     } else {
       addNotice('Email changed!');
     }
   });
 };
 
-export const changeFullname = (fullname) => {
+export const changeFullname = (fullname = '') => {
   check(fullname, String);
+
+  if (!fullname) {
+    return false;
+  }
 
   if (!formatValidation.validate({ min: 3, max: 25 }, fullname)) {
     addNotice(TAPi18n.__('auth.fullnameIncorrect'));
@@ -103,29 +111,33 @@ export const changeFullname = (fullname) => {
 
   return Meteor.call('user.changeFullname', { fullname }, (err) => {
     if (err) {
-      addNotice(err.error);
+      addNotice(err.reason);
     } else {
       addNotice('Fullname changed!');
     }
   });
 };
 
-export const changePassword = (oldPass, newPass) => {
+export const changePassword = (oldPass = '', newPass = '') => {
   check(oldPass, String);
   check(newPass, String);
 
+  if (!oldPass && !newPass) {
+    return false;
+  }
+
   if (!formatValidation.validate({ min: 3, max: 25 }, newPass)) {
-    addNotice(TAPi18n.__('auth.passwordIncorrect'));
+    addNotice('New password incorrect');
     return false;
   }
   if (!formatValidation.validate({ min: 3, max: 25 }, oldPass)) {
-    addNotice(TAPi18n.__('auth.passwordIncorrect'));
+    addNotice('Old password incorrect');
     return false;
   }
 
   return Accounts.changePassword(oldPass, newPass, (err) => {
     if (err) {
-      addNotice(err.error);
+      addNotice(err.reason);
     } else {
       addNotice('Password changed!');
     }

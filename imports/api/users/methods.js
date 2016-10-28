@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 
@@ -10,6 +11,12 @@ export const changeEmail = new ValidatedMethod({
   run({ email }) {
     if (!this.userId) {
       throw new Meteor.Error('User not authorized');
+    }
+
+    if (Meteor.isServer) {
+      if (Accounts.findUserByEmail(email)) {
+        throw new Meteor.Error('Email is already taken');
+      }
     }
 
     Meteor.users.update(this.userId, { $set: { 'emails.0.address': email } });
@@ -25,7 +32,6 @@ export const changeFullname = new ValidatedMethod({
     if (!this.userId) {
       throw new Meteor.Error('User not authorized');
     }
-
     Meteor.users.update(this.userId, { $set: { 'profile.fullname': fullname } });
   }
 });

@@ -13,31 +13,19 @@ export default class ProfileEdit extends React.Component {
       newPassword: ''
     };
 
-    this.onEmailSubmit = this.onEmailSubmit.bind(this);
-    this.onFullnameSubmit = this.onFullnameSubmit.bind(this);
-    this.onPasswordSubmit = this.onPasswordSubmit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-  onFullnameSubmit(event) {
+  onSubmit(event) {
     event.preventDefault();
 
     const fullname = this.state.fullname.trim();
+    const email = this.state.email.trim().toLowerCase();
+    const oldPassword = this.state.oldPassword.trim();
+    const newPassword = this.state.newPassword.trim();
 
     changeFullname(fullname);
-  }
-  onEmailSubmit(event) {
-    event.preventDefault();
-
-    const email = this.state.email.trim().toLowerCase();
-
     changeEmail(email);
-  }
-  onPasswordSubmit(event) {
-    event.preventDefault();
-
-    const oldPassword = this.state.oldPassword;
-    const newPassword = this.state.newPassword;
-
     changePassword(oldPassword, newPassword);
   }
   handleChange({ target }) {
@@ -46,67 +34,53 @@ export default class ProfileEdit extends React.Component {
     });
   }
   render() {
+    const user = this.props.user;
+    const email = user && user.emails && user.emails[0].address;
+    const fullname = user && user.profile && user.profile.fullname;
+
     return (
       <main className="page-content">
         <div className="container">
           <div className="page-title">
             <h1>Edit Profile</h1>
           </div>
-          <h3> Change Email </h3>
-          <form onSubmit={this.onEmailSubmit}>
+
+          <form onSubmit={this.onSubmit}>
+            <label htmlFor="email">Change Email</label>
             <input
               type="email"
               name="email"
-              placeholder="Email"
-              required
+              placeholder={email}
               value={this.state.email}
               onChange={this.handleChange}
             />
-            <input
-              type="submit"
-              value="Change Email"
-              className="button green"
-            />
-          </form>
-
-          <h3> Change Fullname </h3>
-          <form onSubmit={this.onFullnameSubmit}>
+            <label htmlFor="fullname"> Change Fullname </label>
             <input
               type="text"
               name="fullname"
-              placeholder="Change Fullname"
-              required
+              placeholder={fullname}
               value={this.state.fullname}
               onChange={this.handleChange}
             />
-            <input
-              type="submit"
-              value="Change Fullname"
-              className="button green"
-            />
-          </form>
-
-          <h3> Change Password </h3>
-          <form onSubmit={this.onPasswordSubmit}>
+            <label htmlFor="oldPassword"> Old Password </label>
             <input
               type="password"
               name="oldPassword"
               placeholder="Enter old password"
-              required
               value={this.state.oldPassword}
               onChange={this.handleChange}
             />
+            <label htmlFor="newPassword"> Change Password </label>
             <input
               type="password"
               name="newPassword"
               placeholder="Enter new password"
-              required
               value={this.state.newPassword}
               onChange={this.handleChange}
             />
             <input
               type="submit"
-              value="Change Password"
+              value="Submit Changes"
               className="button green"
             />
           </form>
@@ -115,3 +89,6 @@ export default class ProfileEdit extends React.Component {
     );
   }
 }
+ProfileEdit.propTypes = {
+  user: React.PropTypes.object
+};
