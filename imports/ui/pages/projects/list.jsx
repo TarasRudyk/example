@@ -11,7 +11,7 @@ export default class Projects extends React.Component {
   render() {
     return (
       <div className="page-main-content page-projects">
-        <div className="page-separator">
+        <div className="separator">
           <div className="container">
             <div className="title">
               <h1>Projects <span>all your projects</span></h1>

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Elements = () => (
   <div className="page-main-content page-elements">
-    <div className="page-separator">
+    <div className="separator">
       <div className="container">
         <div className="title">
           <h1>UI style guide <span>Version 0.1</span></h1>

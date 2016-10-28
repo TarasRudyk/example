@@ -2,14 +2,14 @@ import { check } from 'meteor/check';
 
 import { getLocalState } from '/imports/startup/client/local-state';
 
-export const toggleSideContent = (name) => {
-  check(name, String);
+export const toggleSideContent = (componentName) => {
+  check(componentName, String);
 
-  const sideContent = getLocalState().get('side-content');
+  const currentComponentName = getLocalState().get('side-content');
 
-  if (sideContent && sideContent.name && sideContent.name === name) {
-    getLocalState().set('side-content', { show: false });
+  if (currentComponentName && currentComponentName === componentName) {
+    getLocalState().set('side-content', '');
   } else {
-    getLocalState().set('side-content', { name, show: true });
+    getLocalState().set('side-content', componentName);
   }
 };

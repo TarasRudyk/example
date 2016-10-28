@@ -13,12 +13,19 @@ export default class Header extends React.Component {
   render() {
     return (
       <div className={this.getClass()}>
-        Side content
+        <div className="separator">
+          <div className="container">
+            <div className="title">
+              <h3>{this.props.name}</h3>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
 Header.propTypes = {
-  show: React.PropTypes.bool
+  show: React.PropTypes.bool,
+  name: React.PropTypes.string
 };

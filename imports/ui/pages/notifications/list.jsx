@@ -13,7 +13,7 @@ export default class Notifications extends React.Component {
   render() {
     return (
       <div className="page-main-content page-projects">
-        <div className="page-separator">
+        <div className="separator">
           <div className="container">
             <div className="title">
               <h1>Notifications <span>all your notifications</span></h1>

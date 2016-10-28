@@ -9,7 +9,7 @@ export default class Dashboard extends React.Component {
   render() {
     return (
       <div className="page-main-content page-dashboard">
-        <div className="page-separator">
+        <div className="separator">
           <div className="container">
             <div className="title">
               <h1>Dashboard <span>all your today tasks</span></h1>

@@ -26,7 +26,7 @@ export default class SingleProject extends React.Component {
 
     return (
       <div className="page-main-content page-project">
-        <div className="page-separator">
+        <div className="separator">
           <div className="container">
             <div className="title">
               <h1>{name} <span>Owner: {ownerName}</span></h1>
