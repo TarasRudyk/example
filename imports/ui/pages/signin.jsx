@@ -29,9 +29,9 @@ export default class Signin extends React.Component {
   }
   render() {
     return (
-      <main className="page-content page-signin">
+      <div className="page-main-content page-signin">
         <div className="container">
-          <div className="page-title">
+          <div className="title">
             <h1>Sign in</h1>
           </div>
           <form onSubmit={this.onSubmit}>
@@ -59,7 +59,7 @@ export default class Signin extends React.Component {
             />
           </form>
         </div>
-      </main>
+      </div>
     );
   }
 }

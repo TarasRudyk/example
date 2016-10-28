@@ -1,0 +1,11 @@
+.page-side-content {
+  display: none;
+
+  &.active {
+    display: table-cell;
+    vertical-align: top;
+    width: 280px;
+    height: calc(100vh - 56px);
+    border-left: 1px solid #eceded;
+  }
+}

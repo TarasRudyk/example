@@ -10,12 +10,12 @@ export default class Projects extends React.Component {
   }
   render() {
     return (
-      <main className="page-content page-projects">
+      <div className="page-main-content page-projects">
         <div className="page-separator">
           <div className="container">
-            <div className="page-title">
+            <div className="title">
               <h1>Projects <span>all your projects</span></h1>
-              <div className="page-title-right-block">
+              <div className="title-right-block">
                 <a href="/projects/create" className="button green">New project</a>
               </div>
             </div>
@@ -31,7 +31,7 @@ export default class Projects extends React.Component {
             ))}
           </div>
         </div>
-      </main>
+      </div>
     );
   }
 }

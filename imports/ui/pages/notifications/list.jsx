@@ -12,12 +12,12 @@ export default class Notifications extends React.Component {
   }
   render() {
     return (
-      <main className="page-content page-projects">
+      <div className="page-main-content page-projects">
         <div className="page-separator">
           <div className="container">
-            <div className="page-title">
+            <div className="title">
               <h1>Notifications <span>all your notifications</span></h1>
-              <div className="page-title-right-block">
+              <div className="title-right-block">
                 <button className="button green" onClick={allReadNotifications}>All read</button>
               </div>
             </div>
@@ -33,7 +33,7 @@ export default class Notifications extends React.Component {
             ))}
           </div>
         </div>
-      </main>
+      </div>
     );
   }
 }

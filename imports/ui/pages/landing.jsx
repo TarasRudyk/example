@@ -8,15 +8,15 @@ export default class Landing extends React.Component {
   }
   render() {
     return (
-      <main className="page-content page-landing">
+      <div className="page-main-content page-landing">
         <div className="container">
-          <div className="page-title">
+          <div className="title">
             <h1>Landing page</h1>
           </div>
           <a href="/signin" className="button green">Sign in</a> &nbsp;
           <a href="/signup" className="button blue">Register</a>
         </div>
-      </main>
+      </div>
     );
   }
 }

@@ -25,12 +25,12 @@ export default class SingleProject extends React.Component {
     const { _id, name, ownerName, description } = this.props.project;
 
     return (
-      <main className="page-content page-project">
+      <div className="page-main-content page-project">
         <div className="page-separator">
           <div className="container">
-            <div className="page-title">
+            <div className="title">
               <h1>{name} <span>Owner: {ownerName}</span></h1>
-              <div className="page-title-right-block">
+              <div className="title-right-block">
                 <a href={`/project/edit/${_id}`} className="button green">Edit</a>
                 <button className="button red" value={_id} onClick={this.deleteHandler}>Remove</button>
               </div>
@@ -39,20 +39,20 @@ export default class SingleProject extends React.Component {
         </div>
         <div className="container">
           <div className="project-description">
-            <div className="page-title">
+            <div className="title">
               <h2>About</h2>
             </div>
             {description || 'No description of the project'}
           </div>
           <div className="project-users">
-            <div className="page-title">
+            <div className="title">
               <h2>Users</h2>
             </div>
 
             <UserSearch />
           </div>
         </div>
-      </main>
+      </div>
     );
   }
 }

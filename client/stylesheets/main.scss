@@ -5,6 +5,7 @@
 @import "{}/client/stylesheets/common.scss";
 @import "{}/client/stylesheets/container.scss";
 
+@import "{}/client/stylesheets/elements/title.scss";
 @import "{}/client/stylesheets/elements/button.scss";
 @import "{}/client/stylesheets/elements/input.scss";
 @import "{}/client/stylesheets/elements/textarea.scss";
@@ -12,9 +13,10 @@
 
 @import "{}/client/stylesheets/elements/header/main.scss";
 
-@import "{}/client/stylesheets/elements/page/content.scss";
+@import "{}/client/stylesheets/elements/page/page.scss";
+@import "{}/client/stylesheets/elements/page/main-content.scss";
+@import "{}/client/stylesheets/elements/page/side-content.scss";
 @import "{}/client/stylesheets/elements/page/separator.scss";
-@import "{}/client/stylesheets/elements/page/title.scss";
 
 @import "{}/client/stylesheets/elements/pages/projects/project-item.scss";
 @import "{}/client/stylesheets/elements/pages/projects/project-single.scss";

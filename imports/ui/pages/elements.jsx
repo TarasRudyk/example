@@ -1,17 +1,17 @@
 import React from 'react';
 
 const Elements = () => (
-  <main className="page-content page-elements">
+  <div className="page-main-content page-elements">
     <div className="page-separator">
       <div className="container">
-        <div className="page-title">
+        <div className="title">
           <h1>UI style guide <span>Version 0.1</span></h1>
         </div>
       </div>
     </div>
     <div className="container">
-      <div className="page-content">
-        <div className="page-title">
+      <div className="page-main-content">
+        <div className="title">
           <h2>Colors</h2>
         </div>
         <div style={{ textAlign: 'center' }}>
@@ -23,10 +23,10 @@ const Elements = () => (
           <div className="elements-box" style={{ background: '#1da9fc' }}>#1da9fc</div>
           <div className="elements-box" style={{ background: '#f14142' }}>#f14142</div>
         </div>
-        <div className="page-title">
+        <div className="title">
           <h2>Forms</h2>
         </div>
-        <div className="page-title">
+        <div className="title">
           <h3>Buttons</h3>
         </div>
 
@@ -36,7 +36,7 @@ const Elements = () => (
         <a href="/" className="button red">Red button</a>
         <input type="submit" defaultValue="Submit" className="button" />
 
-        <div className="page-title">
+        <div className="title">
           <h3>Text fields</h3>
         </div>
 
@@ -47,7 +47,7 @@ const Elements = () => (
         <input type="text" placeholder="Error" className="error" />
         <input type="text" placeholder="Full width" className="fullwidth" />
 
-        <div className="page-title">
+        <div className="title">
           <h2>Lists</h2>
         </div>
 
@@ -58,7 +58,7 @@ const Elements = () => (
         </div>
       </div>
     </div>
-  </main>
+  </div>
 );
 
 export default Elements;

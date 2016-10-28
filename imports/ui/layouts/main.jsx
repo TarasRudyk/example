@@ -8,14 +8,27 @@ export default class MainLayout extends React.Component {
     super(props);
 
     this.state = {};
+    this.getHeader = this.getHeader.bind(this);
+  }
+  getHeader() {
+    if (this.props.userIsLogin) {
+      return <Header
+        user={this.props.user}
+        userIsLogin={this.props.userIsLogin}
+        notificationsCount={this.props.notificationsCount}
+      />;
+    }
+
+    return '';
   }
   render() {
     return (
       <div className="the-karma">
-        {this.props.userIsLogin ?
-          <Header user={this.props.user} userIsLogin={this.props.userIsLogin} notificationsCount={this.props.notificationsCount} /> : ''
-        }
-        {this.props.content}
+        {this.getHeader()}
+        <div className="page">
+          {this.props.content}
+          <div className="page-side-content" />
+        </div>
         <Notices />
       </div>
     );

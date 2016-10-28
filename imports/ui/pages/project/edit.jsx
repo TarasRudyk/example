@@ -29,9 +29,9 @@ export default class EditProject extends React.Component {
   }
   render() {
     return (
-      <main className="page-content page-create-project">
+      <div className="page-main-content page-create-project">
         <div className="container">
-          <div className="page-title">
+          <div className="title">
             <h1>Edit project</h1>
           </div>
           <form onSubmit={this.onSubmit}>
@@ -54,7 +54,7 @@ export default class EditProject extends React.Component {
             />
           </form>
         </div>
-      </main>
+      </div>
     );
   }
 }
