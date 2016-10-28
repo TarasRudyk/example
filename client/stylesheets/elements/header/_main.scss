@@ -1,16 +1,17 @@
 header {
 	background: #fff;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-	padding: 16px 0;
-	height: 34px;
+	padding: 12px 0;
+	height: 32px;
+	font-size: 14px;
 
 	&:after {
 		content: "";
 		display: table;
 		clear: both;
 	}
-	nav {
-		font-size: 14px;
+	.header-main-nav {
+		float: left;
 
 		&:after {
 			content: "";
@@ -23,71 +24,56 @@ header {
 			margin: 9px 16px 9px 0;
 			line-height: 1;
 		}
-		.nav-logo {
+		.header-logo {
 			margin: 0 14px 0 0;
-
-			img {
-				display: block;
-			}
-		}
-		.nav-user-avatar {
-			position: relative;
-			display: inline-block;
 			width: 32px;
 			height: 32px;
-			border-radius: 50%;
-			background: #eee;
-			margin: 0 0 0 14px;
 
-			a {
-				margin: 0;
-			}
 			img {
-				width: 32px;
-				height: 32px;
-				border-radius: 50%;
-				display: block;
-			}
-			.nav-user-submenu {
-				right: -5px;
-				top: 30px;
-				position: absolute;
-				padding: 10px 10px 3px;
-				background: #000;
-				display: none;
-				min-width: 90px;
-
-				a {
-					display: block;
-					width: 100%;
-					color: #fff;
-					margin: 0 0 8px;
-					text-align: left;
-				}
-				&:after {
-					border-color: transparent transparent #000;
-					border-image: none;
-					border-style: solid;
-					border-width: 4px;
-					bottom: 100%;
-					content: '';
-					height: 0;
-					pointer-events: none;
-					position: absolute;
-					width: 0;
-					display: block;
-					right: 17px;
-				}
-			}
-			&:hover .nav-user-submenu {
 				display: block;
 			}
 		}
-		.nav-user-inbox, .nav-user-messages {
+	}
+	.header-user-panel {
+		float: right;
+		text-align: right;
+	}
+	.header-user-info {
+		float: left;
+		margin: 0 4px;
+
+		a {
+			display: block;
+		}
+		.header-avatar {
+			width: 32px;
+			height: 32px;
+			margin: 0 8px 0 0;
+			border-radius: 50%;
+			float: left;
+		}
+		.header-username {
+			display: block;
+			float: left;
+			margin: 9px 0;
+			max-width: 86px;
+			white-space: nowrap;
+    	overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		.material-icons {
+			font-size: 16px;
+			margin: 9px 0;
+		}
+	}
+	.header-user-nav {
+		float: left;
+
+		a {
 			position: relative;
 			display: inline-block;
-			margin: 5px 0 0 10px;
-			color: #c5cdd7;
+			margin: 4px 0 0 10px;
+			color: #9f9f9f;
 
 			span {
 				position: absolute;
@@ -101,7 +87,7 @@ header {
 				display: none;
 			}
 			&:hover {
-				color: #838f9e;
+				color: #6b6b6b;
 			}
 			&.active {
 				color: #45b931;
@@ -110,13 +96,9 @@ header {
 					display: block;
 				}
 			}
-		}
-		&.nav-left {
-			float: left;
-		}
-		&.nav-right {
-			float: right;
-			text-align: right;
+			&.nav-user-inbox {
+				margin-left: 8px;
+			}
 		}
 	}
 }

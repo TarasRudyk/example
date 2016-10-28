@@ -5,6 +5,7 @@ export default class Header extends React.Component {
     super(props);
 
     this.getAvatar = this.getAvatar.bind(this);
+    this.getUsername = this.getUsername.bind(this);
     this.getNotificationsCount = this.getNotificationsCount.bind(this);
     this.getNotificationsClass = this.getNotificationsClass.bind(this);
   }
@@ -14,6 +15,13 @@ export default class Header extends React.Component {
     }
 
     return '/images/avatar.png';
+  }
+  getUsername() {
+    if (this.props.userIsLogin && this.props.user) {
+      return this.props.user.username;
+    }
+
+    return '';
   }
   getNotificationsCount() {
     if (this.props.notificationsCount > 9) {
@@ -29,32 +37,39 @@ export default class Header extends React.Component {
     return (
       <header>
         <div className="container">
-          <nav className="nav-left">
-            <a href="/" className="nav-logo">
+          <div className="header-main-nav">
+            <a href="/" className="header-logo">
               <img src="/images/logo.svg" width="32px" height="32px" alt="Karma" />
             </a>
             <a href="/projects">Projects</a>
             <a href="/">People</a>
             <a href="/">Collections</a>
             <a href="/">Leaderboard</a>
-          </nav>
-          <nav className="nav-right">
-            <a href="/notifications" className={this.getNotificationsClass()}>
-              <i className="material-icons">notifications_none</i>
-              <span>{this.getNotificationsCount()}</span>
-            </a>
-            <a href="/" className="nav-user-inbox">
-              <i className="material-icons">inbox</i>
-            </a>
-            <div className="nav-user-avatar">
+          </div>
+          <nav className="header-user-panel">
+            <div className="header-user-info">
               <a href="/">
-                <img src={this.getAvatar()} width="32px" height="32px" alt="User avatar" />
+                <img src={this.getAvatar()} className="header-avatar" width="32px" height="32px" alt="User avatar" />
+                <span className="header-username">{this.getUsername()}</span>
+                <i className="material-icons">expand_more</i>
               </a>
-              <div className="nav-user-submenu">
-                <a href="/">Profile</a>
-                <a href="/elements">Elements</a>
-                <a href="/logout">Log out</a>
-              </div>
+            </div>
+            <div className="header-user-nav">
+              <a href="/notifications" className={this.getNotificationsClass()}>
+                <i className="material-icons">notifications_none</i>
+                <span>{this.getNotificationsCount()}</span>
+              </a>
+              <a href="/" className="nav-user-inbox">
+                <i className="material-icons">inbox</i>
+              </a>
+              <a href="/" className="nav-user-all-tasks">
+                <i className="material-icons">view_agenda</i>
+              </a>
+            </div>
+            <div className="nav-user-submenu hidden">
+              <a href="/">Profile</a>
+              <a href="/elements">Elements</a>
+              <a href="/logout">Log out</a>
             </div>
           </nav>
         </div>
