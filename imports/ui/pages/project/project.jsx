@@ -1,15 +1,29 @@
 import React from 'react';
+import { deleteProject } from '/imports/api/projects/actions.js';
 
 import UserSearch from '/imports/ui/containers/components/user-search/main';
 
 export default class SingleProject extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
 
-    this.state = {};
+    };
+
+    this.deleteHandler = this.deleteHandler.bind(this);
   }
+
+  deleteHandler(e) {
+    const id = e.target.value;
+    const conf = confirm('Are you sure?'); // eslint-disable-line
+    if (conf) {
+      deleteProject(id);
+    }
+  }
+
   render() {
-    const { name, ownerName, description } = this.props.project;
+    const { _id, name, ownerName, description } = this.props.project;
+
     return (
       <main className="page-content page-project">
         <div className="page-separator">
@@ -17,8 +31,8 @@ export default class SingleProject extends React.Component {
             <div className="page-title">
               <h1>{name} <span>Owner: {ownerName}</span></h1>
               <div className="page-title-right-block">
-                <a href="/" className="button green">Edit</a>
-                <a href="/" className="button red">Remove</a>
+                <a href={`/project/edit/${_id}`} className="button green">Edit</a>
+                <button className="button red" value={_id} onClick={this.deleteHandler}>Remove</button>
               </div>
             </div>
           </div>

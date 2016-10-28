@@ -12,6 +12,7 @@ import Notifications from '/imports/ui/containers/pages/notifications/list';
 import Project from '/imports/ui/containers/pages/project/project';
 import Projects from '/imports/ui/containers/pages/projects/list';
 import ProjectCreate from '/imports/ui/containers/pages/project/create';
+import ProjectEdit from '/imports/ui/containers/pages/project/edit';
 import Elements from '/imports/ui/pages/elements';
 import ProfileEdit from '/imports/ui/pages/profile/profile-edit';
 import Profile from '/imports/ui/containers/pages/profile/profile';
@@ -101,6 +102,14 @@ FlowRouter.route('/profile/:id', {
   action(params) {
     mount(MainLayout, {
       content: <Profile {...params} />
+    });
+  }
+});
+
+privateRoutes.route('/project/edit/:id', {
+  action(params) {
+    mount(MainLayout, {
+      content: <ProjectEdit {...params} />
     });
   }
 });

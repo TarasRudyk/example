@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { createProject } from '/imports/api/projects/actions';
+import { editProject } from '/imports/api/projects/actions.js';
 
-export default class CreateProject extends React.Component {
+export default class EditProject extends React.Component {
   constructor(props) {
     super(props);
 
@@ -17,10 +17,10 @@ export default class CreateProject extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
-    const name = this.state.name.trim();
-    const description = this.state.description.trim();
+    const name = this.state.name.trim() || this.props.project.name;
+    const description = this.state.description.trim() || this.props.project.description;
 
-    createProject(name, description);
+    editProject(name, description, this.props.project._id);
   }
   handleChange({ target }) {
     this.setState({
@@ -32,28 +32,24 @@ export default class CreateProject extends React.Component {
       <main className="page-content page-create-project">
         <div className="container">
           <div className="page-title">
-            <h1>Create project</h1>
+            <h1>Edit project</h1>
           </div>
           <form onSubmit={this.onSubmit}>
             <input
               type="text"
               name="name"
-              placeholder="Name"
+              placeholder={this.props.project.name}
               autoFocus
-              value={this.state.email}
               onChange={this.handleChange}
-              onCopy={this.handleChange}
             />
             <textarea
               name="description"
-              placeholder="Description"
-              value={this.state.password}
+              placeholder={this.props.project.description}
               onChange={this.handleChange}
-              onCopy={this.handleChange}
             />
             <input
               type="submit"
-              value="Create"
+              value="Edit"
               className="button green"
             />
           </form>
@@ -63,4 +59,7 @@ export default class CreateProject extends React.Component {
   }
 }
 
-CreateProject.propTypes = {};
+
+EditProject.propTypes = {
+  project: React.PropTypes.object
+};
