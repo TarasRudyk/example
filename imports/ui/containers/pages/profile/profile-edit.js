@@ -5,8 +5,10 @@ import ProfileEdit from '/imports/ui/pages/profile/profile-edit';
 
 export default createContainer(() => {
   const user = Meteor.user();
+  const userIsLogin = !!Meteor.userId();
 
   return {
-    user
+    user,
+    userIsLogin
   };
 }, ProfileEdit);

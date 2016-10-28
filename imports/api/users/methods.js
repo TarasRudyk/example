@@ -12,13 +12,9 @@ export const changeEmail = new ValidatedMethod({
     if (!this.userId) {
       throw new Meteor.Error('User not authorized');
     }
-
-    if (Meteor.isServer) {
-      if (Accounts.findUserByEmail(email)) {
-        throw new Meteor.Error('Email is already taken');
-      }
+    if (Accounts.findUserByEmail(email)) {
+      throw new Meteor.Error('Email is already taken');
     }
-
     Meteor.users.update(this.userId, { $set: { 'emails.0.address': email } });
   }
 });
