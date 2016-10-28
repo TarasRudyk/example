@@ -76,6 +76,62 @@ export const signup = (email, username, fullname, password) => {
   });
 };
 
+export const changeEmail = (email) => {
+  check(email, String);
+
+  if (!formatValidation.validate({ type: 'email' }, email)) {
+    addNotice(TAPi18n.__('auth.emailIncorrect'));
+    return false;
+  }
+
+  return Meteor.call('user.changeEmail', { email }, (err) => {
+    if (err) {
+      addNotice(err.error);
+    } else {
+      addNotice('Email changed!');
+    }
+  });
+};
+
+export const changeFullname = (fullname) => {
+  check(fullname, String);
+
+  if (!formatValidation.validate({ min: 3, max: 25 }, fullname)) {
+    addNotice(TAPi18n.__('auth.fullnameIncorrect'));
+    return false;
+  }
+
+  return Meteor.call('user.changeFullname', { fullname }, (err) => {
+    if (err) {
+      addNotice(err.error);
+    } else {
+      addNotice('Fullname changed!');
+    }
+  });
+};
+
+export const changePassword = (oldPass, newPass) => {
+  check(oldPass, String);
+  check(newPass, String);
+
+  if (!formatValidation.validate({ min: 3, max: 25 }, newPass)) {
+    addNotice(TAPi18n.__('auth.passwordIncorrect'));
+    return false;
+  }
+  if (!formatValidation.validate({ min: 3, max: 25 }, oldPass)) {
+    addNotice(TAPi18n.__('auth.passwordIncorrect'));
+    return false;
+  }
+
+  return Accounts.changePassword(oldPass, newPass, (err) => {
+    if (err) {
+      addNotice(err.error);
+    } else {
+      addNotice('Password changed!');
+    }
+  });
+};
+
 export const logout = () => {
   Meteor.logout();
 };

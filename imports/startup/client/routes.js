@@ -13,6 +13,8 @@ import Project from '/imports/ui/containers/pages/project/project';
 import Projects from '/imports/ui/containers/pages/projects/list';
 import ProjectCreate from '/imports/ui/containers/pages/project/create';
 import Elements from '/imports/ui/pages/elements';
+import ProfileEdit from '/imports/ui/pages/profile/profile-edit';
+import Profile from '/imports/ui/containers/pages/profile/profile';
 
 const checkLoggedIn = () => {
   if (!Meteor.userId()) {
@@ -75,6 +77,30 @@ privateRoutes.route('/project/:id', {
   action(params) {
     mount(MainLayout, {
       content: <Project {...params} />
+    });
+  }
+});
+
+privateRoutes.route('/profile', {
+  action() {
+    mount(MainLayout, {
+      content: <Profile />
+    });
+  }
+});
+
+privateRoutes.route('/profile/edit', {
+  action() {
+    mount(MainLayout, {
+      content: <ProfileEdit />
+    });
+  }
+});
+
+FlowRouter.route('/profile/:id', {
+  action(params) {
+    mount(MainLayout, {
+      content: <Profile {...params} />
     });
   }
 });
