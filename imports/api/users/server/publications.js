@@ -13,3 +13,9 @@ Meteor.publish('usersByUsername', function (username) {
 
   return Meteor.users.find({ _id: { $ne: this.userId }, username: { $regex: username } });
 });
+
+Meteor.publish('userById', function (id) {
+  check(id, String);
+
+  return Meteor.users.find({ _id: id });
+});
