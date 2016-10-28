@@ -8,7 +8,7 @@ export default class Dashboard extends React.Component {
   }
   render() {
     return (
-      <main className="page-content page-dashboard">
+      <main className="page-content page-dashboard hidden">
         <div className="page-separator">
           <div className="container hidden">
             <div className="page-dashboard-title">
