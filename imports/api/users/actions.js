@@ -58,12 +58,12 @@ export const signup = (email, username, fullname, password) => {
     return false;
   }
   return Accounts.createUser({
-    email: email,
-    username: username,
-    password: password,
+    email,
+    username,
+    password,
     profile: {
       avatar: `https://www.gravatar.com/avatar/${md5(email)}`,
-      fullname: fullname
+      fullname
     }
   }, (err) => {
     if (err) {
