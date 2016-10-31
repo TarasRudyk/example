@@ -11,5 +11,12 @@
     "passwordIncorrect": "Password incorrect",
     "usernameIncorrect": "Username incorrect",
     "fullnameIncorrect": "Full name incorrect"
+  },
+  "change": {
+    "EmailChanged": "Email changed!",
+    "FullnameChanged": "Fullname changed!",
+    "NewPasswordIncorrect": "New password incorrect!",
+    "OldPasswordIncorrect": "Old Ppassword incorrect!",
+    "PasswordChanged": "Password changed!"
   }
 }

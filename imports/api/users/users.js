@@ -12,7 +12,7 @@ Meteor.users.schema = new SimpleSchema({
   },
   username: {
     type: String,
-    regEx: /^[a-z0-9A-Z_]{3,25}$/,
+    regEx: /^[a-z0-9A-Z_]{3,25}$/
   },
   emails: {
     type: Array,
@@ -38,15 +38,15 @@ Meteor.users.schema = new SimpleSchema({
   },
   'profile.username': {
     type: String,
-    optional: true,
+    optional: true
   },
   'profile.avatar': {
     type: String,
-    optional: true,
+    optional: true
   },
   colors: {
     type: [Object],
-    optional: true,
+    optional: true
   },
   projects: {
     type: [Object],
