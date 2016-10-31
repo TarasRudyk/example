@@ -3,6 +3,7 @@ import React from 'react';
 import UserSearchItem from '/imports/ui/components/user-search/item';
 
 import { getLocalState } from '/imports/startup/client/local-state';
+// import { createInvitation } from '/imports/api/invitations/actions';
 
 export default class UserSearch extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ export default class UserSearch extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.focusIn = this.focusIn.bind(this);
     this.focusOut = this.focusOut.bind(this);
+    this.inviteUser = this.inviteUser.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
@@ -44,6 +46,9 @@ export default class UserSearch extends React.Component {
   focusOut() {
     getLocalState().set('username-search', '');
   }
+  inviteUser(userId) {
+    return userId;
+  }
   render() {
     return (
       <form className="user-search">
@@ -60,7 +65,7 @@ export default class UserSearch extends React.Component {
         <div className="user-search-items" style={{ display: this.state.users.length ? 'block' : 'none' }}>
           <div className="user-search-items-inner">
             {this.state.users.map((u, i) => (
-              <UserSearchItem key={i} user={u} />
+              <UserSearchItem key={i} user={u} inviteUser={this.inviteUser} />
             ))}
           </div>
         </div>
