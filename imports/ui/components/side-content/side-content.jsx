@@ -1,6 +1,7 @@
 import React from 'react';
 
 import SideNotifications from '/imports/ui/containers/components/side-content/side-notifications';
+import LoadingComponent from '/imports/ui/components/loading.jsx';
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -15,19 +16,19 @@ export default class Header extends React.Component {
   }
 
   getContent(name) {
-    if (name === 'Notifications') {
-      return <SideNotifications />;
+    switch (name) {
+      case 'notifications':
+        return <SideNotifications />;
+      default:
+        return <LoadingComponent />;
     }
-    return this.props.name;
   }
   render() {
     return (
       <div className={this.getClass()}>
         <div className="separator">
           <div className="container">
-            <div className="title">
-              <h3>{this.getContent(this.props.name)}</h3>
-            </div>
+            {this.getContent(this.props.name)}
           </div>
         </div>
       </div>
