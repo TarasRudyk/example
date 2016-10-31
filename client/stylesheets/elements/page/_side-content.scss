@@ -5,6 +5,16 @@
     vertical-align: top;
     width: 280px;
     height: calc(100vh - 56px);
+    overflow: hidden;
     border-left: 1px solid #eceded;
   }
+}
+.page-side-content-inner {
+  width: 100%;
+  height: calc(100vh - 56px);
+  padding: 0 100px 0 0;
+  overflow-y: scroll;
+}
+.page-side-content-inner::-webkit-scrollbar {
+  display: none;
 }

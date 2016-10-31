@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Notifications } from '/imports/api/notifications/notifications';
-import SideNotificationsList from '/imports/ui/components/side-content/side-notifications';
+import NotificationsList from '/imports/ui/components/side-content/notifications';
 
 export default createContainer(() => {
   const notificationsHandle = Meteor.subscribe('notifications');
@@ -11,4 +11,4 @@ export default createContainer(() => {
   return {
     notifications
   };
-}, SideNotificationsList);
+}, NotificationsList);

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import SideNotifications from '/imports/ui/containers/components/side-content/side-notifications';
+import Notifications from '/imports/ui/containers/components/side-content/notifications';
 import LoadingComponent from '/imports/ui/components/loading.jsx';
 
-export default class Header extends React.Component {
+export default class SideContent extends React.Component {
   constructor(props) {
     super(props);
 
@@ -14,11 +14,10 @@ export default class Header extends React.Component {
   getClass() {
     return this.props.show ? 'page-side-content active' : 'page-side-content';
   }
-
   getContent(name) {
     switch (name) {
       case 'notifications':
-        return <SideNotifications />;
+        return <Notifications />;
       default:
         return <LoadingComponent />;
     }
@@ -26,17 +25,13 @@ export default class Header extends React.Component {
   render() {
     return (
       <div className={this.getClass()}>
-        <div className="separator">
-          <div className="container">
-            {this.getContent(this.props.name)}
-          </div>
-        </div>
+        {this.getContent(this.props.name)}
       </div>
     );
   }
 }
 
-Header.propTypes = {
+SideContent.propTypes = {
   show: React.PropTypes.bool,
   name: React.PropTypes.string
 };
