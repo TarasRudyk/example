@@ -57,15 +57,15 @@ export const signup = (email, username, fullname, password) => {
     addNotice(TAPi18n.__('auth.passwordIncorrect'));
     return false;
   }
-
+console.log(fullname + username);
   return Accounts.createUser({
-    email,
-    username,
-    password,
+    email: email,
+    username: username,
+    password: password,
     profile: {
       avatar: `https://www.gravatar.com/avatar/${md5(email)}`,
-      fullname
-    }
+      fullname: fullname
+    },
   }, (err) => {
     if (err) {
       addNotice(err.reason);
