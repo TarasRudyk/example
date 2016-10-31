@@ -59,6 +59,7 @@ export default class Signup extends React.Component {
               name="username"
               placeholder="Username"
               required
+              pattern="[A-Za-z0-9]{1,25}"
               value={this.state.username}
               onChange={this.handleChange}
             />
