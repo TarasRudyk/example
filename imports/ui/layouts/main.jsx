@@ -2,7 +2,7 @@ import React from 'react';
 
 import Header from '/imports/ui/components/header';
 import Notices from '/imports/ui/containers/components/notices';
-import SideContent from '/imports/ui/containers/components/side-content';
+import SideContent from '/imports/ui/containers/components/side-content/side-content';
 
 export default class MainLayout extends React.Component {
   constructor(props) {
