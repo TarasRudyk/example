@@ -49,7 +49,7 @@ export default class SingleProject extends React.Component {
               <h2>Users</h2>
             </div>
 
-            <UserSearch />
+            <UserSearch projectId={_id} />
           </div>
         </div>
       </div>

@@ -1,10 +1,15 @@
 import React from 'react';
 
+import { createInvitation } from '/imports/api/invitations/actions';
+
 export default class UserSearchItem extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.inviteUser = this.inviteUser.bind(this);
+  }
+  inviteUser() {
+    createInvitation(this.props.projectId, this.props.user._id);
   }
   render() {
     const { username, profile } = this.props.user;
@@ -16,7 +21,7 @@ export default class UserSearchItem extends React.Component {
           <div className="username">{username}</div>
         </div>
         <div className="user-search-item-action">
-          <a href="" className="add-user">
+          <a href="" className="add-user" onClick={this.inviteUser}>
             <i className="material-icons">add_circle_outline</i>
           </a>
         </div>
@@ -26,5 +31,6 @@ export default class UserSearchItem extends React.Component {
 }
 
 UserSearchItem.propTypes = {
-  user: React.PropTypes.object
+  user: React.PropTypes.object,
+  projectId: React.PropTypes.string
 };
