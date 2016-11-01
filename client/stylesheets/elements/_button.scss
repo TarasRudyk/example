@@ -28,7 +28,12 @@
   &:last-child {
     margin-right: 0;
   }
-
+  &.small {
+    min-width: 50px;
+    height: 26px;
+    padding: 5px 8px;
+    font-size: 14px;
+  }
   &.green {
     background: #45b931;
     border-color: #45b931;

@@ -63,7 +63,12 @@ export default class Header extends React.Component {
               </a>
             </div>
             <div className="header-user-nav">
-              <a href="/notifications" className={this.getNotificationsClass()}>
+              <a
+                href=""
+                className={this.getNotificationsClass()}
+                data-name="notifications"
+                onClick={this.toggleSideContent}
+              >
                 <i className="material-icons">notifications_none</i>
                 <span>{this.getNotificationsCount()}</span>
               </a>
