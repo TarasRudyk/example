@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { getLocalState } from '/imports/startup/client/local-state';
 import { allReadNotifications } from '/imports/api/notifications/actions';
 
 import NotificationItem from '/imports/ui/pages/notifications/item';
@@ -9,6 +10,12 @@ export default class Notifications extends React.Component {
     super(props);
 
     this.state = {};
+  }
+  componentDidMount() {
+    const componentName = getLocalState().get('side-content');
+    if (componentName === 'notifications') {
+      getLocalState().set('side-content', '');
+    }
   }
   render() {
     return (
