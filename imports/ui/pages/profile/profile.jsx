@@ -34,7 +34,7 @@ export default class Profile extends React.Component {
           { this.showButton() }
         </div>
       </main>
-      );
+    );
   }
 }
 Profile.propTypes = {

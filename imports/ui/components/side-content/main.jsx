@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Notifications from '/imports/ui/containers/components/side-content/notifications';
-import LoadingComponent from '/imports/ui/components/loading.jsx';
+import Loading from '/imports/ui/components/side-content/loading';
 
 export default class SideContent extends React.Component {
   constructor(props) {
@@ -18,8 +18,10 @@ export default class SideContent extends React.Component {
     switch (name) {
       case 'notifications':
         return <Notifications />;
+      case 'tasks':
+        return <Notifications />;
       default:
-        return <LoadingComponent />;
+        return <Loading />;
     }
   }
   render() {
