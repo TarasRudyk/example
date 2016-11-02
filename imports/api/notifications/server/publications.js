@@ -9,10 +9,11 @@ Meteor.publish('notifications', function () {
 });
 
 Meteor.publish('notifications-new', function () {
-  return Notifications.find({ recipientId: this.userId, read: false });
+  return Notifications.find({ recipientId: this.userId, read: false },
+    { sort: { creationDate: -1 } });
 });
 
 Meteor.publish('notifications-read', function (limit = 0, skip = 0) {
   return Notifications.find({ recipientId: this.userId, read: true },
-        { limit, skip });
+    { sort: { creationDate: -1 }, limit, skip });
 });

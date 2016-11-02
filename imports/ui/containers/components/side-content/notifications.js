@@ -16,7 +16,6 @@ export default createContainer(() => {
       ? Notifications.find({}, { sort: { creationDate: -1 } }).fetch()
       : [];
   }
-  console.log(Notifications.find().fetch());
   return {
     notifications
   };
