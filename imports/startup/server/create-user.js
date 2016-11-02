@@ -26,6 +26,8 @@ if (Meteor.isServer) {
     ];
     user.projects = [];
 
+    // TODO: Use Object.assign in return
+
     return user;
   });
 }

@@ -45,8 +45,17 @@ Meteor.users.schema = new SimpleSchema({
     optional: true
   },
   colors: {
-    type: [Object],
+    type: Array,
     optional: true
+  },
+  'colors.$': {
+    type: Object
+  },
+  'colors.$.used': {
+    type: Boolean
+  },
+  'colors.$.color': {
+    type: String
   },
   projects: {
     type: [Object],
