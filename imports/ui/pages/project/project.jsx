@@ -37,18 +37,38 @@ export default class SingleProject extends React.Component {
             </div>
           </div>
         </div>
-        <div className="container">
-          <div className="project-description">
-            <div className="title">
-              <h2>About</h2>
-            </div>
-            {description || 'No description of the project'}
-          </div>
-          <div className="project-users">
-            <div className="title">
-              <h2>Users</h2>
-            </div>
 
+        <div className="project-description">
+          <div className="separator">
+            <div className="container">
+              <div className="title">
+                <h2>About</h2>
+              </div>
+            </div>
+          </div>
+          <div className="container">
+            <div className="description">
+              {description || 'No description of the project'}
+            </div>
+          </div>
+        </div>
+
+        <div className="project-people">
+          <div className="separator border-top">
+            <div className="container">
+              <div className="title">
+                <h2>People</h2>
+              </div>
+            </div>
+          </div>
+          <div className="container">
+            <div className="list">
+              {this.props.invitations.map((inv, i) => (
+                <div className="list-item" key={i}>
+                  {inv._id}
+                </div>
+              ))}
+            </div>
             <UserSearch projectId={_id} />
           </div>
         </div>
@@ -58,5 +78,6 @@ export default class SingleProject extends React.Component {
 }
 
 SingleProject.propTypes = {
-  project: React.PropTypes.object
+  project: React.PropTypes.object,
+  invitations: React.PropTypes.array
 };
