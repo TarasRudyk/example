@@ -4,7 +4,6 @@ import { TAPi18n } from 'meteor/tap:i18n';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import formatValidation from 'string-format-validation';
 import { addNotice } from '/imports/api/notices/actions';
-import { getLocalState } from '/imports/startup/client/local-state';
 
 export const createProject = (name, description) => {
   check(name, String);
@@ -51,23 +50,4 @@ export const deleteProject = (projectId) => {
       FlowRouter.go('/projects');
     }
   });
-};
-
-export const next = () => {
-  const params = getLocalState().get('params');
-  if (params) {
-    getLocalState().set('params', params + 7);
-  } else {
-    getLocalState().set('params', 7);
-  }
-};
-
-
-export const previous = () => {
-  const params = getLocalState().get('params');
-  if (params) {
-    getLocalState().set('params', params - 7);
-  } else {
-    getLocalState().set('params', 0);
-  }
 };

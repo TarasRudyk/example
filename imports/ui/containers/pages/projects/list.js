@@ -10,7 +10,8 @@ export default createContainer(() => {
   getLocalState().set('params', params);
   const projectsHandle = Meteor.subscribe('projects', params);
   const projects = projectsHandle.ready() ? Projects.find().fetch() : [];
+  const projectsCount = projectsHandle.ready() ? Projects.find().count() : 0;
   return {
-    projects
+    projects, projectsCount
   };
 }, ProjectsList);

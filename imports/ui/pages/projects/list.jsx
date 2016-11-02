@@ -1,8 +1,7 @@
 import React from 'react';
 
 import ProjectItem from '/imports/ui/pages/projects/item';
-import { next, previous } from '/imports/api/projects/actions.js';
-
+import { getLocalState } from '/imports/startup/client/local-state';
 
 export default class Projects extends React.Component {
   constructor(props) {
@@ -13,10 +12,20 @@ export default class Projects extends React.Component {
   }
 
   previous() {
-    previous();
+    const params = getLocalState().get('params');
+    if (params) {
+      getLocalState().set('params', params - 7);
+    } else {
+      getLocalState().set('params', 0);
+    }
   }
   next() {
-    next();
+    const params = getLocalState().get('params');
+    if (params && this.props.projectsCount > 1) {
+      getLocalState().set('params', params + 7);
+    } else if (params === 0) {
+      getLocalState().set('params', 7);
+    }
   }
 
   render() {
@@ -43,8 +52,8 @@ export default class Projects extends React.Component {
           </div>
         </div>
         <div>
-          <button onClick={this.previous}>Previous</button>
-          <button onClick={this.next}>Next</button>
+          <button className="button blue" onClick={this.previous}>Previous</button>
+          <button className="button blue" onClick={this.next}>Next</button>
         </div>
       </div>
     );
@@ -52,5 +61,6 @@ export default class Projects extends React.Component {
 }
 
 Projects.propTypes = {
-  projects: React.PropTypes.arrayOf(React.PropTypes.object)
+  projects: React.PropTypes.arrayOf(React.PropTypes.object),
+  projectsCount: React.PropTypes.number
 };
