@@ -1,13 +1,24 @@
 import React from 'react';
 
 import ProjectItem from '/imports/ui/pages/projects/item';
+import { next, previous } from '/imports/api/projects/actions.js';
+
 
 export default class Projects extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {};
+    this.previous = this.previous.bind(this);
+    this.next = this.next.bind(this);
   }
+
+  previous() {
+    previous();
+  }
+  next() {
+    next();
+  }
+
   render() {
     return (
       <div className="page-main-content page-projects">
@@ -30,6 +41,10 @@ export default class Projects extends React.Component {
               />
             ))}
           </div>
+        </div>
+        <div>
+          <button onClick={this.previous}>Previous</button>
+          <button onClick={this.next}>Next</button>
         </div>
       </div>
     );
