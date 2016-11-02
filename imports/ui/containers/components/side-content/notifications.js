@@ -7,14 +7,15 @@ import NotificationsList from '/imports/ui/components/side-content/notifications
 export default createContainer(() => {
   let notificationsHandle = Meteor.subscribe('notifications-new');
   let notifications = notificationsHandle.ready()
-    ? Notifications.find({}, { sort: { creationDate: -1 } }).fetch()
+    ? Notifications.find({ read: false }, { sort: { creationDate: -1 } }).fetch()
     : [];
   const unreadCount = Notifications.find({ read: false }).count();
   if (unreadCount < 15 && notificationsHandle.ready()) {
     notificationsHandle = Meteor.subscribe('notifications-read', 15 - unreadCount, 0);
     notifications = notificationsHandle.ready()
-      ? Notifications.find({}, { sort: { creationDate: -1 } }).fetch()
-      : [];
+      ? notifications.concat(Notifications.find({ read: true },
+        { sort: { creationDate: -1 }, limit: 15 - unreadCount }).fetch())
+      : notifications;
   }
   return {
     notifications

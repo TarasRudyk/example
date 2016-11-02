@@ -48,6 +48,9 @@ export default class Notifications extends React.Component {
           </div>
         </div>
         {this.getNotifications()}
+        <div className="button-box">
+          <a className="button default small" href="/notifications"> All Notifications </a>
+        </div>
       </div>
     );
   }
