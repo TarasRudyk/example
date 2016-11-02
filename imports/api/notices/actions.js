@@ -1,13 +1,13 @@
-import { Session } from 'meteor/session';
+import { getLocalState } from '/imports/startup/client/local-state';
 import { check } from 'meteor/check';
 
 export const addNotice = (text) => {
   check(text, String);
 
   const id = new Date().getTime();
-  const notices = Session.get('notices') || [];
+  const notices = getLocalState().get('notices') || [];
 
   notices.push({ text, id });
 
-  Session.set('notices', notices);
+  getLocalState().set('notices', notices);
 };
