@@ -21,9 +21,6 @@ export default class SingleProject extends React.Component {
       deleteProject(id);
     }
   }
-  handleSelect(index, last) {
-    console.log('Selected tab: ' + index + ', Last tab: ' + last);
-  }
 
   render() {
     const { _id, name, ownerName, description } = this.props.project;
@@ -43,19 +40,20 @@ export default class SingleProject extends React.Component {
         </div>
         <div>
           <Tabs onSelect={this.handleSelect} selectedIndex={2}>
-             <TabList>
-               <Tab>Foo</Tab>
-               <Tab>Bar</Tab>
-               <Tab>Baz</Tab>
-             </TabList>
-             <TabPanel>
-              <h2>Hello from Foo</h2>
+            <TabList>
+              <Tab>Overview</Tab>
+              <Tab>Tasks</Tab>
+              <Tab>People</Tab>
+            </TabList>
+            <TabPanel className="tasks">
+              <h2>tasks is here</h2>
             </TabPanel>
-            <TabPanel>
-              <h2>Hello from Bar</h2>
+            <TabPanel className="overview">
+              <h2>overview is here</h2>
             </TabPanel>
-            <TabPanel>
-              <h2>Hello from Baz</h2>
+
+            <TabPanel className="people">
+              <h2>people is here</h2>
             </TabPanel>
           </Tabs>
         </div>
