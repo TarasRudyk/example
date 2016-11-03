@@ -7,8 +7,7 @@ import { getLocalState } from '/imports/startup/client/local-state';
 export default createContainer(() => {
   const skip = getLocalState().get('skip') || 0;
   const projectsHandle = Meteor.subscribe('projects');
-  const projects = projectsHandle.ready() ? Projects.find({},
-    { skip, limit: 7 }).fetch() : [];
+  const projects = projectsHandle.ready() ? Projects.find({}, { skip, limit: 7 }).fetch() : [];
   const projectsCount = projectsHandle.ready() ? Projects.find().count() : 0;
   return {
     projects, projectsCount
