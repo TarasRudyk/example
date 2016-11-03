@@ -1,15 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-
 import { Projects } from '/imports/api/projects/projects';
 import ProjectsList from '/imports/ui/pages/projects/list';
 import { getLocalState } from '/imports/startup/client/local-state';
 
 export default createContainer(() => {
-  const params = getLocalState().get('params') || 0;
-  getLocalState().set('params', params);
-  const projectsHandle = Meteor.subscribe('projects', params);
-  const projects = projectsHandle.ready() ? Projects.find().fetch() : [];
+  const skip = getLocalState().get('skip') || 0;
+  const projectsHandle = Meteor.subscribe('projects');
+  const projects = projectsHandle.ready() ? Projects.find({},
+    { skip, limit: 7 }).fetch() : [];
   const projectsCount = projectsHandle.ready() ? Projects.find().count() : 0;
   return {
     projects, projectsCount

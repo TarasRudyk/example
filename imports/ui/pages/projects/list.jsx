@@ -12,19 +12,15 @@ export default class Projects extends React.Component {
   }
 
   previous() {
-    const params = getLocalState().get('params');
-    if (params) {
-      getLocalState().set('params', params - 7);
-    } else {
-      getLocalState().set('params', 0);
+    const skip = getLocalState().get('skip') || 0;
+    if (skip) {
+      getLocalState().set('skip', skip - 7);
     }
   }
   next() {
-    const params = getLocalState().get('params');
-    if (params && this.props.projectsCount > 1) {
-      getLocalState().set('params', params + 7);
-    } else if (params === 0) {
-      getLocalState().set('params', 7);
+    const skip = getLocalState().get('skip') || 0;
+    if (skip < this.props.projectsCount - 7) {
+      getLocalState().set('skip', skip + 7);
     }
   }
 
