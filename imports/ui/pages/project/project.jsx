@@ -2,6 +2,7 @@ import React from 'react';
 import { deleteProject } from '/imports/api/projects/actions.js';
 
 import UserSearch from '/imports/ui/containers/components/user-search/main';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 export default class SingleProject extends React.Component {
   constructor(props) {
@@ -20,6 +21,9 @@ export default class SingleProject extends React.Component {
       deleteProject(id);
     }
   }
+  handleSelect(index, last) {
+    console.log('Selected tab: ' + index + ', Last tab: ' + last);
+  }
 
   render() {
     const { _id, name, ownerName, description } = this.props.project;
@@ -36,6 +40,24 @@ export default class SingleProject extends React.Component {
               </div>
             </div>
           </div>
+        </div>
+        <div>
+          <Tabs onSelect={this.handleSelect} selectedIndex={2}>
+             <TabList>
+               <Tab>Foo</Tab>
+               <Tab>Bar</Tab>
+               <Tab>Baz</Tab>
+             </TabList>
+             <TabPanel>
+              <h2>Hello from Foo</h2>
+            </TabPanel>
+            <TabPanel>
+              <h2>Hello from Bar</h2>
+            </TabPanel>
+            <TabPanel>
+              <h2>Hello from Baz</h2>
+            </TabPanel>
+          </Tabs>
         </div>
         <div className="container">
           <div className="project-description">
