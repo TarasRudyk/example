@@ -11,13 +11,10 @@ export default createContainer(({ id }) => {
   const project = projectHandle.ready() ? Projects.findOne() : {};
 
   const invitationsHandle = Meteor.subscribe('invitationsByProject', id);
-  const invitations = invitationsHandle.ready() ? Invitations.find({
-    projectId: id,
-    replied: false
-  }, {
-    skip: 0,
-    limit: 25
-  }).fetch() : [];
+  const invitations = invitationsHandle.ready() ? Invitations.find(
+    { 'project.id': id, replied: false },
+    { skip: 0, limit: 25 }
+  ).fetch() : [];
 
   return {
     project,

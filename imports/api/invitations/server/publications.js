@@ -13,7 +13,7 @@ Meteor.publish('invitationsByProject', function (projectId) {
   check(projectId, String);
 
   return Invitations.find(
-    { projectId: projectId, replied: false },
+    { 'project.id': projectId, replied: false },
     { skip: 0, limit: 25 }
   );
 });
