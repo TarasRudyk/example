@@ -24,7 +24,6 @@ export default class Projects extends React.Component {
       getLocalState().set('skip', skip + 7);
     }
   }
-
   render() {
     return (
       <div className="page-main-content page-projects">
@@ -40,19 +39,18 @@ export default class Projects extends React.Component {
         </div>
         <div className="list">
           <div className="container">
-            {this.props.projects.map((p, i) => (
+            {this.props.loaded ? this.props.projects.map((p, i) => (
               <ProjectItem
                 key={i}
                 project={p}
               />
-            ))}
+            )) : <Loading /> }
           </div>
         </div>
         <div>
           <button className="button blue" onClick={this.previous}>Previous</button>
           <button className="button blue" onClick={this.next}>Next</button>
         </div>
-        <Loading />
       </div>
     );
   }
@@ -60,5 +58,6 @@ export default class Projects extends React.Component {
 
 Projects.propTypes = {
   projects: React.PropTypes.arrayOf(React.PropTypes.object),
-  projectsCount: React.PropTypes.number
+  projectsCount: React.PropTypes.number,
+  loaded: React.PropTypes.bool
 };

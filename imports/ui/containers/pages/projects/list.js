@@ -10,6 +10,6 @@ export default createContainer(() => {
   const projects = projectsHandle.ready() ? Projects.find({}, { skip, limit: 7 }).fetch() : [];
   const projectsCount = projectsHandle.ready() ? Projects.find().count() : 0;
   return {
-    projects, projectsCount
+    projects, projectsCount, loaded: projectsHandle.ready()
   };
 }, ProjectsList);
