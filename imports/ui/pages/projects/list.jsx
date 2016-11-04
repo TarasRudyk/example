@@ -47,9 +47,11 @@ export default class Projects extends React.Component {
             ))}
           </div>
         </div>
-        <div>
-          <button className="button blue" onClick={this.previous}>Previous</button>
-          <button className="button blue" onClick={this.next}>Next</button>
+        <div className="separator border-top">
+          <div className="container">
+            <button className="button blue" onClick={this.previous}>Previous</button>
+            <button className="button blue" onClick={this.next}>Next</button>
+          </div>
         </div>
       </div>
     );
