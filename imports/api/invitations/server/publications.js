@@ -6,7 +6,7 @@ import { check } from 'meteor/check';
 import { Invitations } from '../invitations';
 
 Meteor.publish('invitations', function () {
-  return Invitations.find({ userId: this.userId, replied: false });
+  return Invitations.find({ 'user.id': this.userId, replied: false });
 });
 
 Meteor.publish('invitationsByProject', function (projectId) {

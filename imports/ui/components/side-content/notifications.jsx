@@ -34,6 +34,23 @@ export default class Notifications extends React.Component {
     );
   }
 
+  getInvitations() {
+    if (this.props.invitations.length > 0) {
+      return (
+        <div className="container">
+          <div className="list">
+            {this.props.invitations.map((n, i) => (
+              <div className="list-item" key={i}>
+                {n.project.name}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    return '';
+  }
+
   render() {
     return (
       <div className="page-side-content-inner">
@@ -48,6 +65,7 @@ export default class Notifications extends React.Component {
           </div>
         </div>
         {this.getNotifications()}
+        {this.getInvitations()}
         <div className="button-box">
           <a className="button default small" href="/notifications"> All Notifications </a>
         </div>
@@ -57,5 +75,6 @@ export default class Notifications extends React.Component {
 }
 
 Notifications.propTypes = {
-  notifications: React.PropTypes.arrayOf(React.PropTypes.object)
+  notifications: React.PropTypes.arrayOf(React.PropTypes.object),
+  invitations: React.PropTypes.arrayOf(React.PropTypes.object)
 };
