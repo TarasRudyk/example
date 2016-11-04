@@ -88,7 +88,7 @@ export default class SingleProject extends React.Component {
             <div className="list">
               {this.props.invitations.map((inv, i) => (
                 <div className="list-item" key={i}>
-                  {inv._id}
+                  Waiting for a response from <a href={`/profile/${inv.user.id}`}>{inv.user.fullname}</a>
                 </div>
               ))}
             </div>
