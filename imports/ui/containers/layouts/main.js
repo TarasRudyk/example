@@ -10,7 +10,8 @@ export default createContainer(() => {
   const user = Meteor.user();
 
   const notificationsHandle = Meteor.subscribe('notifications');
-  const notificationsCount = notificationsHandle.ready() ? Notifications.find().count() : 0;
+  const notificationsCount = notificationsHandle.ready() ?
+    Notifications.find({ read: false }).count() : 0;
 
   return {
     userIsLogin,

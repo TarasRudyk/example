@@ -10,6 +10,7 @@ export default class Notifications extends React.Component {
     super(props);
 
     this.state = {};
+    this.next = this.next.bind(this);
   }
   componentDidMount() {
     const componentName = getLocalState().get('side-content');
@@ -17,6 +18,19 @@ export default class Notifications extends React.Component {
       getLocalState().set('side-content', '');
     }
   }
+  prev() {
+    const page = +getLocalState().get('notification-page') || 0;
+    if (page > 0) {
+      getLocalState().set('notification-page', page - 1);
+    }
+  }
+  next() {
+    const page = +getLocalState().get('notification-page') || 0;
+    if (page < (this.props.notificationsCount / 25) - 1) {
+      getLocalState().set('notification-page', page + 1);
+    }
+  }
+
   render() {
     return (
       <div className="page-main-content page-projects">
@@ -40,11 +54,14 @@ export default class Notifications extends React.Component {
             ))}
           </div>
         </div>
+        <button className="button" onClick={this.prev}> Prev </button>
+        <button className="button" onClick={this.next}> Next </button>
       </div>
     );
   }
 }
 
 Notifications.propTypes = {
-  notifications: React.PropTypes.arrayOf(React.PropTypes.object)
+  notifications: React.PropTypes.arrayOf(React.PropTypes.object),
+  notificationsCount: React.PropTypes.number
 };
