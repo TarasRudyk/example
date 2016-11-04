@@ -65,5 +65,5 @@ export default class CreateTask extends React.Component {
 }
 
 CreateTask.propTypes = {
-
+  projectOwnerId: React.PropTypes.string
 };
