@@ -2,7 +2,7 @@ import React from 'react';
 
 import ProjectItem from '/imports/ui/pages/projects/item';
 import { getLocalState } from '/imports/startup/client/local-state';
-import Loading from 'react-loading';
+import Loading from '/imports/ui/components/side-content/loading.jsx';
 
 export default class Projects extends React.Component {
   constructor(props) {
@@ -52,7 +52,7 @@ export default class Projects extends React.Component {
           <button className="button blue" onClick={this.previous}>Previous</button>
           <button className="button blue" onClick={this.next}>Next</button>
         </div>
-        <Loading type="spin" color="#657587" />
+        <Loading />
       </div>
     );
   }
