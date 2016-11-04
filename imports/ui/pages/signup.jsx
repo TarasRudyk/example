@@ -45,12 +45,9 @@ export default class Signup extends React.Component {
           </div>
           <form onSubmit={this.onSubmit}>
             <input
-              type="email"
+              type="text"
               name="email"
               placeholder="Email"
-              required
-              minLength={6}
-              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
               value={this.state.email}
               onChange={this.handleChange}
             />
@@ -58,7 +55,6 @@ export default class Signup extends React.Component {
               type="text"
               name="username"
               placeholder="Username"
-              required
               value={this.state.username}
               onChange={this.handleChange}
             />
@@ -66,7 +62,6 @@ export default class Signup extends React.Component {
               type="text"
               name="fullname"
               placeholder="Full name"
-              required
               value={this.state.fullname}
               onChange={this.handleChange}
             />
@@ -74,7 +69,6 @@ export default class Signup extends React.Component {
               type={this.state.showPass ? 'text' : 'password'}
               name="password"
               placeholder="Password"
-              required
               value={this.state.password}
               onChange={this.handleChange}
             />

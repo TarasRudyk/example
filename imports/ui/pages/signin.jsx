@@ -36,10 +36,9 @@ export default class Signin extends React.Component {
           </div>
           <form onSubmit={this.onSubmit}>
             <input
-              type="email"
+              type="text"
               name="email"
               placeholder="Email"
-              required
               value={this.state.email}
               onChange={this.handleChange}
             />
@@ -47,7 +46,6 @@ export default class Signin extends React.Component {
               type="password"
               name="password"
               placeholder="Password"
-              required
               value={this.state.password}
               onChange={this.handleChange}
             />

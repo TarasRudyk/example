@@ -14,6 +14,8 @@ export default class UserSearch extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.focusIn = this.focusIn.bind(this);
+    this.focusOut = this.focusOut.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
@@ -34,26 +36,39 @@ export default class UserSearch extends React.Component {
       });
     }
   }
+  focusIn({ target }) {
+    if (target.value && target.value.length > 3) {
+      getLocalState().set('username-search', target.value);
+    }
+  }
+  focusOut() {
+    getLocalState().set('username-search', '');
+  }
   render() {
     return (
-      <div className="user-search">
+      <form className="user-search">
         <input
           type="text"
           name="username"
+          autoComplete="off"
           value={this.state.username}
           onChange={this.handleChange}
           onCopy={this.handleChange}
+          onFocus={this.focusIn}
         />
         <div className="user-search-items" style={{ display: this.state.users.length ? 'block' : 'none' }}>
-          {this.state.users.map((u, i) => (
-            <UserSearchItem key={i} user={u} />
-          ))}
+          <div className="user-search-items-inner">
+            {this.state.users.map((u, i) => (
+              <UserSearchItem key={i} user={u} projectId={this.props.projectId} />
+            ))}
+          </div>
         </div>
-      </div>
+      </form>
     );
   }
 }
 
 UserSearch.propTypes = {
-  users: React.PropTypes.array
+  users: React.PropTypes.array,
+  projectId: React.PropTypes.string
 };

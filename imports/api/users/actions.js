@@ -57,7 +57,6 @@ export const signup = (email, username, fullname, password) => {
     addNotice(TAPi18n.__('auth.passwordIncorrect'));
     return false;
   }
-
   return Accounts.createUser({
     email,
     username,
@@ -92,7 +91,7 @@ export const changeEmail = (email = '') => {
     if (err) {
       addNotice(err.reason);
     } else {
-      addNotice('Email changed!');
+      addNotice(TAPi18n.__('change.EmailChanged'));
     }
   });
 };
@@ -113,7 +112,7 @@ export const changeFullname = (fullname = '') => {
     if (err) {
       addNotice(err.reason);
     } else {
-      addNotice('Fullname changed!');
+      addNotice(TAPi18n.__('change.FullnameChanged'));
     }
   });
 };
@@ -127,11 +126,11 @@ export const changePassword = (oldPass = '', newPass = '') => {
   }
 
   if (!formatValidation.validate({ min: 3, max: 25 }, newPass)) {
-    addNotice('New password incorrect');
+    addNotice(TAPi18n.__('change.NewPasswordIncorrect'));
     return false;
   }
   if (!formatValidation.validate({ min: 3, max: 25 }, oldPass)) {
-    addNotice('Old password incorrect');
+    addNotice(TAPi18n.__('change.OldPasswordIncorrect'));
     return false;
   }
 
@@ -139,7 +138,7 @@ export const changePassword = (oldPass = '', newPass = '') => {
     if (err) {
       addNotice(err.reason);
     } else {
-      addNotice('Password changed!');
+      addNotice(TAPi18n.__('change.PasswordChanged'));
     }
   });
 };

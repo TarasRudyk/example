@@ -8,11 +8,11 @@ export default class NotificationItem extends React.Component {
     this.state = {};
   }
   render() {
-    const { description } = this.props.notification;
-
+    const { description, read } = this.props.notification;
+    const styleClass = `notification-item' ${read ? '' : 'unread'}`;
     return (
       <div className="list-item">
-        <div className="notification-item">
+        <div className={styleClass}>
           {description}
         </div>
       </div>

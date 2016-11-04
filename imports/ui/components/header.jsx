@@ -63,15 +63,17 @@ export default class Header extends React.Component {
               </a>
             </div>
             <div className="header-user-nav">
-              <a href="/notifications" className={this.getNotificationsClass()}>
+              <a
+                href=""
+                className={this.getNotificationsClass()}
+                data-name="notifications"
+                onClick={this.toggleSideContent}
+              >
                 <i className="material-icons">notifications_none</i>
                 <span>{this.getNotificationsCount()}</span>
               </a>
-              <a href="" className="nav-incoming-tasks" data-name="incoming-tasks" onClick={this.toggleSideContent}>
+              <a href="" className="nav-all-tasks" data-name="tasks" onClick={this.toggleSideContent}>
                 <i className="material-icons">inbox</i>
-              </a>
-              <a href="" className="nav-all-tasks" data-name="all-tasks" onClick={this.toggleSideContent}>
-                <i className="material-icons">view_agenda</i>
               </a>
             </div>
             <div className="nav-user-submenu hidden">
