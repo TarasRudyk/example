@@ -10,17 +10,29 @@ Invitations.deny({
 });
 
 Invitations.schema = new SimpleSchema({
-  projectId: {
+  project: {
+    type: Object
+  },
+  'project.id': {
     type: String
   },
-  userId: {
+  'project.name': {
+    type: String
+  },
+  'project.color': {
+    type: String
+  },
+  user: {
+    type: Object
+  },
+  'user.id': {
+    type: String
+  },
+  'user.fullname': {
     type: String
   },
   replied: {
-    type: Boolean,
-    autoValue() {
-      return false;
-    }
+    type: Boolean
   },
   creationDate: {
     type: Date,

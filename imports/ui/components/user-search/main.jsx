@@ -1,21 +1,23 @@
 import React from 'react';
+import clickOutside from 'react-click-outside';
 
 import UserSearchItem from '/imports/ui/components/user-search/item';
 
 import { getLocalState } from '/imports/startup/client/local-state';
 
-export default class UserSearch extends React.Component {
+class UserSearch extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       username: '',
-      users: this.props.users
+      users: this.props.users,
+      isOpened: false
     };
 
+    this.handleClickOutside = this.handleClickOutside.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.focusIn = this.focusIn.bind(this);
-    this.focusOut = this.focusOut.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
@@ -29,20 +31,23 @@ export default class UserSearch extends React.Component {
 
     if (target.value && target.value.length > 3) {
       getLocalState().set('username-search', target.value);
+      this.setState({ isOpened: true });
     } else {
       getLocalState().set('username-search', '');
       this.setState({
-        users: []
+        users: [],
+        isOpened: false
       });
     }
   }
   focusIn({ target }) {
     if (target.value && target.value.length > 3) {
+      this.setState({ isOpened: true });
       getLocalState().set('username-search', target.value);
     }
   }
-  focusOut() {
-    getLocalState().set('username-search', '');
+  handleClickOutside() {
+    this.setState({ isOpened: false });
   }
   render() {
     return (
@@ -56,7 +61,7 @@ export default class UserSearch extends React.Component {
           onCopy={this.handleChange}
           onFocus={this.focusIn}
         />
-        <div className="user-search-items" style={{ display: this.state.users.length ? 'block' : 'none' }}>
+        <div className="user-search-items" style={{ display: this.state.isOpened ? 'block' : 'none' }}>
           <div className="user-search-items-inner">
             {this.state.users.map((u, i) => (
               <UserSearchItem key={i} user={u} projectId={this.props.projectId} />
@@ -72,3 +77,5 @@ UserSearch.propTypes = {
   users: React.PropTypes.array,
   projectId: React.PropTypes.string
 };
+
+export default clickOutside(UserSearch);

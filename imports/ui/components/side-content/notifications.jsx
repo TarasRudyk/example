@@ -3,6 +3,7 @@ import React from 'react';
 import { allReadNotifications } from '/imports/api/notifications/actions';
 
 import NotificationItem from '/imports/ui/pages/notifications/item';
+import InvitationItem from '/imports/ui/components/side-content/items/invitation';
 
 export default class Notifications extends React.Component {
   constructor(props) {
@@ -11,9 +12,20 @@ export default class Notifications extends React.Component {
     this.state = {};
     this.getNotifications = this.getNotifications.bind(this);
   }
-
+  getInvitations() {
+    if (this.props.invitations.length > 0) {
+      return (
+        <div className="list">
+          {this.props.invitations.map((inv, i) => (
+            <InvitationItem invitation={inv} key={i} />
+          ))}
+        </div>
+      );
+    }
+    return '';
+  }
   getNotifications() {
-    if (this.props.notifications.length > 0) {
+    if (this.props.count > 0) {
       return (
         <div className="container">
           <div className="list">
@@ -33,7 +45,6 @@ export default class Notifications extends React.Component {
       </div>
     );
   }
-
   render() {
     return (
       <div className="page-side-content-inner">
@@ -47,6 +58,7 @@ export default class Notifications extends React.Component {
             </div>
           </div>
         </div>
+        {this.getInvitations()}
         {this.getNotifications()}
         <div className="button-box">
           <a className="button default small" href="/notifications"> All Notifications </a>
@@ -57,5 +69,7 @@ export default class Notifications extends React.Component {
 }
 
 Notifications.propTypes = {
-  notifications: React.PropTypes.arrayOf(React.PropTypes.object)
+  notifications: React.PropTypes.arrayOf(React.PropTypes.object),
+  invitations: React.PropTypes.arrayOf(React.PropTypes.object),
+  count: React.PropTypes.number
 };
