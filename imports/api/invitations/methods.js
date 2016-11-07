@@ -60,13 +60,18 @@ export const accept = new ValidatedMethod({
 
     const invitation = Invitations.findOne({ _id: invitationId, 'user.id': this.userId });
 
-    if (!invitation.length) {
+    if (!invitation) {
       throw new Meteor.Error('invitation-not-found');
     }
 
+    const project = Projects.findOne({ _id: invitation.project.id, usersIds: this.userId });
+
+    if (project) {
+      throw new Meteor.Error('the-user-has-already-been-added-to-the-project');
+    }
+
     Invitations.update({
-      'user.id': this.userId,
-      replied: false
+      _id: invitationId
     }, {
       $set: { replied: true }
     });
@@ -74,7 +79,7 @@ export const accept = new ValidatedMethod({
     Projects.update({
       _id: invitation.project.id
     }, {
-      $set: { usersIds: [this.userId] }
+      $push: { usersIds: this.userId }
     });
   }
 });

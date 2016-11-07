@@ -10,8 +10,8 @@ export default class InvitationItem extends React.Component {
     this.accept = this.accept.bind(this);
   }
   accept() {
-    if (this.props.invitation && this.props.invitation.project.id) {
-      acceptInvitation(this.props.invitation.project.id);
+    if (this.props.invitation) {
+      acceptInvitation(this.props.invitation._id);
     }
   }
   render() {
