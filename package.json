@@ -16,6 +16,7 @@
     "meteor-node-stubs": "~0.2.0",
     "react": "^15.3.2",
     "react-addons-pure-render-mixin": "^15.3.2",
+    "react-bootstrap": "^0.30.6",
     "react-confirm": "^0.1.14",
     "react-delete-confirm": "^1.0.1",
     "react-dom": "^15.3.2",

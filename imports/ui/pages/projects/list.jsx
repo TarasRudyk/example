@@ -3,28 +3,27 @@ import React from 'react';
 import ProjectItem from '/imports/ui/pages/projects/item';
 import { getLocalState } from '/imports/startup/client/local-state';
 import Loading from '/imports/ui/components/side-content/loading.jsx';
+import { Pagination } from 'react-bootstrap';
 
 export default class Projects extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    this.previous = this.previous.bind(this);
-    this.next = this.next.bind(this);
+    this.state = { activePage: 1 };
+    this.handleSelect = this.handleSelect.bind(this);
   }
 
-  previous() {
-    const skip = getLocalState().get('skip') || 0;
-    if (skip) {
-      getLocalState().set('skip', skip - 7);
+  handleSelect(eventKey) {
+    this.setState({ activePage: eventKey });
+    if (eventKey > 1) {
+      getLocalState().set('skip', (eventKey * 7) - 7);
+    } else {
+      getLocalState().set('skip', 0);
     }
   }
-  next() {
-    const skip = getLocalState().get('skip') || 0;
-    if (skip < this.props.projectsCount - 7) {
-      getLocalState().set('skip', skip + 7);
-    }
-  }
+
   render() {
+    const perPage = 7;
+    const pages = Math.ceil(this.props.projectsCount / perPage);
     return (
       <div className="page-main-content page-projects">
         <div className="separator">
@@ -39,7 +38,7 @@ export default class Projects extends React.Component {
         </div>
         <div className="list">
           <div className="container">
-            {this.props.loaded ? this.props.projects.map((p, i) => (
+            {this.props.loaded ? this.props.projects.slice(0, 7).map((p, i) => (
               <ProjectItem
                 key={i}
                 project={p}
@@ -47,10 +46,22 @@ export default class Projects extends React.Component {
             )) : <Loading /> }
           </div>
         </div>
-        <div className="separator border-top">
-          <div className="container">
-            <button className="button blue" onClick={this.previous}>Previous</button>
-            <button className="button blue" onClick={this.next}>Next</button>
+        <div className="separator border-top ">
+          <div className="container text-center">
+            <Pagination
+              className="projects-pagination pull-center"
+              bsSize="large"
+              prev
+              next
+              first
+              last
+              boundaryLinks
+              items={pages}
+              maxButtons={10}
+              activePage={this.state.activePage}
+              onSelect={this.handleSelect}
+            />
+
           </div>
         </div>
       </div>
