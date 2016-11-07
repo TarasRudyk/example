@@ -1,6 +1,6 @@
 header {
 	background: #fff;
-	box-shadow: 0 1px 5px $header-shadow-color;
+	box-shadow: 0 0 5px $header-shadow-color;
 	padding: 12px 0;
 	height: 32px;
 	font-size: 14px;
@@ -41,6 +41,7 @@ header {
 	.header-user-info {
 		float: left;
 		margin: 0 4px;
+		position: relative;
 
 		a {
 			display: block;

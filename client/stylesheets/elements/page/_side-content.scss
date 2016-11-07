@@ -6,7 +6,7 @@
     width: 280px;
     height: calc(100vh - 56px);
     overflow: hidden;
-    border-left: 1px solid #eceded;
+    border-left: 1px solid $separator-border-color;
   }
 }
 .page-side-content-inner {

@@ -1,4 +1,5 @@
 import React from 'react';
+import Tasks from '/imports/ui/containers/pages/project/tasks/tasks';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
@@ -6,7 +7,6 @@ import { deleteProject } from '/imports/api/projects/actions.js';
 
 import UserSearch from '/imports/ui/containers/components/user-search/main';
 import Overview from './project-tabs/overview';
-import Tasks from './project-tabs/tasks';
 import People from './project-tabs/people';
 
 export default class SingleProject extends React.Component {
@@ -43,36 +43,53 @@ export default class SingleProject extends React.Component {
             </div>
           </div>
         </div>
-        <div>
-          <Tabs onSelect={this.handleSelect} selectedIndex={0}>
-            <TabList>
-              <Tab>Overview</Tab>
-              <Tab>Tasks</Tab>
-              <Tab>People</Tab>
-            </TabList>
-            <TabPanel>
-              <Overview />
-            </TabPanel>
-            <TabPanel>
-              <Tasks />
-            </TabPanel>
-            <TabPanel>
-              <People />
-            </TabPanel>
-          </Tabs>
-        </div>
-        <div className="container">
-          <div className="project-description">
-            <div className="title">
-              <h2>About</h2>
+        <Tabs onSelect={this.handleSelect} selectedIndex={0}>
+          <TabList>
+            <Tab>Overview</Tab>
+            <Tab>Tasks</Tab>
+            <Tab>People</Tab>
+          </TabList>
+          <TabPanel>
+            <Overview />
+          </TabPanel>
+          <TabPanel>
+            <Tasks />
+          </TabPanel>
+          <TabPanel>
+            <People />
+          </TabPanel>
+        </Tabs>
+        <div className="project-description">
+          <div className="separator">
+            <div className="container">
+              <div className="title">
+                <h2>About</h2>
+              </div>
             </div>
-            {description || 'No description of the project'}
           </div>
-          <div className="project-users">
-            <div className="title">
-              <h2>Users</h2>
+          <div className="container">
+            <div className="description">
+              {description || 'No description of the project'}
             </div>
+          </div>
+        </div>
 
+        <div className="project-people">
+          <div className="separator border-top">
+            <div className="container">
+              <div className="title">
+                <h2>People</h2>
+              </div>
+            </div>
+          </div>
+          <div className="container">
+            <div className="list">
+              {this.props.invitations.map((inv, i) => (
+                <div className="list-item" key={i}>
+                  Waiting for a response from <a href={`/profile/${inv.user.id}`}>{inv.user.fullname}</a>
+                </div>
+              ))}
+            </div>
             <UserSearch projectId={_id} />
           </div>
         </div>
@@ -82,5 +99,6 @@ export default class SingleProject extends React.Component {
 }
 
 SingleProject.propTypes = {
-  project: React.PropTypes.object
+  project: React.PropTypes.object,
+  invitations: React.PropTypes.array
 };
