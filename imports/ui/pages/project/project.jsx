@@ -1,4 +1,5 @@
 import React from 'react';
+import Tasks from '/imports/ui/containers/pages/project/tasks/tasks';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
@@ -6,7 +7,6 @@ import { deleteProject } from '/imports/api/projects/actions.js';
 
 import UserSearch from '/imports/ui/containers/components/user-search/main';
 import Overview from './project-tabs/overview';
-import Tasks from './project-tabs/tasks';
 import People from './project-tabs/people';
 
 export default class SingleProject extends React.Component {
@@ -43,8 +43,7 @@ export default class SingleProject extends React.Component {
             </div>
           </div>
         </div>
-
-        <Tabs onSelect={this.handleSelect} selectedIndex={0} className="hidden">
+        <Tabs onSelect={this.handleSelect} selectedIndex={0}>
           <TabList>
             <Tab>Overview</Tab>
             <Tab>Tasks</Tab>
@@ -60,7 +59,6 @@ export default class SingleProject extends React.Component {
             <People />
           </TabPanel>
         </Tabs>
-
         <div className="project-description">
           <div className="separator">
             <div className="container">
