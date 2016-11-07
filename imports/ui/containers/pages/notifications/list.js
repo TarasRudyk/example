@@ -11,8 +11,10 @@ export default createContainer(() => {
   const notificationsCount = notificationsHandle.ready() ? Notifications.find().count() : 0;
   const notifications = notificationsHandle.ready() ? Notifications.find({},
     { sort: { creationDate: -1 }, limit: 25, skip: page * 25 }).fetch() : [];
+
   return {
     notifications,
-    notificationsCount
+    notificationsCount,
+    loaded: notificationsHandle.ready()
   };
 }, NotificationsList);

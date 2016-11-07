@@ -47,3 +47,34 @@ export const create = new ValidatedMethod({
     });
   }
 });
+
+export const accept = new ValidatedMethod({
+  name: 'invitation.accept',
+  validate: new SimpleSchema({
+    invitationId: { type: String }
+  }).validator(),
+  run({ invitationId }) {
+    if (!this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+
+    const invitation = Invitations.findOne({ _id: invitationId, 'user.id': this.userId });
+
+    if (!invitation.length) {
+      throw new Meteor.Error('invitation-not-found');
+    }
+
+    Invitations.update({
+      'user.id': this.userId,
+      replied: false
+    }, {
+      $set: { replied: true }
+    });
+
+    Projects.update({
+      _id: invitation.project.id
+    }, {
+      $set: { usersIds: [this.userId] }
+    });
+  }
+});
