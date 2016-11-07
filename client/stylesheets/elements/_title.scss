@@ -1,6 +1,6 @@
 .title {
   font-family: 'Open Sans Light';
-  color: #000;
+  color: $link-color;
   display: table;
   width: 100%;
 
@@ -11,7 +11,7 @@
     span {
       display: block;
       margin: 6px 0 0;
-      color: #657587;
+      color: $subtitle-color;
     }
   }
   h1 {
