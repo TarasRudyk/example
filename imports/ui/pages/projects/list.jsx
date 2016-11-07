@@ -2,6 +2,7 @@ import React from 'react';
 
 import ProjectItem from '/imports/ui/pages/projects/item';
 import { getLocalState } from '/imports/startup/client/local-state';
+import Loading from '/imports/ui/components/side-content/loading.jsx';
 
 export default class Projects extends React.Component {
   constructor(props) {
@@ -23,7 +24,6 @@ export default class Projects extends React.Component {
       getLocalState().set('skip', skip + 7);
     }
   }
-
   render() {
     return (
       <div className="page-main-content page-projects">
@@ -39,12 +39,12 @@ export default class Projects extends React.Component {
         </div>
         <div className="list">
           <div className="container">
-            {this.props.projects.map((p, i) => (
+            {this.props.loaded ? this.props.projects.map((p, i) => (
               <ProjectItem
                 key={i}
                 project={p}
               />
-            ))}
+            )) : <Loading /> }
           </div>
         </div>
         <div className="separator border-top">
@@ -60,5 +60,6 @@ export default class Projects extends React.Component {
 
 Projects.propTypes = {
   projects: React.PropTypes.arrayOf(React.PropTypes.object),
-  projectsCount: React.PropTypes.number
+  projectsCount: React.PropTypes.number,
+  loaded: React.PropTypes.bool
 };
