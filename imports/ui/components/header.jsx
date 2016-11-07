@@ -35,14 +35,14 @@ export default class Header extends React.Component {
   getNotificationsClass() {
     return this.props.notificationsCount ? 'nav-messages active' : 'nav-messages';
   }
+  getActiveClass(currentTarget) {
+    if (!currentTarget) return '';
+    return this.props.sideContentName === currentTarget.dataset.name ? 'active' : '';
+  }
   toggleSideContent({ currentTarget }) {
     if (currentTarget && currentTarget.dataset.name) {
       toggleSideContent(currentTarget.dataset.name);
     }
-  }
-  getActiveClass(currentTarget) {
-    if (!currentTarget) return '';
-    return this.props.sideContentName === currentTarget.dataset.name ? 'active' : '';
   }
   render() {
     return (
@@ -67,16 +67,21 @@ export default class Header extends React.Component {
             </div>
             <div className="header-user-nav">
               <a
-                ref="notifBtnElem"
+                ref={(c) => { this.notifBtnElem = c; }}
                 href=""
-                className={`${this.getNotificationsClass()} ${this.getActiveClass(this.refs.notifBtnElem)}`}
+                className={`${this.getNotificationsClass()} ${this.getActiveClass(this.notifBtnElem)}`}
                 data-name="notifications"
                 onClick={this.toggleSideContent}
-                >
+              >
                 <i className="material-icons">notifications_none</i>
                 <span>{this.getNotificationsCount()}</span>
               </a>
-              <a ref="tasksBtnElem" href="" className={`nav-all-tasks ${this.getActiveClass(this.refs.tasksBtnElem)}`} data-name="tasks" onClick={this.toggleSideContent}>
+              <a
+                ref={(c) => { this.tasksBtnElem = c; }}
+                href=""
+                className={`nav-all-tasks ${this.getActiveClass(this.tasksBtnElem)}`}
+                data-name="tasks" onClick={this.toggleSideContent}
+              >
                 <i className="material-icons">inbox</i>
               </a>
             </div>
