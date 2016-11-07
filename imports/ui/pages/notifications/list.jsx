@@ -4,6 +4,7 @@ import { getLocalState } from '/imports/startup/client/local-state';
 import { allReadNotifications } from '/imports/api/notifications/actions';
 
 import NotificationItem from '/imports/ui/pages/notifications/item';
+import Loading from '/imports/ui/components/side-content/loading.jsx';
 
 export default class Notifications extends React.Component {
   constructor(props) {
@@ -46,12 +47,12 @@ export default class Notifications extends React.Component {
         </div>
         <div className="list">
           <div className="container">
-            {this.props.notifications.map((n, i) => (
+            {this.props.loaded ? this.props.notifications.map((n, i) => (
               <NotificationItem
                 key={i}
                 notification={n}
               />
-            ))}
+            )) : <Loading /> }
           </div>
         </div>
         <button className="button" onClick={this.prev}> Prev </button>
@@ -63,5 +64,6 @@ export default class Notifications extends React.Component {
 
 Notifications.propTypes = {
   notifications: React.PropTypes.arrayOf(React.PropTypes.object),
-  notificationsCount: React.PropTypes.number
+  notificationsCount: React.PropTypes.number,
+  loaded: React.PropTypes.bool
 };

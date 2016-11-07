@@ -7,6 +7,6 @@ export default class Loading extends React.Component {
     this.state = { };
   }
   render() {
-    return <div> Loading... </div>;
+    return <img src="/images/ripple.svg" className="loading" alt="loading..." />;
   }
 }
