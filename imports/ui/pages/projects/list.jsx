@@ -1,9 +1,9 @@
 import React from 'react';
 
 import ProjectItem from '/imports/ui/pages/projects/item';
-import { getLocalState } from '/imports/startup/client/local-state';
 import Loading from '/imports/ui/components/side-content/loading.jsx';
 import { Pagination } from 'react-bootstrap';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 
 export default class Projects extends React.Component {
   constructor(props) {
@@ -14,11 +14,7 @@ export default class Projects extends React.Component {
 
   handleSelect(eventKey) {
     this.setState({ activePage: eventKey });
-    if (eventKey > 1) {
-      getLocalState().set('skip', (eventKey * 7) - 7);
-    } else {
-      getLocalState().set('skip', 0);
-    }
+    FlowRouter.setParams({ params: eventKey });
   }
 
   render() {

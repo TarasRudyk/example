@@ -58,10 +58,10 @@ privateRoutes.route('/notifications', {
   }
 });
 
-privateRoutes.route('/projects', {
-  action() {
+privateRoutes.route('/projects/:params', {
+  action(params) {
     mount(MainLayout, {
-      content: <Projects />
+      content: <Projects {...params} />
     });
   }
 });
