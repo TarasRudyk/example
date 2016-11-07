@@ -38,7 +38,7 @@ export default class Projects extends React.Component {
         </div>
         <div className="list">
           <div className="container">
-            {this.props.loaded ? this.props.projects.slice(0, 7).map((p, i) => (
+            {this.props.loaded ? this.props.projects.map((p, i) => (
               <ProjectItem
                 key={i}
                 project={p}
