@@ -1,6 +1,6 @@
 header {
 	background: #fff;
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 1px 5px $header-shadow-color;
 	padding: 12px 0;
 	height: 32px;
 	font-size: 14px;
@@ -73,7 +73,7 @@ header {
 			position: relative;
 			display: inline-block;
 			margin: 4px 0 0 10px;
-			color: #9f9f9f;
+			color: $link-light-color;
 
 			span {
 				position: absolute;
@@ -87,7 +87,7 @@ header {
 				display: none;
 			}
 			&:hover {
-				color: #6b6b6b;
+				color: $link-light-hover-color;
 			}
 			&.active {
 				color: #45b931;
