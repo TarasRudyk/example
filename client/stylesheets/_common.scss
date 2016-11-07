@@ -12,11 +12,7 @@ a {
   }
 }
 a:hover {
-  color: $link-color;
-
-  &:hover {
-    color: $link-blue-hover-color;
-  }
+  color: $link-hover-color;
 }
 .hidden {
   display: none;
