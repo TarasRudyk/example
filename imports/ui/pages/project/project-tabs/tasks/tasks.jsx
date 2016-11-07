@@ -19,5 +19,5 @@ export default class Tasks extends React.Component {
 
 Tasks.propTypes = {
   projectId: React.PropTypes.string
-  // projectOwnerId: React.PropTypes.string,
+  // projectOwnerId: React.PropTypes.string
 };

@@ -1,6 +1,5 @@
 import React from 'react';
-
-// import { createPTask } from '/imports/api/projects/actions';
+import { createTask } from '/imports/api/tasks/actions.js';
 
 export default class CreateTask extends React.Component {
   constructor(props) {
@@ -17,10 +16,10 @@ export default class CreateTask extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
-    // const name = this.state.name.trim();
-    // const description = this.state.description.trim();
+    const name = this.state.name.trim();
+    const description = this.state.description.trim();
 
-    // createProject(name, description);
+    createTask(name, description, this.props.projectId);
   }
   handleChange({ target }) {
     this.setState({
@@ -28,12 +27,11 @@ export default class CreateTask extends React.Component {
     });
   }
   render() {
-    console.log(this);
     return (
       <div className="page-main-content page-create-project">
         <div className="container">
           <div className="title">
-            <h1>Create project</h1>
+            <h1>Create task</h1>
           </div>
           <form onSubmit={this.onSubmit}>
             <input
@@ -65,5 +63,6 @@ export default class CreateTask extends React.Component {
 }
 
 CreateTask.propTypes = {
-  projectOwnerId: React.PropTypes.string
+  projectId: React.PropTypes.string
+  // projectOwnerId: React.PropTypes.string
 };
