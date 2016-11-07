@@ -1,4 +1,5 @@
 import React from 'react';
+import Tasks from '/imports/ui/containers/pages/project/tasks/tasks';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
@@ -6,7 +7,6 @@ import { deleteProject } from '/imports/api/projects/actions.js';
 
 import UserSearch from '/imports/ui/containers/components/user-search/main';
 import Overview from './project-tabs/overview';
-import Tasks from './project-tabs/tasks/tasks';
 import People from './project-tabs/people';
 
 export default class SingleProject extends React.Component {
@@ -29,7 +29,6 @@ export default class SingleProject extends React.Component {
 
   render() {
     const { _id, name, ownerName, description, ownerId } = this.props.project;
-    console.log(this);
     return (
       <div className="page-main-content page-project">
         <div className="separator">
