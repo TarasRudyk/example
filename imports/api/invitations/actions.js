@@ -13,3 +13,13 @@ export const createInvitation = (projectId, userId) => {
     }
   });
 };
+
+export const acceptInvitation = (invitationId) => {
+  check(invitationId, String);
+
+  return Meteor.call('invitation.accept', { invitationId }, (err) => {
+    if (err) {
+      addNotice(err.message);
+    }
+  });
+};
