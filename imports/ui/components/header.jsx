@@ -5,7 +5,6 @@ import { toggleSideContent } from '/imports/api/side-content/actions';
 export default class Header extends React.Component {
   constructor(props) {
     super(props);
-
     this.getAvatar = this.getAvatar.bind(this);
     this.getUsername = this.getUsername.bind(this);
     this.getNotificationsCount = this.getNotificationsCount.bind(this);
@@ -41,6 +40,10 @@ export default class Header extends React.Component {
       toggleSideContent(currentTarget.dataset.name);
     }
   }
+  getActiveClass(currentTarget) {
+    if (!currentTarget) return '';
+    return this.props.sideContentName === currentTarget.dataset.name ? 'active' : '';
+  }
   render() {
     return (
       <header>
@@ -64,15 +67,16 @@ export default class Header extends React.Component {
             </div>
             <div className="header-user-nav">
               <a
+                ref="notifBtnElem"
                 href=""
-                className={this.getNotificationsClass()}
+                className={`${this.getNotificationsClass()} ${this.getActiveClass(this.refs.notifBtnElem)}`}
                 data-name="notifications"
                 onClick={this.toggleSideContent}
-              >
+                >
                 <i className="material-icons">notifications_none</i>
                 <span>{this.getNotificationsCount()}</span>
               </a>
-              <a href="" className="nav-all-tasks" data-name="tasks" onClick={this.toggleSideContent}>
+              <a ref="tasksBtnElem" href="" className={`nav-all-tasks ${this.getActiveClass(this.refs.tasksBtnElem)}`} data-name="tasks" onClick={this.toggleSideContent}>
                 <i className="material-icons">inbox</i>
               </a>
             </div>
@@ -91,5 +95,6 @@ export default class Header extends React.Component {
 Header.propTypes = {
   userIsLogin: React.PropTypes.bool,
   user: React.PropTypes.object,
-  notificationsCount: React.PropTypes.number
+  notificationsCount: React.PropTypes.number,
+  sideContentName: React.PropTypes.string
 };
