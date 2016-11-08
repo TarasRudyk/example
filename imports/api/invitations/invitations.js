@@ -32,7 +32,8 @@ Invitations.schema = new SimpleSchema({
     type: String
   },
   replied: {
-    type: Boolean
+    type: Boolean,
+    optional: true
   },
   creationDate: {
     type: Date,

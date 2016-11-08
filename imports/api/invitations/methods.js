@@ -28,7 +28,7 @@ export const create = new ValidatedMethod({
       throw new Meteor.Error('problem-with-user');
     }
 
-    const invitations = Invitations.find({ 'user.id': userId }).count();
+    const invitations = Invitations.find({ 'user.id': userId, 'project.id': projectId }).count();
 
     if (invitations) {
       throw new Meteor.Error('already-have-invitations-for-this-user');
@@ -43,7 +43,8 @@ export const create = new ValidatedMethod({
       user: {
         id: userId,
         fullname: user.profile.fullname
-      }
+      },
+      replied: false
     });
   }
 });

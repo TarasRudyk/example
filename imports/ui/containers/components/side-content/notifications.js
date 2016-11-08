@@ -24,7 +24,7 @@ export default createContainer(() => {
 
   const invitationsHandle = Meteor.subscribe('invitations');
   const invitations = invitationsHandle.ready()
-    ? Invitations.find({ replied: false }, { sort: { creationDate: -1 } }).fetch()
+    ? Invitations.find({ 'user.id': Meteor.userId(), replied: false }, { sort: { creationDate: -1 } }).fetch()
     : [];
 
   const count = unreadCount + invitations.length;
