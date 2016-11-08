@@ -10,11 +10,14 @@ export default class Projects extends React.Component {
     super(props);
     this.state = { activePage: 1 };
     this.handleSelect = this.handleSelect.bind(this);
+    // console.log(this.props.skip);
+    // console.log(FlowRouter.getQueryParam('activePage'));
   }
 
   handleSelect(eventKey) {
-    this.setState({ activePage: eventKey });
-    FlowRouter.setParams({ params: eventKey });
+    const activePage = { activePage: eventKey };
+    this.setState(activePage);
+    FlowRouter.setQueryParams(activePage);
   }
 
   render() {

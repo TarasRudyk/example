@@ -49,7 +49,7 @@ export default class Header extends React.Component {
             <a href="/" className="header-logo">
               <img src="/images/logo.svg" width="32px" height="32px" alt="Karma" />
             </a>
-            <a href="/projects/1">Projects</a>
+            <a href="/projects">Projects</a>
             <a href="/">People</a>
             <a href="/">Collections</a>
             <a href="/">Leaderboard</a>
