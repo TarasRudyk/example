@@ -6,6 +6,11 @@
 @import "{}/client/stylesheets/common.scss";
 @import "{}/client/stylesheets/container.scss";
 
+@import "{}/client/stylesheets/bootstrap/variables.scss";
+@import "{}/client/stylesheets/bootstrap/mixins/pagination.scss";
+@import "{}/client/stylesheets/bootstrap/mixins/border-radius.scss";
+@import "{}/client/stylesheets/bootstrap/pagination.scss";
+
 @import "{}/client/stylesheets/elements/title.scss";
 @import "{}/client/stylesheets/elements/separator.scss";
 @import "{}/client/stylesheets/elements/button.scss";
