@@ -18,8 +18,7 @@ export default class Projects extends React.Component {
   }
 
   render() {
-    const perPage = 7;
-    const pages = Math.ceil(this.props.projectsCount / perPage);
+    const pages = Math.ceil(this.props.projectsCount / 7);
     return (
       <div className="page-main-content page-projects">
         <div className="separator">
