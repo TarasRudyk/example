@@ -8,7 +8,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 export default class Projects extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { activePage: 1 };
+    this.state = { activePage: this.props.page || 1 };
     this.handleSelect = this.handleSelect.bind(this);
   }
 
@@ -68,5 +68,6 @@ export default class Projects extends React.Component {
 Projects.propTypes = {
   projects: React.PropTypes.arrayOf(React.PropTypes.object),
   projectsCount: React.PropTypes.number,
-  loaded: React.PropTypes.bool
+  loaded: React.PropTypes.bool,
+  page: React.PropTypes.number
 };
