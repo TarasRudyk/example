@@ -60,8 +60,9 @@ privateRoutes.route('/notifications', {
 
 privateRoutes.route('/projects', {
   action() {
+    const activePage = FlowRouter.getQueryParam('activePage');
     mount(MainLayout, {
-      content: <Projects />
+      content: <Projects {...activePage} />
     });
   }
 });
