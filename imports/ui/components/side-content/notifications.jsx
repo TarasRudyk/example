@@ -40,8 +40,10 @@ export default class Notifications extends React.Component {
       );
     }
     return (
-      <div className="container">
-        <p>No notifications yet</p>
+      <div className="no-notifications">
+        <div className="container">
+          No notifications yet
+        </div>
       </div>
     );
   }
@@ -60,8 +62,8 @@ export default class Notifications extends React.Component {
         </div>
         {this.getInvitations()}
         {this.getNotifications()}
-        <div className="button-box">
-          <a className="button default small" href="/notifications"> All Notifications </a>
+        <div className="page-side-content-bottom-panel">
+          <a className="button default small" href="/notifications"> All notifications </a>
         </div>
       </div>
     );
