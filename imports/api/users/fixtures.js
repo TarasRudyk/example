@@ -42,6 +42,4 @@ if (Colors.find().count() === 0) {
       Colors.insert({ gradient: { start: colors[i], stop: colors[j], direction: 'vertical' } });
     }
   }
-  Colors.insert({ gradient: { start: 'hey', stop: 'hey', direction: 'hey' } });
-  Colors.insert({ gradient: { start: 'heyd', stop: 'hdey', direction: 'hefdy' } });
 }
