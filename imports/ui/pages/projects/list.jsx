@@ -57,7 +57,6 @@ export default class Projects extends React.Component {
               activePage={this.state.activePage}
               onSelect={this.handleSelect}
             />
-
           </div>
         </div>
       </div>
