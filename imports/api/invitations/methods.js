@@ -4,6 +4,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 
 import { Projects } from '/imports/api/projects/projects';
 import { Invitations } from './invitations';
+import { create as createNotification } from '../notifications/methods';
 
 export const create = new ValidatedMethod({
   name: 'invitation.create',
@@ -38,7 +39,8 @@ export const create = new ValidatedMethod({
       project: {
         id: projectId,
         name: project.name,
-        color: project.color
+        color: project.color,
+        ownerId: project.ownerId
       },
       user: {
         id: userId,
@@ -81,6 +83,14 @@ export const accept = new ValidatedMethod({
       _id: invitation.project.id
     }, {
       $push: { usersIds: this.userId }
+    });
+
+    // What kind of actions and types??
+    createNotification.call({
+      description: `${invitation.user.fullname} accept your invitation`,
+      type: 'Invitation',
+      action: 'Invitation',
+      recipientId: invitation.project.ownerId
     });
   }
 });
