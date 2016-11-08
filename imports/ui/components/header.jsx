@@ -22,6 +22,10 @@ export default class Header extends React.Component {
   getNotificationsClass() {
     return this.props.notificationsCount ? 'nav-messages active' : 'nav-messages';
   }
+  getActiveClass(currentTarget) {
+    if (!currentTarget) return '';
+    return this.props.sideContentName === currentTarget.dataset.name ? 'active' : '';
+  }
   toggleSideContent({ currentTarget }) {
     if (currentTarget && currentTarget.dataset.name) {
       toggleSideContent(currentTarget.dataset.name);
@@ -45,15 +49,21 @@ export default class Header extends React.Component {
 
             <div className="header-user-nav">
               <a
+                ref={(c) => { this.notifBtnElem = c; }}
                 href=""
-                className={this.getNotificationsClass()}
+                className={`${this.getNotificationsClass()} ${this.getActiveClass(this.notifBtnElem)}`}
                 data-name="notifications"
                 onClick={this.toggleSideContent}
               >
                 <i className="material-icons">notifications_none</i>
                 <span>{this.getNotificationsCount()}</span>
               </a>
-              <a href="" className="nav-all-tasks" data-name="tasks" onClick={this.toggleSideContent}>
+              <a
+                ref={(c) => { this.tasksBtnElem = c; }}
+                href=""
+                className={`nav-all-tasks ${this.getActiveClass(this.tasksBtnElem)}`}
+                data-name="tasks" onClick={this.toggleSideContent}
+              >
                 <i className="material-icons">inbox</i>
               </a>
             </div>
@@ -67,5 +77,6 @@ export default class Header extends React.Component {
 Header.propTypes = {
   userIsLogin: React.PropTypes.bool,
   user: React.PropTypes.object,
-  notificationsCount: React.PropTypes.number
+  notificationsCount: React.PropTypes.number,
+  sideContentName: React.PropTypes.string
 };
