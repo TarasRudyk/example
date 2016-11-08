@@ -1,7 +1,7 @@
 @import "{}/client/stylesheets/mixins.scss";
-@import "{}/client/stylesheets/variables.scss";
 @import "{}/client/stylesheets/fonts.scss";
 @import "{}/client/stylesheets/reset.scss";
+@import "{}/client/stylesheets/variables.scss";
 @import "{}/client/stylesheets/material-icons.scss";
 @import "{}/client/stylesheets/common.scss";
 @import "{}/client/stylesheets/container.scss";
@@ -14,16 +14,18 @@
 @import "{}/client/stylesheets/elements/list.scss";
 
 @import "{}/client/stylesheets/elements/header/main.scss";
+@import "{}/client/stylesheets/elements/header/dropdown.scss";
 
 @import "{}/client/stylesheets/elements/page/page.scss";
 @import "{}/client/stylesheets/elements/page/main-content.scss";
 @import "{}/client/stylesheets/elements/page/side-content.scss";
 
-@import "{}/client/stylesheets/elements/pages/projects/project-item.scss";
-@import "{}/client/stylesheets/elements/pages/projects/project-single.scss";
-@import "{}/client/stylesheets/elements/pages/elements/main.scss";
-@import "{}/client/stylesheets/elements/pages/dashboard/main.scss";
+@import "{}/client/stylesheets/pages/projects/project-item.scss";
+@import "{}/client/stylesheets/pages/projects/project-single.scss";
+@import "{}/client/stylesheets/pages/elements/main.scss";
+@import "{}/client/stylesheets/pages/dashboard/main.scss";
 
 @import "{}/client/stylesheets/components/user-search.scss";
+@import "{}/client/stylesheets/components/invitation-item.scss";
 
 @import "{}/client/stylesheets/elements/pages/notifications/notifications.scss";

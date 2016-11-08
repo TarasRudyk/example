@@ -1,0 +1,17 @@
+.elements-box {
+  display: inline-block;
+  width: 100px;
+  height: 25px;
+  margin: 20px 10px 20px 0;
+  color: #fff;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 16px;
+  padding: 10px 0 0;
+  border: 2px solid #fff;
+  box-shadow: 0 0 5px $header-shadow-color;
+
+  &.dark {
+    color: $link-light-color;
+  }
+}

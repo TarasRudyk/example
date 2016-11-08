@@ -2,29 +2,15 @@ import React from 'react';
 
 import { toggleSideContent } from '/imports/api/side-content/actions';
 
+import UserInfo from './header/user-info';
+
 export default class Header extends React.Component {
   constructor(props) {
     super(props);
 
-    this.getAvatar = this.getAvatar.bind(this);
-    this.getUsername = this.getUsername.bind(this);
     this.getNotificationsCount = this.getNotificationsCount.bind(this);
     this.getNotificationsClass = this.getNotificationsClass.bind(this);
     this.toggleSideContent = this.toggleSideContent.bind(this);
-  }
-  getAvatar() {
-    if (this.props.userIsLogin && this.props.user) {
-      return this.props.user.profile.avatar;
-    }
-
-    return '/images/avatar.png';
-  }
-  getUsername() {
-    if (this.props.userIsLogin && this.props.user) {
-      return this.props.user.username;
-    }
-
-    return '';
   }
   getNotificationsCount() {
     if (this.props.notificationsCount > 9) {
@@ -35,6 +21,10 @@ export default class Header extends React.Component {
   }
   getNotificationsClass() {
     return this.props.notificationsCount ? 'nav-messages active' : 'nav-messages';
+  }
+  getActiveClass(currentTarget) {
+    if (!currentTarget) return '';
+    return this.props.sideContentName === currentTarget.dataset.name ? 'active' : '';
   }
   toggleSideContent({ currentTarget }) {
     if (currentTarget && currentTarget.dataset.name) {
@@ -55,31 +45,27 @@ export default class Header extends React.Component {
             <a href="/">Leaderboard</a>
           </div>
           <nav className="header-user-panel">
-            <div className="header-user-info">
-              <a href="/">
-                <img src={this.getAvatar()} className="header-avatar" width="32px" height="32px" alt="User avatar" />
-                <span className="header-username">{this.getUsername()}</span>
-                <i className="material-icons">expand_more</i>
-              </a>
-            </div>
+            <UserInfo userIsLogin={this.props.userIsLogin} user={this.props.user} />
+
             <div className="header-user-nav">
               <a
+                ref={(c) => { this.notifBtnElem = c; }}
                 href=""
-                className={this.getNotificationsClass()}
+                className={`${this.getNotificationsClass()} ${this.getActiveClass(this.notifBtnElem)}`}
                 data-name="notifications"
                 onClick={this.toggleSideContent}
               >
                 <i className="material-icons">notifications_none</i>
                 <span>{this.getNotificationsCount()}</span>
               </a>
-              <a href="" className="nav-all-tasks" data-name="tasks" onClick={this.toggleSideContent}>
+              <a
+                ref={(c) => { this.tasksBtnElem = c; }}
+                href=""
+                className={`nav-all-tasks ${this.getActiveClass(this.tasksBtnElem)}`}
+                data-name="tasks" onClick={this.toggleSideContent}
+              >
                 <i className="material-icons">inbox</i>
               </a>
-            </div>
-            <div className="nav-user-submenu hidden">
-              <a href="/">Profile</a>
-              <a href="/elements">Elements</a>
-              <a href="/logout">Log out</a>
             </div>
           </nav>
         </div>
@@ -91,5 +77,6 @@ export default class Header extends React.Component {
 Header.propTypes = {
   userIsLogin: React.PropTypes.bool,
   user: React.PropTypes.object,
-  notificationsCount: React.PropTypes.number
+  notificationsCount: React.PropTypes.number,
+  sideContentName: React.PropTypes.string
 };

@@ -9,10 +9,6 @@ a {
 
   &.blue {
     color: $link-blue-color;
-
-    &:hover {
-      color: $link-blue-hover-color;
-    }
   }
 }
 a:hover {
