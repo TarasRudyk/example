@@ -29,7 +29,7 @@ export default class SingleProject extends React.Component {
   }
 
   render() {
-    const { _id, name, ownerName, description } = this.props.project;
+    const { _id, name, ownerName, description, ownerId } = this.props.project;
 
     return (
       <div className="page-main-content page-project">
@@ -55,7 +55,7 @@ export default class SingleProject extends React.Component {
             <Overview />
           </TabPanel>
           <TabPanel>
-            <Tasks />
+            <Tasks projectId={_id} projectOwnerId={ownerId} />
           </TabPanel>
           <TabPanel>
             <People />
