@@ -1,30 +1,25 @@
 import React from 'react';
 
 import ProjectItem from '/imports/ui/pages/projects/item';
-import { getLocalState } from '/imports/startup/client/local-state';
 import Loading from '/imports/ui/components/side-content/loading.jsx';
+import { Pagination } from 'react-bootstrap';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 
 export default class Projects extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    this.previous = this.previous.bind(this);
-    this.next = this.next.bind(this);
+    this.state = { activePage: this.props.page };
+    this.handleSelect = this.handleSelect.bind(this);
   }
 
-  previous() {
-    const skip = getLocalState().get('skip') || 0;
-    if (skip) {
-      getLocalState().set('skip', skip - 7);
-    }
+  handleSelect(eventKey) {
+    const activePage = { activePage: eventKey };
+    this.setState(activePage);
+    FlowRouter.setQueryParams({ page: eventKey });
   }
-  next() {
-    const skip = getLocalState().get('skip') || 0;
-    if (skip < this.props.projectsCount - 7) {
-      getLocalState().set('skip', skip + 7);
-    }
-  }
+
   render() {
+    const pages = Math.ceil(this.props.projectsCount / 7);
     return (
       <div className="page-main-content page-projects">
         <div className="separator">
@@ -47,9 +42,23 @@ export default class Projects extends React.Component {
             )) : <Loading /> }
           </div>
         </div>
-        <div>
-          <button className="button blue" onClick={this.previous}>Previous</button>
-          <button className="button blue" onClick={this.next}>Next</button>
+        <div className="separator border-top ">
+          <div className="container text-center">
+            <Pagination
+              className="projects-pagination pull-center"
+              bsSize="large"
+              prev
+              next
+              first
+              last
+              boundaryLinks
+              items={pages}
+              maxButtons={10}
+              activePage={this.state.activePage}
+              onSelect={this.handleSelect}
+            />
+
+          </div>
         </div>
       </div>
     );
@@ -59,5 +68,6 @@ export default class Projects extends React.Component {
 Projects.propTypes = {
   projects: React.PropTypes.arrayOf(React.PropTypes.object),
   projectsCount: React.PropTypes.number,
-  loaded: React.PropTypes.bool
+  loaded: React.PropTypes.bool,
+  page: React.PropTypes.number
 };

@@ -61,9 +61,9 @@ privateRoutes.route('/notifications', {
 });
 
 privateRoutes.route('/projects', {
-  action() {
+  action(params, get) {
     mount(MainLayout, {
-      content: <Projects />
+      content: <Projects {...get} />
     });
   }
 });
