@@ -8,14 +8,14 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 export default class Projects extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { activePage: this.props.page || 1 };
+    this.state = { activePage: this.props.page };
     this.handleSelect = this.handleSelect.bind(this);
   }
 
   handleSelect(eventKey) {
     const activePage = { activePage: eventKey };
     this.setState(activePage);
-    FlowRouter.setQueryParams({ activePage: activePage });
+    FlowRouter.setQueryParams({ page: eventKey });
   }
 
   render() {
@@ -57,6 +57,7 @@ export default class Projects extends React.Component {
               activePage={this.state.activePage}
               onSelect={this.handleSelect}
             />
+
           </div>
         </div>
       </div>
