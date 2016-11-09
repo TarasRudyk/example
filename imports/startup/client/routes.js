@@ -62,8 +62,6 @@ privateRoutes.route('/notifications', {
 
 privateRoutes.route('/projects', {
   action(params, get) {
-    console.log(get);
-    // const activePage = FlowRouter.getQueryParam('activePage');
     mount(MainLayout, {
       content: <Projects {...get} />
     });

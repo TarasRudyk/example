@@ -4,8 +4,6 @@ import { Projects } from '/imports/api/projects/projects';
 import ProjectsList from '/imports/ui/pages/projects/list';
 
 export default createContainer((data) => {
-  console.log(data.page);
-  // const page = parseInt((activePage.activePage), 10);
   const skip = ((parseInt((data.page), 10) * 7) - 7);
   const projectsHandle = Meteor.subscribe('projects');
   const projects = projectsHandle.ready() ? Projects.find({}, { skip, limit: 7 }).fetch() : [];
