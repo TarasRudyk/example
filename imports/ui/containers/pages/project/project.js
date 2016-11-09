@@ -14,9 +14,11 @@ export default createContainer(({ id }) => {
     { 'project.id': id, replied: false },
     { skip: 0, limit: 25 }
   ).fetch() : [];
+  const isOwner = Meteor.userId() === project.ownerId;
 
   return {
     project,
-    invitations
+    invitations,
+    isOwner
   };
 }, SingleProject);

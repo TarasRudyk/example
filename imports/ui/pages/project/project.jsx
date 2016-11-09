@@ -37,7 +37,7 @@ export default class SingleProject extends React.Component {
           <div className="container">
             <div className="title">
               <h1>{name} <span>Owner: {ownerName}</span></h1>
-              {(Meteor.userId() === this.props.project.ownerId) ?
+              { this.props.isOwner ?
                 <div className="title-right-block">
                   <a href={`/project/edit/${_id}`} className="button green">Edit</a>
                   <button className="button red" value={_id} onClick={this.deleteHandler}>Remove</button>
@@ -84,7 +84,7 @@ export default class SingleProject extends React.Component {
               </div>
             </div>
           </div>
-          {(Meteor.userId() === this.props.project.ownerId) ?
+          { this.props.isOwner ?
             <div className="container">
               <div className="list">
                 {this.props.invitations.map((inv, i) => (
@@ -103,5 +103,6 @@ export default class SingleProject extends React.Component {
 
 SingleProject.propTypes = {
   project: React.PropTypes.object,
-  invitations: React.PropTypes.array
+  invitations: React.PropTypes.array,
+  isOwner: React.PropTypes.bool
 };
