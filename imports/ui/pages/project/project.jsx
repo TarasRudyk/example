@@ -1,5 +1,4 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
 import Tasks from '/imports/ui/containers/pages/project/tasks/tasks';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
