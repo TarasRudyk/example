@@ -42,7 +42,7 @@ export default class Projects extends React.Component {
             )) : <Loading /> }
           </div>
         </div>
-        <div className="separator border-top ">
+        {(pages > 1) ?
           <div className="container text-center">
             <Pagination
               className="projects-pagination pull-center"
@@ -57,9 +57,8 @@ export default class Projects extends React.Component {
               activePage={this.state.activePage}
               onSelect={this.handleSelect}
             />
-
           </div>
-        </div>
+      : null}
       </div>
     );
   }
