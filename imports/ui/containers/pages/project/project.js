@@ -9,7 +9,7 @@ import SingleProject from '/imports/ui/pages/project/project';
 export default createContainer(({ id }) => {
   const projectHandle = Meteor.subscribe('project', id);
   const project = projectHandle.ready() ? Projects.findOne() : {};
-
+console.log(Meteor.userId());
   const invitationsHandle = Meteor.subscribe('invitationsByProject', id);
   const invitations = invitationsHandle.ready() ? Invitations.find(
     { 'project.id': id, replied: false },
@@ -18,6 +18,7 @@ export default createContainer(({ id }) => {
 
   return {
     project,
-    invitations
+    invitations,
+    ownerId: project.ownerId
   };
 }, SingleProject);

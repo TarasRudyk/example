@@ -1,4 +1,5 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 import Tasks from '/imports/ui/containers/pages/project/tasks/tasks';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -36,10 +37,11 @@ export default class SingleProject extends React.Component {
           <div className="container">
             <div className="title">
               <h1>{name} <span>Owner: {ownerName}</span></h1>
-              <div className="title-right-block">
-                <a href={`/project/edit/${_id}`} className="button green">Edit</a>
-                <button className="button red" value={_id} onClick={this.deleteHandler}>Remove</button>
-              </div>
+              {(this.props.ownerId === Meteor.userId()) ?
+                <div className="title-right-block">
+                  <a href={`/project/edit/${_id}`} className="button green">Edit</a>
+                  <button className="button red" value={_id} onClick={this.deleteHandler}>Remove</button>
+                </div> : null}
             </div>
           </div>
         </div>
@@ -100,5 +102,6 @@ export default class SingleProject extends React.Component {
 
 SingleProject.propTypes = {
   project: React.PropTypes.object,
-  invitations: React.PropTypes.array
+  invitations: React.PropTypes.array,
+  ownerId: React.PropTypes.string || undefined
 };
