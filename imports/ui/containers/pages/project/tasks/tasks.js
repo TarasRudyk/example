@@ -7,7 +7,7 @@ import TasksUI from '/imports/ui/pages/project/project-tabs/tasks/tasks';
 export default createContainer(({ projectId }) => {
   const tasksHandle = Meteor.subscribe('tasks.byProject', projectId);
   const tasks = tasksHandle.ready() ? Tasks.find().fetch() : [];
-
+  console.log({ projectId });
   return {
     tasks: tasks
   };

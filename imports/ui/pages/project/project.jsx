@@ -37,7 +37,7 @@ export default class SingleProject extends React.Component {
           <div className="container">
             <div className="title">
               <h1>{name} <span>Owner: {ownerName}</span></h1>
-              {(this.props.ownerId === Meteor.userId()) ?
+              {(Meteor.userId() === this.props.project.ownerId) ?
                 <div className="title-right-block">
                   <a href={`/project/edit/${_id}`} className="button green">Edit</a>
                   <button className="button red" value={_id} onClick={this.deleteHandler}>Remove</button>
@@ -84,16 +84,17 @@ export default class SingleProject extends React.Component {
               </div>
             </div>
           </div>
-          <div className="container">
-            <div className="list">
-              {this.props.invitations.map((inv, i) => (
-                <div className="list-item" key={i}>
-                  Waiting for a response from <a href={`/profile/${inv.user.id}`}>{inv.user.fullname}</a>
-                </div>
-              ))}
-            </div>
-            <UserSearch projectId={_id} />
-          </div>
+          {(Meteor.userId() === this.props.project.ownerId) ?
+            <div className="container">
+              <div className="list">
+                {this.props.invitations.map((inv, i) => (
+                  <div className="list-item" key={i}>
+                    Waiting for a response from <a href={`/profile/${inv.user.id}`}>{inv.user.fullname}</a>
+                  </div>
+                ))}
+              </div>
+              <UserSearch projectId={_id} />
+            </div> : null}
         </div>
       </div>
     );
@@ -102,6 +103,5 @@ export default class SingleProject extends React.Component {
 
 SingleProject.propTypes = {
   project: React.PropTypes.object,
-  invitations: React.PropTypes.array,
-  ownerId: React.PropTypes.string || undefined
+  invitations: React.PropTypes.array
 };

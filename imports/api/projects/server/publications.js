@@ -18,5 +18,5 @@ Meteor.publish('projects.byIds', function (projectsIds) {
 Meteor.publish('project', function (id) {
   check(id, String);
 
-  return Projects.find({ _id: id, ownerId: this.userId });
+  return Projects.find({ _id: id });
 });
