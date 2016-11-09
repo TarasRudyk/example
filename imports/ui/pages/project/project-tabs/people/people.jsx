@@ -1,5 +1,7 @@
 import React from 'react';
-import PeopleList from './list';
+import PeopleList from '/imports/ui/containers/pages/project/people/people-list';
+import UserSearch from '/imports/ui/containers/components/user-search/main';
+
 
 export default class People extends React.Component {
   constructor() {
@@ -9,9 +11,21 @@ export default class People extends React.Component {
   render() {
     return (
       <div>
-        <h1>People</h1>
-        <PeopleList />
+        <div className="list">
+          {this.props.invitations.map((inv, i) => (
+            <div className="list-item" key={i}>
+              Waiting for a response from <a href={`/profile/${inv.user.id}`}>{inv.user.fullname}</a>
+            </div>
+          ))}
+        </div>
+        <UserSearch projectId={this.props.project._id} />
+        <PeopleList project={this.props.project} />
       </div>
     );
   }
 }
+
+People.propTypes = {
+  project: React.PropTypes.object,
+  invitations: React.PropTypes.array
+};

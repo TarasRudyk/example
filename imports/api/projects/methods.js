@@ -4,6 +4,8 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { _ } from 'lodash';
 import randomArray from 'unique-random-array';
 
+import { Invitations } from '../invitations/invitations';
+import { create as createNotification } from '../notifications/methods';
 import { Projects } from './projects';
 
 export const create = new ValidatedMethod({
@@ -74,5 +76,31 @@ export const deactivate = new ValidatedMethod({
     }
 
     return Projects.update({ _id: projectId }, { $set: { active: false } });
+  }
+});
+
+export const deleteUserFromProject = new ValidatedMethod({
+  name: 'project.deleteUser',
+  validate: new SimpleSchema({
+    projectId: { type: String },
+    userId: { type: String }
+  }).validator(),
+  run({ projectId, userId }) {
+    const project = Projects.findOne({ _id: projectId });
+    if (project.ownerId !== this.userId) {
+      throw new Meteor.Error('This is not your project');
+    }
+
+    const invitation = Invitations.findOne({ 'user.id': userId, 'project.id': projectId });
+    Invitations.remove(invitation);
+
+    createNotification.call({
+      description: `${project.ownerName} revoked your access to the ${project.name} project`,
+      type: 'Revoke access',
+      action: 'Revoke access',
+      recipientId: userId
+    });
+
+    return Projects.update({ _id: projectId }, { $pull: { usersIds: userId } });
   }
 });

@@ -11,7 +11,9 @@ export default createContainer(() => {
 
   if (username && username.length > 3) {
     const usersHandle = Meteor.subscribe('usersByUsername', username);
-    users = usersHandle.ready() ? Meteor.users.find({ _id: { $ne: Meteor.userId() } }).fetch() : [];
+    users = usersHandle.ready()
+      ? Meteor.users.find({ _id: { $ne: this.userId }, username: { $regex: username } }).fetch()
+      : [];
   }
 
   return {
