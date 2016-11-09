@@ -1,0 +1,17 @@
+.people-list-item {
+    width: 100%;
+    padding: 10px;
+    a{
+      display: flex;
+      align-items: center;
+      img{
+        border-radius: 50px;
+      }
+      span{
+        margin-left: 10px;
+      }
+      &:hover{
+        cursor: pointer;
+      }
+    }
+}

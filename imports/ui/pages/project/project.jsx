@@ -6,8 +6,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { deleteProject } from '/imports/api/projects/actions.js';
 
 import UserSearch from '/imports/ui/containers/components/user-search/main';
+import People from '/imports/ui/containers/pages/project/people/people';
 import Overview from './project-tabs/overview';
-import People from './project-tabs/people';
 
 export default class SingleProject extends React.Component {
   constructor(props) {
@@ -56,7 +56,7 @@ export default class SingleProject extends React.Component {
             <Tasks />
           </TabPanel>
           <TabPanel>
-            <People />
+            <People project={this.props.project} />
           </TabPanel>
         </Tabs>
         <div className="project-description">
