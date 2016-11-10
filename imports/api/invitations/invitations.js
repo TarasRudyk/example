@@ -22,6 +22,9 @@ Invitations.schema = new SimpleSchema({
   'project.color': {
     type: String
   },
+  'project.ownerId': {
+    type: String
+  },
   user: {
     type: Object
   },

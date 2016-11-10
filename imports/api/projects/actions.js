@@ -51,3 +51,14 @@ export const deleteProject = (projectId) => {
     }
   });
 };
+
+export const deleteUserFromProject = (projectId, userId) => {
+  check(projectId, String);
+  check(userId, String);
+
+  return Meteor.call('project.deleteUser', { projectId, userId }, (err) => {
+    if (err) {
+      addNotice(err.error);
+    }
+  });
+};
