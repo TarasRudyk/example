@@ -15,7 +15,11 @@ export default class Signup extends React.Component {
       emailError: false,
       usernameError: false,
       fullnameError: false,
-      passwordError: false
+      passwordError: false,
+      emailStyle: { border: '' },
+      usernameStyle: { border: '' },
+      fullnameStyle: { border: '' },
+      passwordStyle: { border: '' }
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -32,18 +36,19 @@ export default class Signup extends React.Component {
     const password = this.state.password.trim();
 
     signup(email, username, fullname, password, (err) => {
+      const border = '2px solid #FF0000';
       switch(err) {       // eslint-disable-line
         case 'errorEmail':
-          this.setState({ emailError: true });
+          this.setState({ emailError: true, emailStyle: { border } });
           break;
         case 'errorUsername':
-          this.setState({ usernameError: true });
+          this.setState({ usernameError: true, usernameStyle: { border } });
           break;
         case 'errorFullname':
-          this.setState({ fullnameError: true });
+          this.setState({ fullnameError: true, fullnameStyle: { border } });
           break;
         case 'errorPassword':
-          this.setState({ passwordError: true });
+          this.setState({ passwordError: true, passwordStyle: { border } });
           break;
       }
     });
@@ -51,16 +56,16 @@ export default class Signup extends React.Component {
   resetError(event) {
     switch(event.target.name) {       // eslint-disable-line
       case 'email':
-        this.setState({ emailError: false });
+        this.setState({ emailError: false, emailStyle: { border: '' } });
         break;
       case 'username':
-        this.setState({ usernameError: false });
+        this.setState({ usernameError: false, usernameStyle: { border: '' } });
         break;
       case 'fullname':
-        this.setState({ fullnameError: false });
+        this.setState({ fullnameError: false, fullnameStyle: { border: '' } });
         break;
       case 'password':
-        this.setState({ passwordError: false });
+        this.setState({ passwordError: false, passwordStyle: { border: '' } });
         break;
     }
   }
@@ -87,7 +92,9 @@ export default class Signup extends React.Component {
             <h1>Sign up</h1>
           </div>
           <form onSubmit={this.onSubmit}>
+
             <input
+              style={this.state.emailStyle}
               type="text"
               name="email"
               placeholder="Email"
@@ -97,6 +104,7 @@ export default class Signup extends React.Component {
             />
             {emailError}
             <input
+              style={this.state.usernameStyle}
               type="text"
               name="username"
               placeholder="Username"
@@ -106,6 +114,7 @@ export default class Signup extends React.Component {
             />
             {usernameError}
             <input
+              style={this.state.fullnameStyle}
               type="text"
               name="fullname"
               placeholder="Full name"
@@ -115,6 +124,7 @@ export default class Signup extends React.Component {
             />
             {fullnameError}
             <input
+              style={this.state.passwordStyle}
               type={this.state.showPass ? 'text' : 'password'}
               name="password"
               placeholder="Password"

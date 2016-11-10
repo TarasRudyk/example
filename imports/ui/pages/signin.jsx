@@ -9,7 +9,9 @@ export default class Signin extends React.Component {
       email: '',
       password: '',
       emailError: false,
-      passwordError: false
+      passwordError: false,
+      emailStyle: { border: '' },
+      passwordStyle: { border: '' }
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -21,12 +23,13 @@ export default class Signin extends React.Component {
     const email = this.state.email.trim().toLowerCase();
     const password = this.state.password.trim();
     signin(email, password, (err) => {
+      const border = '2px solid #FF0000';
       switch(err) {   // eslint-disable-line
         case 'errorEmail':
-          this.setState({ emailError: true });
+          this.setState({ emailError: true, emailStyle: { border } });
           break;
         case 'errorPassword':
-          this.setState({ passwordError: true });
+          this.setState({ passwordError: true, passwordStyle: { border } });
           break;
       }
     });
@@ -34,10 +37,10 @@ export default class Signin extends React.Component {
   resetError(event) {
     switch(event.target.name) {   // eslint-disable-line
       case 'email':
-        this.setState({ emailError: false });
+        this.setState({ emailError: false, emailStyle: { border: '' } });
         break;
       case 'password':
-        this.setState({ passwordError: false });
+        this.setState({ passwordError: false, passwordStyle: { border: '' } });
         break;
     }
   }
@@ -58,6 +61,7 @@ export default class Signin extends React.Component {
           </div>
           <form onSubmit={this.onSubmit}>
             <input
+              style={this.state.emailStyle}
               type="text"
               name="email"
               placeholder="Email"
@@ -67,7 +71,7 @@ export default class Signin extends React.Component {
             />
             {emailError}
             <input
-              className={this.state.statusClass}
+              style={this.state.passwordStyle}
               type="password"
               name="password"
               placeholder="Password"
