@@ -14,19 +14,32 @@ export default class Signin extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.resetError = this.resetError.bind(this);
   }
   onSubmit(event) {
     event.preventDefault();
     const email = this.state.email.trim().toLowerCase();
     const password = this.state.password.trim();
     signin(email, password, (err) => {
-      if (err === 'errorEmail') {
-        this.setState({ emailError: true });
-      }
-      if (err === 'errorPassword') {
-        this.setState({ passwordError: true });
+      switch(err) {   // eslint-disable-line
+        case 'errorEmail':
+          this.setState({ emailError: true });
+          break;
+        case 'errorPassword':
+          this.setState({ passwordError: true });
+          break;
       }
     });
+  }
+  resetError(event) {
+    switch(event.target.name) {   // eslint-disable-line
+      case 'email':
+        this.setState({ emailError: false });
+        break;
+      case 'password':
+        this.setState({ passwordError: false });
+        break;
+    }
   }
   handleChange({ target }) {
     this.setState({
@@ -50,6 +63,7 @@ export default class Signin extends React.Component {
               placeholder="Email"
               value={this.state.email}
               onChange={this.handleChange}
+              onFocus={this.resetError}
             />
             {emailError}
             <input
@@ -59,6 +73,7 @@ export default class Signin extends React.Component {
               placeholder="Password"
               value={this.state.password}
               onChange={this.handleChange}
+              onFocus={this.resetError}
             />
             {passwordError}
             <a href="/" className="button">Back</a>

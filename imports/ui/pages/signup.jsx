@@ -21,6 +21,7 @@ export default class Signup extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.togglePassVisibility = this.togglePassVisibility.bind(this);
+    this.resetError = this.resetError.bind(this);
   }
   onSubmit(event) {
     event.preventDefault();
@@ -31,19 +32,37 @@ export default class Signup extends React.Component {
     const password = this.state.password.trim();
 
     signup(email, username, fullname, password, (err) => {
-      if (err === 'errorEmail') {
-        this.setState({ emailError: true });
-      }
-      if (err === 'errorUsername') {
-        this.setState({ usernameError: true });
-      }
-      if (err === 'errorFullname') {
-        this.setState({ fullnameError: true });
-      }
-      if (err === 'errorPassword') {
-        this.setState({ passwordError: true });
+      switch(err) {       // eslint-disable-line
+        case 'errorEmail':
+          this.setState({ emailError: true });
+          break;
+        case 'errorUsername':
+          this.setState({ usernameError: true });
+          break;
+        case 'errorFullname':
+          this.setState({ fullnameError: true });
+          break;
+        case 'errorPassword':
+          this.setState({ passwordError: true });
+          break;
       }
     });
+  }
+  resetError(event) {
+    switch(event.target.name) {       // eslint-disable-line
+      case 'email':
+        this.setState({ emailError: false });
+        break;
+      case 'username':
+        this.setState({ usernameError: false });
+        break;
+      case 'fullname':
+        this.setState({ fullnameError: false });
+        break;
+      case 'password':
+        this.setState({ passwordError: false });
+        break;
+    }
   }
   handleChange({ target }) {
     this.setState({
@@ -74,6 +93,7 @@ export default class Signup extends React.Component {
               placeholder="Email"
               value={this.state.email}
               onChange={this.handleChange}
+              onFocus={this.resetError}
             />
             {emailError}
             <input
@@ -82,6 +102,7 @@ export default class Signup extends React.Component {
               placeholder="Username"
               value={this.state.username}
               onChange={this.handleChange}
+              onFocus={this.resetError}
             />
             {usernameError}
             <input
@@ -90,6 +111,7 @@ export default class Signup extends React.Component {
               placeholder="Full name"
               value={this.state.fullname}
               onChange={this.handleChange}
+              onFocus={this.resetError}
             />
             {fullnameError}
             <input
@@ -98,6 +120,7 @@ export default class Signup extends React.Component {
               placeholder="Password"
               value={this.state.password}
               onChange={this.handleChange}
+              onFocus={this.resetError}
             />
             {passwordError}
 

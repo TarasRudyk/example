@@ -15,13 +15,13 @@ export const signin = (email, password, reason = () => { }) => {
   let valid = true;
 
   if (!formatValidation.validate({ type: 'email' }, email)) {
-    addNotice(TAPi18n.__('auth.emailIncorrect'));
+    // addNotice(TAPi18n.__('auth.emailIncorrect'));
     reason('errorEmail');
     valid = false;
   }
 
   if (!formatValidation.validate({ min: 3, max: 25 }, password)) {
-    addNotice(TAPi18n.__('auth.passwordIncorrect'));
+    // addNotice(TAPi18n.__('auth.passwordIncorrect'));
     reason('errorPassword');
     valid = false;
   }
@@ -48,25 +48,25 @@ export const signup = (email, username, fullname, password, reason = () => { }) 
   let valid = true;
 
   if (!formatValidation.validate({ type: 'email' }, email)) {
-    addNotice(TAPi18n.__('auth.emailIncorrect'));
+    // addNotice(TAPi18n.__('auth.emailIncorrect'));
     reason('errorEmail');
     valid = false;
   }
 
   if (!formatValidation.validate({ min: 3, max: 25 }, username)) {
-    addNotice(TAPi18n.__('auth.usernameIncorrect'));
+    // addNotice(TAPi18n.__('auth.usernameIncorrect'));
     reason('errorUsername');
     valid = false;
   }
 
   if (!formatValidation.validate({ min: 3, max: 25 }, fullname)) {
-    addNotice(TAPi18n.__('auth.fullnameIncorrect'));
+    // addNotice(TAPi18n.__('auth.fullnameIncorrect'));
     reason('errorFullname');
     valid = false;
   }
 
   if (!formatValidation.validate({ min: 3, max: 25 }, password)) {
-    addNotice(TAPi18n.__('auth.passwordIncorrect'));
+    // addNotice(TAPi18n.__('auth.passwordIncorrect'));
     reason('errorPassword');
     valid = false;
   }
