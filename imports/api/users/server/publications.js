@@ -18,3 +18,9 @@ Meteor.publish('userById', function (id) {
 
   return Meteor.users.find({ _id: id });
 });
+
+Meteor.publish('usersByIds', function (usersIds) {
+  check(usersIds, [String]);
+
+  return Meteor.users.find({ _id: { $in: usersIds } });
+});

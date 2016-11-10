@@ -1,13 +1,12 @@
 import React from 'react';
 import Tasks from '/imports/ui/containers/pages/project/tasks/tasks';
+import People from '/imports/ui/pages/project/project-tabs/people/people';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import { deleteProject } from '/imports/api/projects/actions.js';
 
-import UserSearch from '/imports/ui/containers/components/user-search/main';
 import Overview from './project-tabs/overview';
-import People from './project-tabs/people';
 
 export default class SingleProject extends React.Component {
   constructor(props) {
@@ -56,7 +55,7 @@ export default class SingleProject extends React.Component {
             <Tasks />
           </TabPanel>
           <TabPanel>
-            <People />
+            <People project={this.props.project} invitations={this.props.invitations} />
           </TabPanel>
         </Tabs>
         <div className="project-description">
@@ -71,26 +70,6 @@ export default class SingleProject extends React.Component {
             <div className="description">
               {description || 'No description of the project'}
             </div>
-          </div>
-        </div>
-
-        <div className="project-people">
-          <div className="separator border-top">
-            <div className="container">
-              <div className="title">
-                <h2>People</h2>
-              </div>
-            </div>
-          </div>
-          <div className="container">
-            <div className="list">
-              {this.props.invitations.map((inv, i) => (
-                <div className="list-item" key={i}>
-                  Waiting for a response from <a href={`/profile/${inv.user.id}`}>{inv.user.fullname}</a>
-                </div>
-              ))}
-            </div>
-            <UserSearch projectId={_id} />
           </div>
         </div>
       </div>
