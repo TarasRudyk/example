@@ -12,8 +12,6 @@ export const create = new ValidatedMethod({
     projectId: { type: String }
   }).validator(),
   run({ name, description, projectId }) {
-    console.log(name, description, projectId);
-
     if (!this.userId) {
       throw new Meteor.Error('User not authorized');
     }

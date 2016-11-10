@@ -8,12 +8,14 @@ export default class Tasks extends React.Component {
   }
 
   render() {
-    const { projectId } = this.props;
+    const { projectId, isProjectOwner } = this.props;
 
     return (
       <div>
         <h1>Tasks</h1>
-        <a href={`/project/${projectId}/task/create`} className="button green">New task</a>
+        { isProjectOwner ?
+          <a href={`/project/${projectId}/task/create`} className="button green">New task</a>
+        : null }
         <div className="list">
           <div className="container">
             {this.props.tasks.map((t, i) => (
@@ -31,6 +33,6 @@ export default class Tasks extends React.Component {
 
 Tasks.propTypes = {
   projectId: React.PropTypes.string,
-  tasks: React.PropTypes.array
-  // projectOwnerId: React.PropTypes.string
+  tasks: React.PropTypes.array,
+  isProjectOwner: React.PropTypes.bool
 };
