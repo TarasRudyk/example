@@ -11,7 +11,11 @@ export default class Signup extends React.Component {
       username: '',
       fullname: '',
       password: '',
-      showPass: false
+      showPass: false,
+      emailError: false,
+      usernameError: false,
+      fullnameError: false,
+      passwordError: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -26,7 +30,20 @@ export default class Signup extends React.Component {
     const fullname = this.state.fullname.trim();
     const password = this.state.password.trim();
 
-    signup(email, username, fullname, password);
+    signup(email, username, fullname, password, (err) => {
+      if (err === 'errorEmail') {
+        this.setState({ emailError: true });
+      }
+      if (err === 'errorUsername') {
+        this.setState({ usernameError: true });
+      }
+      if (err === 'errorFullname') {
+        this.setState({ fullnameError: true });
+      }
+      if (err === 'errorPassword') {
+        this.setState({ passwordError: true });
+      }
+    });
   }
   handleChange({ target }) {
     this.setState({
@@ -37,6 +54,13 @@ export default class Signup extends React.Component {
     this.setState({ showPass: event.target.checked });
   }
   render() {
+    const emailError = this.state.emailError ? <h1>Email is not correct</h1> : false;
+    const usernameError = this.state.usernameError ?
+      <h1>Username must be at least 3 characters but less then 25</h1> : false;
+    const fullnameError = this.state.fullnameError ?
+      <h1>Full name must be at least 3 characters but less then 25</h1> : false;
+    const passwordError = this.state.passwordError ?
+      <h1>Passwords must be at least 3 characters but less then 25</h1> : false;
     return (
       <div className="page-main-content page-signin">
         <div className="container">
@@ -51,6 +75,7 @@ export default class Signup extends React.Component {
               value={this.state.email}
               onChange={this.handleChange}
             />
+            {emailError}
             <input
               type="text"
               name="username"
@@ -58,6 +83,7 @@ export default class Signup extends React.Component {
               value={this.state.username}
               onChange={this.handleChange}
             />
+            {usernameError}
             <input
               type="text"
               name="fullname"
@@ -65,6 +91,7 @@ export default class Signup extends React.Component {
               value={this.state.fullname}
               onChange={this.handleChange}
             />
+            {fullnameError}
             <input
               type={this.state.showPass ? 'text' : 'password'}
               name="password"
@@ -72,6 +99,7 @@ export default class Signup extends React.Component {
               value={this.state.password}
               onChange={this.handleChange}
             />
+            {passwordError}
 
             <div className="show-password hidden">
               <input

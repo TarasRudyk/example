@@ -12,18 +12,23 @@ export const signin = (email, password, reason = () => { }) => {
   check(email, String);
   check(password, String);
 
+  let valid = true;
+
   if (!formatValidation.validate({ type: 'email' }, email)) {
     addNotice(TAPi18n.__('auth.emailIncorrect'));
     reason('errorEmail');
-    return false;
+    valid = false;
   }
 
   if (!formatValidation.validate({ min: 3, max: 25 }, password)) {
     addNotice(TAPi18n.__('auth.passwordIncorrect'));
     reason('errorPassword');
-    return false;
+    valid = false;
   }
 
+  if (!valid) {
+    return false;
+  }
   return Meteor.loginWithPassword(email, password, (err) => {
     if (err) {
       addNotice(err.reason);
@@ -34,29 +39,39 @@ export const signin = (email, password, reason = () => { }) => {
   });
 };
 
-export const signup = (email, username, fullname, password) => {
+export const signup = (email, username, fullname, password, reason = () => { }) => {
   check(email, String);
   check(username, String);
   check(fullname, String);
   check(password, String);
 
+  let valid = true;
+
   if (!formatValidation.validate({ type: 'email' }, email)) {
     addNotice(TAPi18n.__('auth.emailIncorrect'));
-    return false;
+    reason('errorEmail');
+    valid = false;
   }
 
   if (!formatValidation.validate({ min: 3, max: 25 }, username)) {
     addNotice(TAPi18n.__('auth.usernameIncorrect'));
-    return false;
+    reason('errorUsername');
+    valid = false;
   }
 
   if (!formatValidation.validate({ min: 3, max: 25 }, fullname)) {
     addNotice(TAPi18n.__('auth.fullnameIncorrect'));
-    return false;
+    reason('errorFullname');
+    valid = false;
   }
 
   if (!formatValidation.validate({ min: 3, max: 25 }, password)) {
     addNotice(TAPi18n.__('auth.passwordIncorrect'));
+    reason('errorPassword');
+    valid = false;
+  }
+
+  if (!valid) {
     return false;
   }
   return Accounts.createUser({
