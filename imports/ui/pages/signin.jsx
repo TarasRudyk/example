@@ -5,10 +5,11 @@ import { signin } from '/imports/api/users/actions';
 export default class Signin extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      emailError: false,
+      passwordError: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -16,11 +17,16 @@ export default class Signin extends React.Component {
   }
   onSubmit(event) {
     event.preventDefault();
-
     const email = this.state.email.trim().toLowerCase();
     const password = this.state.password.trim();
-
-    signin(email, password);
+    signin(email, password, (err) => {
+      if (err === 'errorEmail') {
+        this.setState({ emailError: true });
+      }
+      if (err === 'errorPassword') {
+        this.setState({ passwordError: true });
+      }
+    });
   }
   handleChange({ target }) {
     this.setState({
@@ -28,6 +34,9 @@ export default class Signin extends React.Component {
     });
   }
   render() {
+    const emailError = this.state.emailError ? <h1>Email is not correct</h1> : false;
+    const passwordError = this.state.passwordError ?
+      <h1>Passwords must be at least 3 characters but less then 25</h1> : false;
     return (
       <div className="page-main-content page-signin">
         <div className="container">
@@ -42,13 +51,16 @@ export default class Signin extends React.Component {
               value={this.state.email}
               onChange={this.handleChange}
             />
+            {emailError}
             <input
+              className={this.state.statusClass}
               type="password"
               name="password"
               placeholder="Password"
               value={this.state.password}
               onChange={this.handleChange}
             />
+            {passwordError}
             <a href="/" className="button">Back</a>
             <input
               type="submit"

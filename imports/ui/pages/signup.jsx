@@ -45,12 +45,11 @@ export default class Signup extends React.Component {
           </div>
           <form onSubmit={this.onSubmit}>
             <input
-              type="email"
+              type="text"
               name="email"
               placeholder="Email"
               value={this.state.email}
               onChange={this.handleChange}
-              required
             />
             <input
               type="text"
@@ -58,9 +57,6 @@ export default class Signup extends React.Component {
               placeholder="Username"
               value={this.state.username}
               onChange={this.handleChange}
-              required
-              minLength={3}
-              maxLength={25}
             />
             <input
               type="text"
@@ -68,7 +64,6 @@ export default class Signup extends React.Component {
               placeholder="Full name"
               value={this.state.fullname}
               onChange={this.handleChange}
-              required
             />
             <input
               type={this.state.showPass ? 'text' : 'password'}
@@ -76,7 +71,6 @@ export default class Signup extends React.Component {
               placeholder="Password"
               value={this.state.password}
               onChange={this.handleChange}
-              required
             />
 
             <div className="show-password hidden">

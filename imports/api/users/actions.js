@@ -8,17 +8,19 @@ import { addNotice } from '/imports/api/notices/actions';
 import md5 from 'js-md5';
 import formatValidation from 'string-format-validation';
 
-export const signin = (email, password) => {
+export const signin = (email, password, reason = () => { }) => {
   check(email, String);
   check(password, String);
 
   if (!formatValidation.validate({ type: 'email' }, email)) {
     addNotice(TAPi18n.__('auth.emailIncorrect'));
+    reason('errorEmail');
     return false;
   }
 
   if (!formatValidation.validate({ min: 3, max: 25 }, password)) {
     addNotice(TAPi18n.__('auth.passwordIncorrect'));
+    reason('errorPassword');
     return false;
   }
 
