@@ -25,7 +25,7 @@ export default class Notifications extends React.Component {
     return '';
   }
   getNotifications() {
-    if (this.props.count > 0) {
+    if (this.props.count === 0) {
       return (
         <div className="container">
           <div className="list">
@@ -53,9 +53,9 @@ export default class Notifications extends React.Component {
         <div className="separator">
           <div className="container">
             <div className="title">
-              <h2>Notifications</h2>
+              <h2>NotificationsSide</h2>
               <div className="title-right-block">
-                <button className="button green small" onClick={allReadNotifications}>All read</button>
+                <button className="button green small" onClick={allReadNotifications}>All reads</button>
               </div>
             </div>
           </div>
