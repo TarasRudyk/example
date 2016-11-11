@@ -53,9 +53,9 @@ privateRoutes.route('/elements', {
 });
 
 privateRoutes.route('/notifications', {
-  action() {
+  action(params, get) {
     mount(MainLayout, {
-      content: <Notifications />
+      content: <Notifications {...get} />
     });
   }
 });
