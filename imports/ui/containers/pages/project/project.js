@@ -9,15 +9,16 @@ import SingleProject from '/imports/ui/pages/project/project';
 export default createContainer(({ id }) => {
   const projectHandle = Meteor.subscribe('project', id);
   const project = projectHandle.ready() ? Projects.findOne() : {};
-
   const invitationsHandle = Meteor.subscribe('invitationsByProject', id);
   const invitations = invitationsHandle.ready() ? Invitations.find(
     { 'project.id': id, replied: false },
     { skip: 0, limit: 25 }
   ).fetch() : [];
+  const isOwner = Meteor.userId() === project.ownerId;
 
   return {
     project,
-    invitations
+    invitations,
+    isOwner
   };
 }, SingleProject);
