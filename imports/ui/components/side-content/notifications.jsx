@@ -25,7 +25,7 @@ export default class Notifications extends React.Component {
     return '';
   }
   getNotifications() {
-    if (this.props.count > 1) {
+    if (this.props.count > 0) {
       return (
         <div className="container">
           <div className="list">
