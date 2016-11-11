@@ -37,40 +37,33 @@ export const signin = (email, password, callback) => {
   });
 };
 
-export const signup = (email, username, fullname, password, reason = () => { }) => {
+export const signup = (email, username, fullname, password, callback) => {
   check(email, String);
   check(username, String);
   check(fullname, String);
   check(password, String);
 
-  let valid = true;
+  const errors = {
+    email: '',
+    username: '',
+    fullname: '',
+    password: ''
+  };
 
   if (!formatValidation.validate({ type: 'email' }, email)) {
-    // addNotice(TAPi18n.__('auth.emailIncorrect'));
-    reason('errorEmail');
-    valid = false;
+    errors.email = TAPi18n.__('auth.emailIncorrect');
   }
-
   if (!formatValidation.validate({ min: 3, max: 25 }, username)) {
-    // addNotice(TAPi18n.__('auth.usernameIncorrect'));
-    reason('errorUsername');
-    valid = false;
+    errors.username = TAPi18n.__('auth.usernameIncorrect');
   }
-
   if (!formatValidation.validate({ min: 3, max: 25 }, fullname)) {
-    // addNotice(TAPi18n.__('auth.fullnameIncorrect'));
-    reason('errorFullname');
-    valid = false;
+    errors.fullname = TAPi18n.__('auth.fullnameIncorrect');
   }
-
   if (!formatValidation.validate({ min: 3, max: 25 }, password)) {
-    // addNotice(TAPi18n.__('auth.passwordIncorrect'));
-    reason('errorPassword');
-    valid = false;
+    errors.password = TAPi18n.__('auth.passwordIncorrect');
   }
-
-  if (!valid) {
-    return false;
+  if (errors.email || errors.username || errors.fullname || errors.password) {
+    callback(errors);
   }
   return Accounts.createUser({
     email,

@@ -8,10 +8,6 @@ export default class Signin extends React.Component {
     this.state = {
       email: '',
       password: '',
-      emailError: false,
-      passwordError: false,
-      emailStyle: { border: '' },
-      passwordStyle: { border: '' },
       fieldsErrors: {
         email: '',
         password: ''
@@ -20,8 +16,6 @@ export default class Signin extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.resetError = this.resetError.bind(this);
-    this.error = this.error.bind(this);
   }
   onSubmit(event) {
     event.preventDefault();
@@ -36,32 +30,15 @@ export default class Signin extends React.Component {
       }
     });
   }
-  resetError(event) {
-    switch(event.target.name) {   // eslint-disable-line
-      case 'email':
-        this.setState({ emailError: false, emailStyle: { border: '' } });
-        break;
-      case 'password':
-        this.setState({ passwordError: false, passwordStyle: { border: '' } });
-        break;
+  handleChange({ target }) {
+    if (target.name) {
+      this.setState({
+        [target.name]: target.value,
+        fieldsErrors: ''
+      });
     }
   }
-  error() {
-    this.setState({
-      fieldsErrors: {
-        email: 'fdfs',
-        password: 'sdfs'
-      }
-    });
-  }
-  handleChange({ target }) {
-    this.setState({
-      [target.name]: target.value
-    });
-  }
   render() {
-    const passwordError = this.state.passwordError ?
-      <h1>Passwords must be at least 3 characters but less then 25</h1> : false;
     return (
       <div className="page-main-content page-signin">
         <div className="container">
@@ -71,25 +48,22 @@ export default class Signin extends React.Component {
           <form onSubmit={this.onSubmit}>
             <input
               className={this.state.fieldsErrors.email ? 'error' : ''}
-              style={this.state.emailStyle}
               type="text"
               name="email"
               placeholder="Email"
               value={this.state.email}
               onChange={this.handleChange}
-              onFocus={this.resetError}
             />
-            {this.state.fieldsErrors.email}
+            <h1>{this.state.fieldsErrors.email}</h1>
             <input
-              style={this.state.passwordStyle}
+              className={this.state.fieldsErrors.password ? 'error' : ''}
               type="password"
               name="password"
               placeholder="Password"
               value={this.state.password}
               onChange={this.handleChange}
-              onFocus={this.resetError}
             />
-            {passwordError}
+            <h1>{this.state.fieldsErrors.password}</h1>
             <a href="/" className="button">Back</a>
             <input
               type="submit"
