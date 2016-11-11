@@ -11,14 +11,20 @@ export default createContainer(() => {
   const notifications = notificationsHandle.ready() ?
     Notifications.find({}, { sort: { creationDate: -1 }, limit: 15, skip: 0 }).fetch() : [];
 
+  const notificationsCount = notificationsHandle.ready() ? Notifications.find().count() : 0;
+  console.log(notificationsCount);
 
   const invitationsHandle = Meteor.subscribe('invitations');
   const invitations = invitationsHandle.ready()
     ? Invitations.find({ 'user.id': Meteor.userId(), replied: false }, { sort: { creationDate: -1 } }).fetch()
     : [];
+
+  const invitationsCount = invitationsHandle.ready() ? Invitations.find().count() : 0;
+  const count = notificationsCount + invitationsCount;
+
   return {
     notifications,
     invitations,
-    count: 2
+    count
   };
 }, NotificationsList);
