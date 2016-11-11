@@ -12,9 +12,8 @@ import People from './project-tabs/people';
 export default class SingleProject extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
 
-    };
+    Tabs.setUseDefaultStyles(false);
 
     this.deleteHandler = this.deleteHandler.bind(this);
   }
@@ -26,7 +25,6 @@ export default class SingleProject extends React.Component {
       deleteProject(id);
     }
   }
-
   render() {
     const { _id, name, ownerName, description } = this.props.project;
 
