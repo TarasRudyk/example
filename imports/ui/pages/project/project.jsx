@@ -18,10 +18,6 @@ export default class SingleProject extends React.Component {
     this.deleteHandler = this.deleteHandler.bind(this);
   }
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.id !== this.props.id;
-  }
-
   deleteHandler(e) {
     const id = e.target.value;
     const conf = confirm('Are you sure?'); // eslint-disable-line
