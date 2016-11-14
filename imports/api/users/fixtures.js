@@ -1,5 +1,6 @@
+/* global Assets */
+
 import { Meteor } from 'meteor/meteor';
-import { HTTP } from 'meteor/http';
 import md5 from 'js-md5';
 
 import { Accounts } from 'meteor/accounts-base';
@@ -9,22 +10,22 @@ import { Colors } from '/imports/api/colors/colors';
 const result = [];
 
 if (!Meteor.users.find().count()) {
-  HTTP.call('GET', Meteor.absoluteUrl('test-users.json'), {}, (err, response) => {
-    if (response && response.data) {
-      for (let i = 0; i < response.data.length; i += 1) {
-        const user = Accounts.createUser({
-          email: response.data[i].email,
-          username: response.data[i].username,
-          password: 'password',
-          profile: {
-            avatar: `https://www.gravatar.com/avatar/${md5(response.data[i].email)}`,
-            fullname: response.data[i].fullname
-          }
-        });
+  const users = JSON.parse(Assets.getText('test-users.json'));
 
-        result.push(user);
+  users.map((user) => {
+    const data = Accounts.createUser({
+      email: user.email,
+      username: user.username,
+      password: 'password',
+      profile: {
+        avatar: `https://www.gravatar.com/avatar/${md5(user.email)}`,
+        fullname: user.fullname
       }
-    }
+    });
+
+    result.push(data);
+
+    return data;
   });
 }
 
