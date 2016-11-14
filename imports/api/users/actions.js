@@ -19,35 +19,13 @@ export const signin = (email, password) => {
   });
 };
 
-export const signup = (email, username, fullname, password, callback) => {
+export const signup = (email, username, fullname, password) => {
   check(email, String);
   check(username, String);
   check(fullname, String);
   check(password, String);
 
-  const errors = {
-    email: '',
-    username: '',
-    fullname: '',
-    password: ''
-  };
-
-  if (!formatValidation.validate({ type: 'email' }, email)) {
-    errors.email = TAPi18n.__('auth.emailIncorrect');
-  }
-  if (!formatValidation.validate({ min: 3, max: 25 }, username)) {
-    errors.username = TAPi18n.__('auth.usernameIncorrect');
-  }
-  if (!formatValidation.validate({ min: 3, max: 25 }, fullname)) {
-    errors.fullname = TAPi18n.__('auth.fullnameIncorrect');
-  }
-  if (!formatValidation.validate({ min: 3, max: 25 }, password)) {
-    errors.password = TAPi18n.__('auth.passwordIncorrect');
-  }
-  if (errors.email || errors.username || errors.fullname || errors.password) {
-    callback(errors);
-  }
-  return Accounts.createUser({
+  Accounts.createUser({
     email,
     username,
     password,
@@ -58,10 +36,7 @@ export const signup = (email, username, fullname, password, callback) => {
   }, (err) => {
     if (err) {
       addNotice(err.reason);
-      return false;
     }
-
-    return true;
   });
 };
 

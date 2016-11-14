@@ -1,4 +1,6 @@
 import React from 'react';
+import formatValidation from 'string-format-validation';
+import { TAPi18n } from 'meteor/tap:i18n';
 
 import { signup } from '/imports/api/users/actions';
 
@@ -7,15 +9,21 @@ export default class Signup extends React.Component {
     super(props);
 
     this.state = {
-      email: '',
-      username: '',
-      fullname: '',
-      password: '',
-      fieldsErrors: {
-        email: '',
-        username: '',
-        fullname: '',
-        password: ''
+      email: {
+        value: '',
+        error: ''
+      },
+      username: {
+        value: '',
+        error: ''
+      },
+      fullname: {
+        value: '',
+        error: ''
+      },
+      password: {
+        value: '',
+        error: ''
       }
     };
 
@@ -26,24 +34,63 @@ export default class Signup extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
-    const email = this.state.email.trim().toLowerCase();
-    const username = this.state.username.trim();
-    const fullname = this.state.fullname.trim();
-    const password = this.state.password.trim();
+    const email = this.state.email.value.trim().toLowerCase();
+    const username = this.state.username.value.trim();
+    const fullname = this.state.fullname.value.trim();
+    const password = this.state.password.value.trim();
+    let errors = false;
 
-    signup(email, username, fullname, password, (err) => {
-      if (err) {
-        this.setState({
-          fieldsErrors: err
-        });
-      }
-    });
+    if (!formatValidation.validate({ type: 'email' }, email)) {
+      this.setState({
+        email: {
+          value: email,
+          error: TAPi18n.__('auth.emailIncorrect')
+        }
+      });
+
+      errors = true;
+    }
+    if (!formatValidation.validate({ min: 3, max: 25 }, username)) {
+      this.setState({
+        username: {
+          value: username,
+          error: TAPi18n.__('auth.emailIncorrect')
+        }
+      });
+
+      errors = true;
+    }
+    if (!formatValidation.validate({ min: 3, max: 25 }, fullname)) {
+      this.setState({
+        fullname: {
+          value: fullname,
+          error: TAPi18n.__('auth.emailIncorrect')
+        }
+      });
+
+      errors = true;
+    }
+    if (!formatValidation.validate({ min: 3, max: 25 }, password)) {
+      this.setState({
+        password: {
+          value: password,
+          error: TAPi18n.__('auth.emailIncorrect')
+        }
+      });
+
+      errors = true;
+    }
+    if (!errors) {
+      signup(email, username, fullname, password);
+    }
   }
   handleChange({ target }) {
     if (target.name) {
       this.setState({
-        [target.name]: target.value,
-        fieldsErrors: ''
+        [target.name]: {
+          value: target.value,
+          error: ''
+        }
       });
     }
   }
@@ -51,15 +98,6 @@ export default class Signup extends React.Component {
     this.setState({ showPass: event.target.checked });
   }
   render() {
-    const emailError = this.state.fieldsErrors.email ? <h1>Email is not correct</h1> : '';
-    const usernameError = this.state.fieldsErrors.username ?
-      <h1>Username must be at least 3 characters but less then 25 <br />
-      and only letters and numbers  are allowed </h1> : '';
-    const fullnameError = this.state.fieldsErrors.fullname ?
-      <h1>Full name must be at least 3 characters but less then 25 <br />
-      and only letters and numbers  are allowed </h1> : '';
-    const passwordError = this.state.fieldsErrors.password ?
-      <h1>Passwords must be at least 3 characters but less then 25</h1> : '';
     return (
       <div className="page-main-content page-signin">
         <div className="container">
@@ -68,41 +106,41 @@ export default class Signup extends React.Component {
           </div>
           <form onSubmit={this.onSubmit}>
             <input
-              className={this.state.fieldsErrors.email ? 'error' : ''}
+              className={this.state.email.error ? 'error' : ''}
               type="text"
               name="email"
               placeholder="Email"
-              value={this.state.email}
+              value={this.state.email.value}
               onChange={this.handleChange}
             />
-            {emailError}
+            <span className="field-error">{this.state.email.error}</span>
             <input
-              className={this.state.fieldsErrors.username ? 'error' : ''}
+              className={this.state.username.error ? 'error' : ''}
               type="text"
               name="username"
               placeholder="Username"
-              value={this.state.username}
+              value={this.state.username.value}
               onChange={this.handleChange}
             />
-            {usernameError}
+            <span className="field-error">{this.state.username.error}</span>
             <input
-              className={this.state.fieldsErrors.fullname ? 'error' : ''}
+              className={this.state.fullname.error ? 'error' : ''}
               type="text"
               name="fullname"
               placeholder="Full name"
-              value={this.state.fullname}
+              value={this.state.fullname.value}
               onChange={this.handleChange}
             />
-            {fullnameError}
+            <span className="field-error">{this.state.fullname.error}</span>
             <input
-              className={this.state.fieldsErrors.password ? 'error' : ''}
+              className={this.state.password.error ? 'error' : ''}
               type={this.state.showPass ? 'text' : 'password'}
               name="password"
               placeholder="Password"
-              value={this.state.password}
+              value={this.state.password.value}
               onChange={this.handleChange}
             />
-            {passwordError}
+            <span className="field-error">{this.state.password.error}</span>
             <div className="show-password hidden">
               <input
                 id="show-password"
@@ -113,11 +151,7 @@ export default class Signup extends React.Component {
               <label htmlFor="show-password">Show password</label>
             </div>
             <a href="/" className="button">Back</a>
-            <input
-              type="submit"
-              value="Sign up"
-              className="button green"
-            />
+            <input type="submit" value="Sign up" className="button green" />
           </form>
         </div>
       </div>

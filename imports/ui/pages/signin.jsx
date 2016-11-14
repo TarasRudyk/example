@@ -1,9 +1,8 @@
 import React from 'react';
+import formatValidation from 'string-format-validation';
 import { TAPi18n } from 'meteor/tap:i18n';
 
 import { signin } from '/imports/api/users/actions';
-
-import formatValidation from 'string-format-validation';
 
 export default class Signin extends React.Component {
   constructor(props) {
