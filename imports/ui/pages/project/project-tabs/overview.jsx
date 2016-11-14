@@ -7,9 +7,24 @@ export default class Overview extends React.Component {
   }
   render() {
     return (
-      <div>
-        <h1>Overview</h1>
+      <div className="project-description">
+        <div className="separator">
+          <div className="container">
+            <div className="title">
+              <h2>Overview</h2>
+            </div>
+          </div>
+        </div>
+        <div className="container">
+          <div className="description">
+            {this.props.description || 'No description of the project'}
+          </div>
+        </div>
       </div>
     );
   }
 }
+
+Overview.propTypes = {
+  description: React.PropTypes.string
+};

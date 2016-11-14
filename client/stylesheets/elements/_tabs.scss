@@ -1,17 +1,17 @@
 .ReactTabs__TabList {
-  border: 1px solid #eee;
-  background: #fff;
-  margin: 15px 20px 20px;
-  padding: 0 15px;
-  border-radius: 6px;
+  border-bottom: 1px solid $separator-border-color;
+  padding: 0 14px;
 
   .ReactTabs__Tab {
     display: inline-block;
-    margin: 10px 15px 10px 0;
+    padding: 18px 6px;
+    margin: 0 10px 0 0;
     cursor: pointer;
     outline: none;
   }
   .ReactTabs__Tab--selected {
-    color: #227dac;
+    color: $active-tab-color;
+    border-bottom: 2px solid $active-tab-color;
+    margin-bottom: -1px;
   }
 }

@@ -50,7 +50,7 @@ export default class SingleProject extends React.Component {
             <Tab>People</Tab>
           </TabList>
           <TabPanel>
-            <Overview />
+            <Overview description={this.props.description} />
           </TabPanel>
           <TabPanel>
             <Tasks projectId={this.props.id} projectOwnerId={this.props.ownerId} />
@@ -59,20 +59,6 @@ export default class SingleProject extends React.Component {
             <People projectId={this.props.id} />
           </TabPanel>
         </Tabs>
-        <div className="project-description">
-          <div className="separator">
-            <div className="container">
-              <div className="title">
-                <h2>About</h2>
-              </div>
-            </div>
-          </div>
-          <div className="container">
-            <div className="description">
-              {this.props.description || 'No description of the project'}
-            </div>
-          </div>
-        </div>
       </div>
     );
   }
