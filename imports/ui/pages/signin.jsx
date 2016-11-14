@@ -1,16 +1,22 @@
 import React from 'react';
+import { TAPi18n } from 'meteor/tap:i18n';
 
 import { signin } from '/imports/api/users/actions';
+
+import formatValidation from 'string-format-validation';
 
 export default class Signin extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      email: '',
-      password: '',
-      fieldsErrors: {
-        email: '',
-        password: ''
+      email: {
+        value: '',
+        error: ''
+      },
+      password: {
+        value: '',
+        error: ''
       }
     };
 
@@ -19,22 +25,42 @@ export default class Signin extends React.Component {
   }
   onSubmit(event) {
     event.preventDefault();
-    const email = this.state.email.trim().toLowerCase();
-    const password = this.state.password.trim();
 
-    signin(email, password, (err) => {
-      if (err) {
-        this.setState({
-          fieldsErrors: err
-        });
-      }
-    });
+    const email = this.state.email.value.trim().toLowerCase();
+    const password = this.state.password.value.trim();
+    let errors = false;
+
+    if (!formatValidation.validate({ type: 'email' }, email)) {
+      this.setState({
+        email: {
+          value: email,
+          error: TAPi18n.__('auth.emailIncorrect')
+        }
+      });
+
+      errors = true;
+    }
+    if (!formatValidation.validate({ min: 3, max: 25 }, password)) {
+      this.setState({
+        password: {
+          value: password,
+          error: TAPi18n.__('auth.passwordIncorrect')
+        }
+      });
+
+      errors = true;
+    }
+    if (!errors) {
+      signin(email, password);
+    }
   }
   handleChange({ target }) {
     if (target.name) {
       this.setState({
-        [target.name]: target.value,
-        fieldsErrors: ''
+        [target.name]: {
+          value: target.value,
+          error: ''
+        }
       });
     }
   }
@@ -47,29 +73,25 @@ export default class Signin extends React.Component {
           </div>
           <form onSubmit={this.onSubmit}>
             <input
-              className={this.state.fieldsErrors.email ? 'error' : ''}
+              className={this.state.email.error ? 'error' : ''}
               type="text"
               name="email"
               placeholder="Email"
-              value={this.state.email}
+              value={this.state.email.value}
               onChange={this.handleChange}
             />
-            <h1>{this.state.fieldsErrors.email}</h1>
+            <span className="field-error">{this.state.email.error}</span>
             <input
-              className={this.state.fieldsErrors.password ? 'error' : ''}
+              className={this.state.password.error ? 'error' : ''}
               type="password"
               name="password"
               placeholder="Password"
-              value={this.state.password}
+              value={this.state.password.value}
               onChange={this.handleChange}
             />
-            <h1>{this.state.fieldsErrors.password}</h1>
+            <span className="field-error">{this.state.password.error}</span>
             <a href="/" className="button">Back</a>
-            <input
-              type="submit"
-              value="Sign in"
-              className="button green"
-            />
+            <input type="submit" value="Sign in" className="button green" />
           </form>
         </div>
       </div>

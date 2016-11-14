@@ -8,32 +8,14 @@ import { addNotice } from '/imports/api/notices/actions';
 import md5 from 'js-md5';
 import formatValidation from 'string-format-validation';
 
-export const signin = (email, password, callback) => {
+export const signin = (email, password) => {
   check(email, String);
   check(password, String);
 
-  const errors = {
-    email: '',
-    password: ''
-  };
-
-  if (!formatValidation.validate({ type: 'email' }, email)) {
-    errors.email = TAPi18n.__('auth.emailIncorrect');
-  }
-  if (!formatValidation.validate({ min: 3, max: 25 }, password)) {
-    errors.password = TAPi18n.__('auth.passwordIncorrect');
-  }
-  if (errors.email || errors.password) {
-    callback(errors);
-  }
-
-  return Meteor.loginWithPassword(email, password, (err) => {
+  Meteor.loginWithPassword(email, password, (err) => {
     if (err) {
       addNotice(err.reason);
-      return false;
     }
-
-    return true;
   });
 };
 
