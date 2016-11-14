@@ -8,9 +8,7 @@ import InvitationItem from '/imports/ui/components/side-content/items/invitation
 export default class Notifications extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {};
-    this.getNotifications = this.getNotifications.bind(this);
   }
   getInvitations() {
     if (this.props.invitations.length > 0) {
