@@ -13,6 +13,7 @@ export default class UserSearchItem extends React.Component {
   }
   render() {
     const { username, profile } = this.props.user;
+
     return (
       <div className="user-search-item">
         <div className="user-search-item-info">

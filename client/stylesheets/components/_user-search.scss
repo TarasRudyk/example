@@ -4,14 +4,13 @@
 
   .user-search-items {
     position: absolute;
-    top: 46px;
+    top: 49px;
     left: 0;
     width: 270px;
     max-height: 140px;
-    box-shadow: 0 0 0 1px #2babf9;
+    box-shadow: 0 2px 4px $header-shadow-color;
     border: 1px solid #c5cdd7;
     border-radius: 6px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     z-index: 9999;
   }

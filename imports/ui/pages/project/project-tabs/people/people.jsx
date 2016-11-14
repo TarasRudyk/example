@@ -10,16 +10,18 @@ export default class People extends React.Component {
   }
   render() {
     return (
-      <div>
-        <div className="list">
-          {this.props.invitations.map((inv, i) => (
-            <div className="list-item" key={i}>
-              Waiting for a response from <a href={`/profile/${inv.user.id}`}>{inv.user.fullname}</a>
-            </div>
-          ))}
+      <div className="project-overview">
+        <div className="container">
+          <div className="list">
+            {this.props.invitations.map((inv, i) => (
+              <div className="list-item" key={i}>
+                Waiting for a response from <a href={`/profile/${inv.user.id}`}>{inv.user.fullname}</a>
+              </div>
+            ))}
+          </div>
+          <UserSearch projectId={this.props.projectId} />
+          <PeopleList projectId={this.props.projectId} />
         </div>
-        <UserSearch projectId={this.props.projectId} />
-        <PeopleList projectId={this.props.projectId} />
       </div>
     );
   }

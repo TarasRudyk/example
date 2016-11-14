@@ -2,6 +2,7 @@ import React from 'react';
 import clickOutside from 'react-click-outside';
 
 import UserSearchItem from '/imports/ui/components/user-search/item';
+import NothingFound from '/imports/ui/components/user-search/nothing-found';
 
 import { getLocalState } from '/imports/startup/client/local-state';
 
@@ -56,6 +57,7 @@ class UserSearch extends React.Component {
           type="text"
           name="username"
           autoComplete="off"
+          placeholder="Type username"
           value={this.state.username}
           onChange={this.handleChange}
           onCopy={this.handleChange}
@@ -66,6 +68,7 @@ class UserSearch extends React.Component {
             {this.state.users.map((u, i) => (
               <UserSearchItem key={i} user={u} projectId={this.props.projectId} />
             ))}
+            {this.state.users ? <NothingFound /> : ''}
           </div>
         </div>
       </form>
