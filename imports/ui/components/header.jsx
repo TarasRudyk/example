@@ -20,7 +20,7 @@ export default class Header extends React.Component {
     return this.props.notificationsCount;
   }
   getNotificationsClass() {
-    return this.props.notificationsCount ? 'nav-messages active' : 'nav-messages';
+    return this.props.notificationsCount ? 'nav-messages with-counter' : 'nav-messages';
   }
   getActiveClass(currentTarget) {
     if (!currentTarget) return '';

@@ -11,9 +11,8 @@ import Overview from './project-tabs/overview';
 export default class SingleProject extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
 
-    };
+    Tabs.setUseDefaultStyles(false);
 
     this.deleteHandler = this.deleteHandler.bind(this);
   }
@@ -29,7 +28,6 @@ export default class SingleProject extends React.Component {
       deleteProject(id);
     }
   }
-
   render() {
     return (
       <div className="page-main-content page-project">

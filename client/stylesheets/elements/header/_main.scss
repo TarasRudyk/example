@@ -90,6 +90,19 @@ header {
 				color: $link-light-hover-color;
 			}
 			&.active {
+				position: relative;
+
+				&:after {
+			    content: '';
+			    position: absolute;
+			    left: 0;
+					bottom: -16px;
+					width: 24px;
+					height: 2px;
+					background: $link-light-color;
+			  }
+			}
+			&.with-counter {
 				color: #45b931;
 
 				span {
