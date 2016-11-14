@@ -8,9 +8,7 @@ import InvitationItem from '/imports/ui/components/side-content/items/invitation
 export default class Notifications extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {};
-    this.getNotifications = this.getNotifications.bind(this);
   }
   getInvitations() {
     if (this.props.invitations.length > 0) {
@@ -53,9 +51,9 @@ export default class Notifications extends React.Component {
         <div className="separator">
           <div className="container">
             <div className="title">
-              <h2>Notifications</h2>
+              <h2>NotificationsSide</h2>
               <div className="title-right-block">
-                <button className="button green small" onClick={allReadNotifications}>All read</button>
+                <button className="button green small" onClick={allReadNotifications}>All reads</button>
               </div>
             </div>
           </div>

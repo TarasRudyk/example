@@ -7,28 +7,20 @@ import { Invitations } from '/imports/api/invitations/invitations';
 import NotificationsList from '/imports/ui/components/side-content/notifications';
 
 export default createContainer(() => {
-  let notificationsHandle = Meteor.subscribe('notifications-new');
-  let notifications = notificationsHandle.ready()
-    ? Notifications.find({ read: false }, { sort: { creationDate: -1 } }).fetch()
-    : [];
+  const notificationsHandle = Meteor.subscribe('notifications');
+  const notifications = notificationsHandle.ready() ?
+    Notifications.find({}, { sort: { creationDate: -1 }, limit: 15, skip: 0 }).fetch() : [];
 
-  const unreadCount = Notifications.find({ read: false }).count();
-
-  if (unreadCount < 15 && notificationsHandle.ready()) {
-    notificationsHandle = Meteor.subscribe('notifications-read', 15 - unreadCount, 0);
-    notifications = notificationsHandle.ready()
-      ? notifications.concat(Notifications.find({ read: true },
-        { sort: { creationDate: -1 }, limit: 15 - unreadCount }).fetch())
-      : notifications;
-  }
+  const notificationsCount = notificationsHandle.ready() ? Notifications.find().count() : 0;
 
   const invitationsHandle = Meteor.subscribe('invitations');
-  const invitations = invitationsHandle.ready()
-    ? Invitations.find({ 'user.id': Meteor.userId(), replied: false }, { sort: { creationDate: -1 } }).fetch()
-    : [];
+  const invitations = invitationsHandle.ready() ?
+    Invitations.find({}, { sort: { creationDate: -1 }, limit: 15, skip: 0 }).fetch() : [];
 
-  const count = unreadCount + invitations.length;
+  const invitationsCount = invitationsHandle.ready() ? Invitations.find().count() : 0;
 
+  const count = notificationsCount + invitationsCount;
+  // const notifInvit = notifications.concat(invitations).slice(0, 15);
   return {
     notifications,
     invitations,
