@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { getLocalState } from '/imports/startup/client/local-state';
+import { Pagination } from 'react-bootstrap';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import { allReadNotifications } from '/imports/api/notifications/actions';
 
 import NotificationItem from '/imports/ui/pages/notifications/item';
@@ -10,29 +11,18 @@ export default class Notifications extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
-    this.next = this.next.bind(this);
+    this.state = { activePage: this.props.page };
+    this.handleSelect = this.handleSelect.bind(this);
   }
-  componentDidMount() {
-    const componentName = getLocalState().get('side-content');
-    if (componentName === 'notifications') {
-      getLocalState().set('side-content', '');
-    }
-  }
-  prev() {
-    const page = +getLocalState().get('notification-page') || 0;
-    if (page > 0) {
-      getLocalState().set('notification-page', page - 1);
-    }
-  }
-  next() {
-    const page = +getLocalState().get('notification-page') || 0;
-    if (page < (this.props.notificationsCount / 25) - 1) {
-      getLocalState().set('notification-page', page + 1);
-    }
+
+  handleSelect(eventKey) {
+    const activePage = { activePage: eventKey };
+    this.setState(activePage);
+    FlowRouter.setQueryParams({ page: eventKey });
   }
 
   render() {
+    const pages = Math.ceil(this.props.notificationsCount / 25);
     return (
       <div className="page-main-content page-projects">
         <div className="separator">
@@ -55,8 +45,23 @@ export default class Notifications extends React.Component {
             )) : <Loading /> }
           </div>
         </div>
-        <button className="button" onClick={this.prev}> Prev </button>
-        <button className="button" onClick={this.next}> Next </button>
+        {(pages > 1) ?
+          <div className="container text-center">
+            <Pagination
+              className="projects-pagination pull-center"
+              bsSize="large"
+              prev
+              next
+              first
+              last
+              boundaryLinks
+              items={pages}
+              maxButtons={10}
+              activePage={this.state.activePage}
+              onSelect={this.handleSelect}
+            />
+          </div>
+      : null}
       </div>
     );
   }
@@ -65,5 +70,6 @@ export default class Notifications extends React.Component {
 Notifications.propTypes = {
   notifications: React.PropTypes.arrayOf(React.PropTypes.object),
   notificationsCount: React.PropTypes.number,
+  page: React.PropTypes.number,
   loaded: React.PropTypes.bool
 };
