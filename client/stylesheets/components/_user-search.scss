@@ -13,12 +13,14 @@
     border-radius: 6px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    z-index: 9999;
   }
   .user-search-items-inner {
     width: 270px;
     padding: 0 100px 0 0;
     max-height: 140px;
     overflow-y: auto;
+    background: $body-color;
   }
   .user-search-items-inner::-webkit-scrollbar {
     display: none;
