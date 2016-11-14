@@ -18,14 +18,14 @@ export default class People extends React.Component {
             </div>
           ))}
         </div>
-        <UserSearch projectId={this.props.project._id} />
-        <PeopleList project={this.props.project} />
+        <UserSearch projectId={this.props.projectId} />
+        <PeopleList projectId={this.props.projectId} />
       </div>
     );
   }
 }
 
 People.propTypes = {
-  project: React.PropTypes.object,
+  projectId: React.PropTypes.string,
   invitations: React.PropTypes.array
 };

@@ -1,12 +1,11 @@
 import React from 'react';
 import Tasks from '/imports/ui/containers/pages/project/tasks/tasks';
-import People from '/imports/ui/pages/project/project-tabs/people/people';
+import People from '/imports/ui/containers/pages/project/people/people';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import { deleteProject } from '/imports/api/projects/actions.js';
 
-import UserSearch from '/imports/ui/containers/components/user-search/main';
 import Overview from './project-tabs/overview';
 
 export default class SingleProject extends React.Component {
@@ -18,6 +17,10 @@ export default class SingleProject extends React.Component {
     this.deleteHandler = this.deleteHandler.bind(this);
   }
 
+  shouldComponentUpdate(nextProps) {
+    return nextProps.id !== this.props.id;
+  }
+
   deleteHandler(e) {
     const id = e.target.value;
     const conf = confirm('Are you sure?'); // eslint-disable-line
@@ -26,23 +29,21 @@ export default class SingleProject extends React.Component {
     }
   }
   render() {
-    const { _id, name, ownerName, description, ownerId } = this.props.project;
-
     return (
       <div className="page-main-content page-project">
         <div className="separator">
           <div className="container">
             <div className="title">
-              <h1>{name} <span>Owner: {ownerName}</span></h1>
-              { this.props.isOwner ?
+              <h1>{this.props.name} <span>Owner: {this.props.ownerName}</span></h1>
+              {this.props.isOwner ?
                 <div className="title-right-block">
-                  <a href={`/project/edit/${_id}`} className="button green">Edit</a>
-                  <button className="button red" value={_id} onClick={this.deleteHandler}>Remove</button>
+                  <a href={`/project/edit/${this.props.id}`} className="button green">Edit</a>
+                  <button className="button red" value={this.props.id} onClick={this.deleteHandler}>Remove</button>
                 </div> : null}
             </div>
           </div>
         </div>
-        <Tabs onSelect={this.handleSelect} selectedIndex={0}>
+        <Tabs onSelect={this.handleSelect}>
           <TabList>
             <Tab>Overview</Tab>
             <Tab>Tasks</Tab>
@@ -52,10 +53,10 @@ export default class SingleProject extends React.Component {
             <Overview />
           </TabPanel>
           <TabPanel>
-            <Tasks projectId={_id} projectOwnerId={ownerId} />
+            <Tasks projectId={this.props.id} projectOwnerId={this.props.ownerId} />
           </TabPanel>
           <TabPanel>
-            <People project={this.props.project} invitations={this.props.invitations} />
+            <People projectId={this.props.id} />
           </TabPanel>
         </Tabs>
         <div className="project-description">
@@ -68,29 +69,8 @@ export default class SingleProject extends React.Component {
           </div>
           <div className="container">
             <div className="description">
-              {description || 'No description of the project'}
+              {this.props.description || 'No description of the project'}
             </div>
-          </div>
-        </div>
-        <div className="project-people">
-          <div className="separator border-top">
-            <div className="container">
-              <div className="title">
-                <h2>People</h2>
-              </div>
-            </div>
-          </div>
-          <div className="container">
-            <div className="list">
-              {this.props.invitations.map((inv, i) => (
-                <div className="list-item" key={i}>
-                  Waiting for a response from <a href={`/profile/${inv.user.id}`}>{inv.user.fullname}</a>
-                </div>
-              ))}
-            </div>
-            {this.props.isOwner ?
-              <UserSearch projectId={_id} />
-            : null}
           </div>
         </div>
       </div>
@@ -99,7 +79,10 @@ export default class SingleProject extends React.Component {
 }
 
 SingleProject.propTypes = {
-  project: React.PropTypes.object,
-  invitations: React.PropTypes.array,
+  id: React.PropTypes.string,
+  name: React.PropTypes.string,
+  ownerName: React.PropTypes.string,
+  description: React.PropTypes.string,
+  ownerId: React.PropTypes.string,
   isOwner: React.PropTypes.bool
 };

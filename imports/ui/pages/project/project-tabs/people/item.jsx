@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 
+import { deleteUserFromProject } from '/imports/api/projects/actions';
+
+
 export default class PeopleListItem extends Component {
   constructor() {
     super();
@@ -10,7 +13,7 @@ export default class PeopleListItem extends Component {
     this.isThisUserOwner = this.isThisUserOwner.bind(this);
   }
   delete() {
-    this.props.onDelete(this.props.person._id);
+    deleteUserFromProject(this.props.project._id, this.props.person._id);
   }
   isThisUserOwner() {
     return Meteor.userId() === this.props.project.ownerId;
@@ -31,6 +34,5 @@ export default class PeopleListItem extends Component {
 
 PeopleListItem.propTypes = {
   project: React.PropTypes.object,
-  person: React.PropTypes.object,
-  onDelete: React.PropTypes.func
+  person: React.PropTypes.object
 };
