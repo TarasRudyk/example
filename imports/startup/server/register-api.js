@@ -9,6 +9,8 @@ import '/imports/api/notifications/methods';
 import '/imports/api/invitations/server/publications';
 import '/imports/api/invitations/methods';
 
+import '/imports/api/colors/fixtures';
+
 import '/imports/api/projects/server/publications';
 import '/imports/api/projects/methods';
 
