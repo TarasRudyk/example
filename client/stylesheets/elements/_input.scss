@@ -13,7 +13,7 @@ input[type="tel"] {
   padding: 0 15px;
   color: #000;
   border-radius: 6px;
-  margin: 0 0 8px;
+  margin: 8px 0 4px;
 
   &:focus {
     box-shadow: 0 0 0 1px #2babf9;
@@ -44,4 +44,11 @@ input[type="tel"] {
   &.inline {
     display: inline-block;
   }
+}
+
+.field-error {
+  color: #f14142;
+  display: block;
+  font-size: 14px;
+  margin: 0 0 8px;
 }

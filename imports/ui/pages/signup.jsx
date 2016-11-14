@@ -38,6 +38,7 @@ export default class Signup extends React.Component {
     const username = this.state.username.value.trim();
     const fullname = this.state.fullname.value.trim();
     const password = this.state.password.value.trim();
+    const regExp = /^\w+$/;
     let errors = false;
 
     if (!formatValidation.validate({ type: 'email' }, email)) {
@@ -50,11 +51,21 @@ export default class Signup extends React.Component {
 
       errors = true;
     }
+    if (!regExp.test(username)) {
+      this.setState({
+        username: {
+          value: username,
+          error: 'Only letters and numbers'
+        }
+      });
+
+      errors = true;
+    }
     if (!formatValidation.validate({ min: 3, max: 25 }, username)) {
       this.setState({
         username: {
           value: username,
-          error: TAPi18n.__('auth.emailIncorrect')
+          error: TAPi18n.__('auth.usernameIncorrect')
         }
       });
 
@@ -64,7 +75,7 @@ export default class Signup extends React.Component {
       this.setState({
         fullname: {
           value: fullname,
-          error: TAPi18n.__('auth.emailIncorrect')
+          error: TAPi18n.__('auth.fullnameIncorrect')
         }
       });
 
@@ -74,7 +85,7 @@ export default class Signup extends React.Component {
       this.setState({
         password: {
           value: password,
-          error: TAPi18n.__('auth.emailIncorrect')
+          error: TAPi18n.__('auth.passwordIncorrect')
         }
       });
 
