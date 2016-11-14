@@ -11,11 +11,18 @@ export default class Tasks extends React.Component {
     const { projectId, isProjectOwner } = this.props;
 
     return (
-      <div>
-        <h1>Tasks</h1>
-        { isProjectOwner ?
-          <a href={`/project/${projectId}/task/create`} className="button green">New task</a>
-        : null }
+      <div className="project-tasks">
+        <div className="separator">
+          <div className="container">
+            <div className="title">
+              <h3>All tasks</h3>
+              {isProjectOwner ?
+                <div className="title-right-block">
+                  <a href={`/project/${projectId}/task/create`} className="button green small">New task</a>
+                </div> : null}
+            </div>
+          </div>
+        </div>
         <div className="list">
           <div className="container">
             {this.props.tasks.map((t, i) => (

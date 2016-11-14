@@ -1,8 +1,10 @@
 header {
+	position: relative;
 	background: #fff;
 	box-shadow: 0 0 5px $header-shadow-color;
 	padding: 12px 0;
 	font-size: 14px;
+	z-index: 200;
 
 	&:after {
 		content: "";
