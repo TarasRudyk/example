@@ -1,4 +1,5 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 
 import { createInvitation } from '/imports/api/invitations/actions';
 
@@ -21,11 +22,12 @@ export default class UserSearchItem extends React.Component {
           <div className="fullname">{profile.fullname}</div>
           <div className="username">{username}</div>
         </div>
+        { Meteor.userId() === this.props.user._id ? null :
         <div className="user-search-item-action">
           <a href="" className="add-user" onClick={this.inviteUser}>
             <i className="material-icons">add_circle_outline</i>
           </a>
-        </div>
+        </div> }
       </div>
     );
   }
