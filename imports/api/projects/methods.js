@@ -78,7 +78,7 @@ export const deactivate = new ValidatedMethod({
     if (project.ownerId !== this.userId) {
       throw new Meteor.Error('This is not your project');
     }
-
+    Meteor.users.update({ _id: this.userId }, { $pull: { projects: { projectId: projectId } } });
     return Projects.update({ _id: projectId }, { $set: { active: false } });
   }
 });
