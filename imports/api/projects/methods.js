@@ -1,12 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
-import { _ } from 'lodash';
-import randomArray from 'unique-random-array';
 
 import { Invitations } from '../invitations/invitations';
 import { create as createNotification } from '../notifications/methods';
 import { Projects } from './projects';
+import { Colors } from '../colors/colors';
 
 export const create = new ValidatedMethod({
   name: 'project.create',
@@ -14,31 +13,36 @@ export const create = new ValidatedMethod({
     name: { type: String },
     description: { type: String, optional: true }
   }).validator(),
-  run({ name, description }) {
+  run({ name, description }) {    // eslint-disable-line
     if (!this.userId) {
       throw new Meteor.Error('User not authorized');
     }
-
     if (Projects.find({ name, ownerId: this.userId }).count()) {
       throw new Meteor.Error('Project with the same name exists');
     }
+    const colors = Colors.find().fetch();
+    const randomElem = Math.floor(Math.random() * colors.length);
+    const usersProjects = Meteor.users.findOne({ _id: this.userId }).projects;
+    const usedColors = usersProjects.map((projects) => projects.colorId);  // eslint-disable-line
+    const selectedColor = usedColors.filter((colorId) => colorId === colors[randomElem]._id); // eslint-disable-line
 
-    const colors = Meteor.user().colors;
-    const unusedColors = _.filter(colors, { used: false });
-    const randomColors = randomArray(unusedColors);
-    const selectedColor = randomColors();
-    const colorIndex = _.findIndex(colors, { used: false, color: selectedColor.color });
-    const resultColor = colors[colorIndex].color;
-
-    return Projects.insert({
-      name,
-      description,
-      ownerId: this.userId,
-      ownerName: Meteor.user().profile.fullname,
-      active: true,
-      creationDate: new Date(),
-      color: resultColor
-    });
+    if (!selectedColor.length) {
+      const projectId = Projects.insert({
+        name,
+        description,
+        ownerId: this.userId,
+        ownerName: Meteor.user().profile.fullname,
+        active: true,
+        creationDate: new Date(),
+        color: colors[randomElem]
+      });
+      const usersProject = {
+        projectId,
+        colorId: colors[randomElem]._id
+      };
+      Meteor.users.update({ _id: this.userId }, { $push: { projects: usersProject } });
+      return projectId;
+    }
   }
 });
 

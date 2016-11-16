@@ -14,7 +14,7 @@ export default class ProjectItem extends React.Component {
       <div className="list-item">
         <div className="project-item">
           <div className="project-item-color">
-            <div className="ring" style={{ borderColor: color }}>{color}</div>
+            <div className="ring" style={{ background: `repeating-linear-gradient(${color.gradient.direction}, ${color.gradient.start}, ${color.gradient.stop}` }} />
           </div>
           <div className="project-item-information">
             <div className="project-item-title"><a href={`/project/${_id}`}>{name}</a></div>
