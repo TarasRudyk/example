@@ -1,4 +1,8 @@
 import React from 'react';
+import Datetime from 'react-datetime';
+
+import AssignUser from '/imports/ui/components/assign-user/main';
+
 import { createTask } from '/imports/api/tasks/actions.js';
 
 export default class CreateTask extends React.Component {
@@ -7,10 +11,14 @@ export default class CreateTask extends React.Component {
 
     this.state = {
       name: '',
-      description: ''
+      description: '',
+      assignedAt: '',
+      startAt: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleOnAssigned = this.handleOnAssigned.bind(this);
+    this.isValidDate = this.isValidDate.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
   onSubmit(event) {
@@ -19,12 +27,22 @@ export default class CreateTask extends React.Component {
     const name = this.state.name.trim();
     const description = this.state.description.trim();
 
-    createTask(name, description, this.props.projectId);
+    createTask(name, description, this.props.project._id);
   }
   handleChange({ target }) {
     this.setState({
       [target.name]: target.value
     });
+  }
+  handleOnAssigned(user) {
+    const id = user ? user._id : '';
+    this.setState({
+      assignedAt: id
+    });
+  }
+  isValidDate(current) {
+    const yesterday = Datetime.moment().subtract(1, 'day');
+    return current.isAfter(yesterday);
   }
   render() {
     return (
@@ -50,6 +68,8 @@ export default class CreateTask extends React.Component {
               onChange={this.handleChange}
               onCopy={this.handleChange}
             />
+            <Datetime isValidDate={this.isValidDate} />
+            <AssignUser project={this.props.project} onAssigned={this.handleOnAssigned} />
             <input
               type="submit"
               value="Create"
@@ -63,6 +83,6 @@ export default class CreateTask extends React.Component {
 }
 
 CreateTask.propTypes = {
-  projectId: React.PropTypes.string
+  project: React.PropTypes.object
   // projectOwnerId: React.PropTypes.string
 };
