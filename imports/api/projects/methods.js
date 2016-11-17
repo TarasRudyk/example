@@ -20,45 +20,26 @@ export const create = new ValidatedMethod({
     if (Projects.find({ name, ownerId: this.userId }).count()) {
       throw new Meteor.Error('Project with the same name exists');
     }
-    const colors = Colors.find().fetch();
+    const user = Meteor.users.findOne({ _id: this.userId });
+    const usersProjects = user.project || [];
+    const usedColors = usersProjects.map(projects => projects.colorId);
+    const colors = Colors.find({ _id: { $nin: usedColors } }).fetch();
     const randomElem = Math.floor(Math.random() * colors.length);
-    const usersProjects = Meteor.users.findOne({ _id: this.userId }).projects;
-    if (!usersProjects) {
-      const projectId = Projects.insert({
-        name,
-        description,
-        ownerId: this.userId,
-        ownerName: Meteor.user().profile.fullname,
-        active: true,
-        creationDate: new Date(),
-        color: colors[randomElem]
-      });
-      const usersProject = {
-        projectId,
-        colorId: colors[randomElem]._id
-      };
-      Meteor.users.update({ _id: this.userId }, { $push: { projects: usersProject } });
-      return projectId;
-    }
-    const usedColors = usersProjects.map((projects) => projects.colorId);  // eslint-disable-line
-    const selectedColor = usedColors.filter((colorId) => colorId === colors[randomElem]._id); // eslint-disable-line
-    if (!selectedColor.length) {
-      const projectId = Projects.insert({
-        name,
-        description,
-        ownerId: this.userId,
-        ownerName: Meteor.user().profile.fullname,
-        active: true,
-        creationDate: new Date(),
-        color: colors[randomElem]
-      });
-      const usersProject = {
-        projectId,
-        colorId: colors[randomElem]._id
-      };
-      Meteor.users.update({ _id: this.userId }, { $push: { projects: usersProject } });
-      return projectId;
-    }
+    const projectId = Projects.insert({
+      name,
+      description,
+      ownerId: this.userId,
+      ownerName: Meteor.user().profile.fullname,
+      active: true,
+      creationDate: new Date(),
+      color: colors[randomElem]
+    });
+    const usersProject = {
+      projectId,
+      colorId: colors[randomElem]._id
+    };
+    Meteor.users.update({ _id: this.userId }, { $push: { projects: usersProject } });
+    return projectId;
   }
 });
 
