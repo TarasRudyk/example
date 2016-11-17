@@ -1,4 +1,6 @@
 import React from 'react';
+import formatValidation from 'string-format-validation';
+import { TAPi18n } from 'meteor/tap:i18n';
 
 import { editProject } from '/imports/api/projects/actions.js';
 
@@ -7,25 +9,65 @@ export default class EditProject extends React.Component {
     super(props);
 
     this.state = {
-      name: '',
-      description: ''
+      name: {
+        value: this.props.project.name || '',
+        error: ''
+      },
+      description: {
+        value: this.props.project.description || '',
+        error: ''
+      }
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
+  componentWillReceiveProps(nextProps) {
+    const { project } = nextProps;
+
+    this.state = {
+      name: {
+        value: project.name || '',
+        error: ''
+      },
+      description: {
+        value: project.description || '',
+        error: ''
+      }
+    };
+  }
   onSubmit(event) {
     event.preventDefault();
 
-    const name = this.state.name.trim() || this.props.project.name;
-    const description = this.state.description.trim() || this.props.project.description;
+    const name = this.state.name.value.trim();
+    const description = this.state.description.value.trim();
 
-    editProject(name, description, this.props.project._id);
+    let errors = false;
+
+    if (!formatValidation.validate({ min: 3, max: 25 }, name)) {
+      this.setState({
+        name: {
+          value: name,
+          error: TAPi18n.__('create.ProjectNameRequired')
+        }
+      });
+
+      errors = true;
+    }
+
+    if (!errors) {
+      editProject(name, description, this.props.project._id);
+    }
   }
   handleChange({ target }) {
-    this.setState({
-      [target.name]: target.value
-    });
+    if (target.name) {
+      this.setState({
+        [target.name]: {
+          value: target.value,
+          error: ''
+        }
+      });
+    }
   }
   render() {
     return (
@@ -38,14 +80,18 @@ export default class EditProject extends React.Component {
             <input
               type="text"
               name="name"
-              placeholder={this.props.project.name}
+              value={this.state.name.value}
+              placeholder="Name"
               autoFocus
               onChange={this.handleChange}
             />
+            <span className="field-error">{this.state.name.error}</span>
             <textarea
               name="description"
-              placeholder={this.props.project.description}
+              value={this.state.description.value}
+              placeholder="Description"
               onChange={this.handleChange}
+              onCopy={this.handleChange}
             />
             <input
               type="submit"
