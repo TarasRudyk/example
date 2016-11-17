@@ -1,9 +1,9 @@
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import React from 'react';
-import Pagination from 'rc-pagination';
+import Pagination from 'react-js-pagination';
 
 import ProjectItem from '/imports/ui/pages/projects/item';
 import Loading from '/imports/ui/components/side-content/loading.jsx';
-import { FlowRouter } from 'meteor/kadira:flow-router';
 
 export default class Projects extends React.Component {
   constructor(props) {
@@ -39,12 +39,11 @@ export default class Projects extends React.Component {
             )) : <Loading /> }
           </div>
         </div>
-        <div className="container text-center">
+        <div className="container">
           <Pagination
-            current={this.props.currentPage}
-            total={this.props.projectsCount}
-            pageSize={7}
-            locale={'en_US'}
+            activePage={this.props.currentPage || 1}
+            totalItemsCount={this.props.projectsCount}
+            itemsCountPerPage={7}
             onChange={this.onChange}
           />
         </div>

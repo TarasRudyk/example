@@ -1,7 +1,7 @@
-import React from 'react';
-
-import { Pagination } from 'react-bootstrap';
 import { FlowRouter } from 'meteor/kadira:flow-router';
+import React from 'react';
+import Pagination from 'react-js-pagination';
+
 import { allReadNotifications } from '/imports/api/notifications/actions';
 
 import NotificationItem from '/imports/ui/pages/notifications/item';
@@ -11,18 +11,14 @@ export default class Notifications extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { activePage: this.props.page };
-    this.handleSelect = this.handleSelect.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
-  handleSelect(eventKey) {
-    const activePage = { activePage: eventKey };
-    this.setState(activePage);
-    FlowRouter.setQueryParams({ page: eventKey });
+  onChange(page) {
+    FlowRouter.setQueryParams({ page });
   }
 
   render() {
-    const pages = Math.ceil(this.props.notificationsCount / 25);
     return (
       <div className="page-main-content page-projects">
         <div className="separator">
@@ -45,31 +41,22 @@ export default class Notifications extends React.Component {
             )) : <Loading /> }
           </div>
         </div>
-        {(pages > 1) ?
-          <div className="container text-center">
-            <Pagination
-              className="projects-pagination pull-center"
-              bsSize="large"
-              prev
-              next
-              first
-              last
-              boundaryLinks
-              items={pages}
-              maxButtons={10}
-              activePage={this.state.activePage}
-              onSelect={this.handleSelect}
-            />
-          </div>
-      : null}
+        <div className="container">
+          <Pagination
+            activePage={this.props.activePage || 1}
+            totalItemsCount={this.props.notificationsCount}
+            itemsCountPerPage={25}
+            onChange={this.onChange}
+          />
+        </div>
       </div>
     );
   }
 }
 
 Notifications.propTypes = {
+  loaded: React.PropTypes.bool,
   notifications: React.PropTypes.arrayOf(React.PropTypes.object),
   notificationsCount: React.PropTypes.number,
-  page: React.PropTypes.number,
-  loaded: React.PropTypes.bool
+  activePage: React.PropTypes.number
 };
