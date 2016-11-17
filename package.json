@@ -14,18 +14,17 @@
     "immutable": "^3.8.1",
     "lodash": "^4.16.4",
     "meteor-node-stubs": "~0.2.0",
+    "rc-pagination": "^1.6.1",
     "react": "^15.3.2",
+    "react-addons-create-fragment": "^15.4.0",
     "react-addons-pure-render-mixin": "^15.3.2",
-    "react-bootstrap": "^0.30.6",
     "react-click-outside": "^2.2.0",
     "react-confirm": "^0.1.14",
-    "react-delete-confirm": "^1.0.1",
     "react-dom": "^15.3.2",
     "react-mounter": "^1.2.0",
     "react-notification": "^6.3.0",
     "react-tabs": "^0.8.2",
     "string-format-validation": "^2.0.2",
-    "sweetalert": "^1.1.3",
     "unique-random-array": "^1.0.0"
   },
   "devDependencies": {
@@ -56,10 +55,11 @@
       "import/resolver": "meteor"
     },
     "rules": {
-      "meteor/no-session": 0,
-      "space-before-function-paren": "error",
       "no-underscore-dangle": 0,
       "new-cap": 0,
+      "class-methods-use-this": 0,
+      "object-shorthand": 0,
+      "meteor/no-session": 0,
       "import/no-absolute-path": 0,
       "import/prefer-default-export": 0,
       "import/no-unresolved": 0,
@@ -69,8 +69,7 @@
       "react/jsx-filename-extension": 0,
       "react/jsx-wrap-multilines": 0,
       "react/forbid-prop-types": 0,
-      "class-methods-use-this": 0,
-      "object-shorthand": 0,
+      "space-before-function-paren": "error",
       "comma-dangle": [
         "error",
         "never"
