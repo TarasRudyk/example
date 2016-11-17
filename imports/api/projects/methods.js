@@ -23,9 +23,25 @@ export const create = new ValidatedMethod({
     const colors = Colors.find().fetch();
     const randomElem = Math.floor(Math.random() * colors.length);
     const usersProjects = Meteor.users.findOne({ _id: this.userId }).projects;
+    if (!usersProjects) {
+      const projectId = Projects.insert({
+        name,
+        description,
+        ownerId: this.userId,
+        ownerName: Meteor.user().profile.fullname,
+        active: true,
+        creationDate: new Date(),
+        color: colors[randomElem]
+      });
+      const usersProject = {
+        projectId,
+        colorId: colors[randomElem]._id
+      };
+      Meteor.users.update({ _id: this.userId }, { $push: { projects: usersProject } });
+      return projectId;
+    }
     const usedColors = usersProjects.map((projects) => projects.colorId);  // eslint-disable-line
     const selectedColor = usedColors.filter((colorId) => colorId === colors[randomElem]._id); // eslint-disable-line
-
     if (!selectedColor.length) {
       const projectId = Projects.insert({
         name,

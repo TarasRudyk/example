@@ -23,7 +23,6 @@
     "react-dom": "^15.3.2",
     "react-mounter": "^1.2.0",
     "react-notification": "^6.3.0",
-    "react-prefixer": "^2.0.0",
     "react-tabs": "^0.8.2",
     "string-format-validation": "^2.0.2",
     "sweetalert": "^1.1.3",
