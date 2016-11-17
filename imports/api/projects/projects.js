@@ -1,21 +1,7 @@
-// import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-// import { _ } from 'lodash';
-// import { Colors } from '../colors/colors';
 
 export const Projects = new Mongo.Collection('projects');
-
-// Projects.after.insert((userId, _id) => {
-//   console.log(`fasfefse ${userId} sgags ${_id}`);
-//   if (!userId) {
-//     throw new Meteor.Error('User not authorized');
-//   }
-//
-//   const colorsId = Colors.findOne({})._id;
-//
-//   Meteor.users.update({ _id: userId }, { $addToSet: { colors: colorsId } });
-// });
 
 Projects.deny({
   insert() { return true; },
