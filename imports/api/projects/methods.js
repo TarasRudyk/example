@@ -21,10 +21,10 @@ export const create = new ValidatedMethod({
       throw new Meteor.Error('Project with the same name exists');
     }
     const user = Meteor.users.findOne({ _id: this.userId });
-    const usersProjects = user.project || [];
-    const usedColors = usersProjects.map(projects => projects.colorId);
+    const usersProjects = user.projects;
+    const usedColors = usersProjects.map((projects) => projects.colorId);  // eslint-disable-line
     const colors = Colors.find({ _id: { $nin: usedColors } }).fetch();
-    const randomElem = Math.floor(Math.random() * colors.length);
+    const randomElem = Math.floor(Math.random() * (colors.length + 1));
     const projectId = Projects.insert({
       name,
       description,
