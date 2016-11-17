@@ -1,6 +1,7 @@
 import React from 'react';
 import formatValidation from 'string-format-validation';
 import { TAPi18n } from 'meteor/tap:i18n';
+
 import { createProject } from '/imports/api/projects/actions';
 
 export default class CreateProject extends React.Component {
@@ -45,7 +46,6 @@ export default class CreateProject extends React.Component {
       createProject(name, description);
     }
   }
-
   handleChange({ target }) {
     if (target.name) {
       this.setState({
@@ -93,5 +93,3 @@ export default class CreateProject extends React.Component {
     );
   }
 }
-
-CreateProject.propTypes = {};

@@ -1,6 +1,7 @@
 import React from 'react';
 import formatValidation from 'string-format-validation';
 import { TAPi18n } from 'meteor/tap:i18n';
+
 import { editProject } from '/imports/api/projects/actions.js';
 
 export default class EditProject extends React.Component {
@@ -9,11 +10,11 @@ export default class EditProject extends React.Component {
 
     this.state = {
       name: {
-        value: '',
+        value: this.props.project.name || '',
         error: ''
       },
       description: {
-        value: '',
+        value: this.props.project.description || '',
         error: ''
       }
     };
@@ -21,11 +22,25 @@ export default class EditProject extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
+  componentWillReceiveProps(nextProps) {
+    const { project } = nextProps;
+
+    this.state = {
+      name: {
+        value: project.name || '',
+        error: ''
+      },
+      description: {
+        value: project.description || '',
+        error: ''
+      }
+    };
+  }
   onSubmit(event) {
     event.preventDefault();
 
-    const name = this.state.name.value.trim() || this.props.project.name;
-    const description = this.state.description.value.trim() || this.props.project.description;
+    const name = this.state.name.value.trim();
+    const description = this.state.description.value.trim();
 
     let errors = false;
 
@@ -44,7 +59,6 @@ export default class EditProject extends React.Component {
       editProject(name, description, this.props.project._id);
     }
   }
-
   handleChange({ target }) {
     if (target.name) {
       this.setState({
@@ -66,15 +80,18 @@ export default class EditProject extends React.Component {
             <input
               type="text"
               name="name"
-              placeholder={this.props.project.name}
+              value={this.state.name.value}
+              placeholder="Name"
               autoFocus
               onChange={this.handleChange}
             />
             <span className="field-error">{this.state.name.error}</span>
             <textarea
               name="description"
-              placeholder={this.props.project.description}
+              value={this.state.description.value}
+              placeholder="Description"
               onChange={this.handleChange}
+              onCopy={this.handleChange}
             />
             <input
               type="submit"

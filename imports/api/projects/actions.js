@@ -7,7 +7,7 @@ export const createProject = (name, description) => {
   check(name, String);
   check(description, String);
 
-  return Meteor.call('project.create', { name, description }, (err, res) => {
+  Meteor.call('project.create', { name, description }, (err, res) => {
     if (err) {
       addNotice(err.error);
     }
@@ -22,7 +22,7 @@ export const editProject = (name, description, projectId) => {
   check(description, String);
   check(projectId, String);
 
-  return Meteor.call('project.edit', { name, description, projectId }, (err, res) => {
+  Meteor.call('project.edit', { name, description, projectId }, (err, res) => {
     if (err) {
       addNotice(err.error);
     }
@@ -35,7 +35,7 @@ export const editProject = (name, description, projectId) => {
 export const deleteProject = (projectId) => {
   check(projectId, String);
 
-  return Meteor.call('project.delete', { projectId }, (err, res) => {
+  Meteor.call('project.delete', { projectId }, (err, res) => {
     if (err) {
       addNotice(err.error);
     }
