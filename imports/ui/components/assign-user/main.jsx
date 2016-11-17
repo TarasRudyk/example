@@ -20,7 +20,7 @@ class AssignUser extends React.Component {
   }
 
   handleInputChange({ target }) {
-    if (target.value.length > 3 && this.state.isItemsVisible === false) {
+    if (target.value.length > 1 && this.state.isItemsVisible === false) {
       this.setState({
         isItemsVisible: true
       });
@@ -60,7 +60,7 @@ class AssignUser extends React.Component {
       />;
     } else {
       view = (
-        <form className="assign-user-form">
+        <div className="assign-user-main">
           <input
             type="text"
             name="username"
@@ -75,7 +75,7 @@ class AssignUser extends React.Component {
             isVisible={this.state.isItemsVisible}
             onUserSelect={this.handleUserSelect}
           />
-        </form>);
+        </div>);
     }
 
     return view;

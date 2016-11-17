@@ -1,5 +1,7 @@
 import React from 'react';
 import Datetime from 'react-datetime';
+import formatValidation from 'string-format-validation';
+import { TAPi18n } from 'meteor/tap:i18n';
 
 import AssignUser from '/imports/ui/components/assign-user/main';
 
@@ -10,13 +12,19 @@ export default class CreateTask extends React.Component {
     super(props);
 
     this.state = {
-      name: '',
-      description: '',
+      name: {
+        value: '',
+        error: ''
+      },
+      description: {
+        value: ''
+      },
       assignedAt: '',
-      startAt: ''
+      startAt: null
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
     this.handleOnAssigned = this.handleOnAssigned.bind(this);
     this.isValidDate = this.isValidDate.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -24,14 +32,43 @@ export default class CreateTask extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
-    const name = this.state.name.trim();
-    const description = this.state.description.trim();
+    const taskName = this.state.name.value.trim();
 
-    createTask(name, description, this.props.project._id);
+    let errors = false;
+
+    if (!formatValidation.validate({ min: 3, max: 25 }, taskName)) {
+      this.setState({
+        name: {
+          value: taskName,
+          error: TAPi18n.__('commonValidation.nameIncorect')
+        }
+      });
+
+      errors = true;
+    }
+
+    if (!errors) {
+      const { name, description, assignedAt, startAt } = this.state;
+
+      createTask({
+        name: name.value,
+        description: description.value,
+        assignedAt,
+        startAt
+      }, this.props.project._id);
+    }
   }
   handleChange({ target }) {
     this.setState({
-      [target.name]: target.value
+      [target.name]: {
+        value: target.value,
+        error: ''
+      }
+    });
+  }
+  handleDateChange(momentDate) {
+    this.setState({
+      startAt: momentDate.toDate ? momentDate.toDate() : null
     });
   }
   handleOnAssigned(user) {
@@ -57,18 +94,22 @@ export default class CreateTask extends React.Component {
               name="name"
               placeholder="Name"
               autoFocus
-              value={this.state.email}
+              className={this.state.name.error ? 'error' : ''}
+              value={this.state.name.value}
               onChange={this.handleChange}
-              onCopy={this.handleChange}
             />
+            <span className="field-error">{this.state.name.error}</span>
             <textarea
               name="description"
               placeholder="Description"
-              value={this.state.password}
+              value={this.state.description.value}
               onChange={this.handleChange}
-              onCopy={this.handleChange}
             />
-            <Datetime isValidDate={this.isValidDate} />
+            <Datetime
+              isValidDate={this.isValidDate}
+              onChange={this.handleDateChange}
+              inputProps={{ placeholder: 'Start task at' }}
+            />
             <AssignUser project={this.props.project} onAssigned={this.handleOnAssigned} />
             <input
               type="submit"
@@ -84,5 +125,4 @@ export default class CreateTask extends React.Component {
 
 CreateTask.propTypes = {
   project: React.PropTypes.object
-  // projectOwnerId: React.PropTypes.string
 };
