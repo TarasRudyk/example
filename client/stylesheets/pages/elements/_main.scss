@@ -15,3 +15,13 @@
     color: $link-light-color;
   }
 }
+
+code {
+  display: block;
+  background: #f1f1f1;
+  color: #000;
+  border-radius: 6px;
+  padding: 12px;
+  margin: 5px 0 20px;
+  line-height: 1.8;
+}
