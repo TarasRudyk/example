@@ -23,9 +23,7 @@ export const create = new ValidatedMethod({
     const user = Meteor.users.findOne({ _id: this.userId });
     const usersProjects = user.projects || [];
     const usedColors = usersProjects.map((projects) => projects.colorId);  // eslint-disable-line
-    console.log(usedColors.length);
     const colors = Colors.find({ _id: { $nin: usedColors } }).fetch();
-    console.log(colors.length);
     if (!colors.length) {
       throw new Meteor.Error('Too much projects was created');
     }
