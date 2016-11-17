@@ -15,3 +15,10 @@ Meteor.publish('task.byId', function (taskId) {
 
   return Tasks.find({ _id: taskId, active: true });
 });
+
+Meteor.publish('tasks.byAssignedUser', function (userId) {
+  check(userId, String);
+
+  const tasks = Tasks.find({ assignedAt: userId });
+  return tasks;
+});
