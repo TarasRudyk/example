@@ -1,5 +1,6 @@
 import React from 'react';
-import Datetime from 'react-datetime';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 import formatValidation from 'string-format-validation';
 import { TAPi18n } from 'meteor/tap:i18n';
 
@@ -26,7 +27,6 @@ export default class CreateTask extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleOnAssigned = this.handleOnAssigned.bind(this);
-    this.isValidDate = this.isValidDate.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
   onSubmit(event) {
@@ -54,7 +54,7 @@ export default class CreateTask extends React.Component {
         name: name.value,
         description: description.value,
         assignedAt,
-        startAt
+        startAt: startAt.toDate ? startAt.toDate() : null
       }, this.props.project._id);
     }
   }
@@ -66,9 +66,11 @@ export default class CreateTask extends React.Component {
       }
     });
   }
-  handleDateChange(momentDate) {
+  handleDateChange(date) {
+    if (date.isBefore(moment(), 'day')) return;
+    const validDate = date.isValid() ? date : null;
     this.setState({
-      startAt: momentDate.toDate ? momentDate.toDate() : null
+      startAt: validDate
     });
   }
   handleOnAssigned(user) {
@@ -76,10 +78,6 @@ export default class CreateTask extends React.Component {
     this.setState({
       assignedAt: id
     });
-  }
-  isValidDate(current) {
-    const yesterday = Datetime.moment().subtract(1, 'day');
-    return current.isAfter(yesterday);
   }
   render() {
     return (
@@ -105,10 +103,11 @@ export default class CreateTask extends React.Component {
               value={this.state.description.value}
               onChange={this.handleChange}
             />
-            <Datetime
-              isValidDate={this.isValidDate}
+            <DatePicker
+              selected={this.state.startAt}
               onChange={this.handleDateChange}
-              inputProps={{ placeholder: 'Start task at' }}
+              placeholderText="Start task at"
+              minDate={moment()}
             />
             <AssignUser project={this.props.project} onAssigned={this.handleOnAssigned} />
             <input
