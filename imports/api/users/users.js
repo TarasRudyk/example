@@ -54,7 +54,22 @@ Meteor.users.schema = new SimpleSchema({
   'projects.$.projectId': {
     type: String
   },
-  'projects.$.colorId': {
+  'projects.$.color': {
+    type: Object
+  },
+  'projects.$.color._id': {
+    type: String
+  },
+  'projects.$.color.gradient': {
+    type: Object
+  },
+  'projects.$.color.gradient.start': {
+    type: String
+  },
+  'projects.$.color.gradient.stop': {
+    type: String
+  },
+  'projects.$.color.gradient.direction': {
     type: String
   }
 });

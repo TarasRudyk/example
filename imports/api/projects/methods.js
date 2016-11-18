@@ -13,7 +13,7 @@ export const create = new ValidatedMethod({
     name: { type: String },
     description: { type: String, optional: true }
   }).validator(),
-  run({ name, description }) {    // eslint-disable-line
+  run({ name, description }) {
     if (!this.userId) {
       throw new Meteor.Error('User not authorized');
     }
@@ -22,7 +22,7 @@ export const create = new ValidatedMethod({
     }
     const user = Meteor.users.findOne({ _id: this.userId });
     const usersProjects = user.projects || [];
-    const usedColors = usersProjects.map((projects) => projects.colorId);  // eslint-disable-line
+    const usedColors = usersProjects.map(projects => projects.colorId);
     const colors = Colors.find({ _id: { $nin: usedColors } }).fetch();
     if (!colors.length) {
       throw new Meteor.Error('Too much projects was created');
@@ -34,12 +34,11 @@ export const create = new ValidatedMethod({
       ownerId: this.userId,
       ownerName: Meteor.user().profile.fullname,
       active: true,
-      creationDate: new Date(),
-      color: colors[randomElem]
+      creationDate: new Date()
     });
     const usersProject = {
       projectId,
-      colorId: colors[randomElem]._id
+      color: colors[randomElem]
     };
     Meteor.users.update({ _id: this.userId }, { $push: { projects: usersProject } });
     return projectId;

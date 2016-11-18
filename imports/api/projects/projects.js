@@ -17,24 +17,6 @@ Projects.schema = new SimpleSchema({
     type: String,
     optional: true
   },
-  color: {
-    type: Object
-  },
-  'color._id': {
-    type: String
-  },
-  'color.gradient': {
-    type: Object
-  },
-  'color.gradient.start': {
-    type: String
-  },
-  'color.gradient.stop': {
-    type: String
-  },
-  'color.gradient.direction': {
-    type: String
-  },
   ownerId: {
     type: String
   },

@@ -3,7 +3,7 @@ import React from 'react';
 import Pagination from 'react-js-pagination';
 
 import ProjectItem from '/imports/ui/pages/projects/item';
-import Loading from '/imports/ui/components/side-content/loading.jsx';
+import Loading from '/imports/ui/components/side-content/loading';
 
 export default class Projects extends React.Component {
   constructor(props) {
@@ -35,6 +35,8 @@ export default class Projects extends React.Component {
               <ProjectItem
                 key={i}
                 project={p}
+                userProjects={this.props.userProjects}
+
               />
             )) : <Loading /> }
           </div>
@@ -56,5 +58,6 @@ Projects.propTypes = {
   loaded: React.PropTypes.bool,
   projects: React.PropTypes.arrayOf(React.PropTypes.object),
   projectsCount: React.PropTypes.number,
-  currentPage: React.PropTypes.number
+  currentPage: React.PropTypes.number,
+  userProjects: React.PropTypes.arrayOf(React.PropTypes.object)
 };

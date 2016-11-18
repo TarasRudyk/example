@@ -8,13 +8,14 @@ export default class ProjectItem extends React.Component {
     this.state = {};
   }
   render() {
-    const { _id, name, ownerName, color } = this.props.project;
+    const { _id, name, ownerName } = this.props.project;
+    const userProject = this.props.userProjects.find(elem => elem.projectId === _id);
 
     return (
       <div className="list-item">
         <div className="project-item">
           <div className="project-item-color">
-            <div className="ring" style={{ background: `repeating-linear-gradient(${color.gradient.direction}, ${color.gradient.start}, ${color.gradient.stop}` }} />
+            <div className="ring" style={{ background: `repeating-linear-gradient(${userProject.color.gradient.direction}, ${userProject.color.gradient.start}, ${userProject.color.gradient.stop}` }} />
           </div>
           <div className="project-item-information">
             <div className="project-item-title"><a href={`/project/${_id}`}>{name}</a></div>
@@ -31,5 +32,6 @@ export default class ProjectItem extends React.Component {
 }
 
 ProjectItem.propTypes = {
-  project: React.PropTypes.object
+  project: React.PropTypes.object,
+  userProjects: React.PropTypes.arrayOf(React.PropTypes.object)
 };
