@@ -1,5 +1,6 @@
 import React from 'react';
-import PeopleList from '/imports/ui/containers/pages/project/tabs/people/people-list';
+
+import PeopleList from '/imports/ui/containers/pages/project/tabs/people/list';
 import UserSearch from '/imports/ui/containers/components/user-search/main';
 
 
@@ -10,17 +11,10 @@ export default class People extends React.Component {
   }
   render() {
     return (
-      <div className="project-overview">
+      <div className="project-people">
         <div className="container">
-          <div className="list">
-            {this.props.invitations.map((inv, i) => (
-              <div className="list-item" key={i}>
-                Waiting for a response from <a href={`/profile/${inv.user.id}`}>{inv.user.fullname}</a>
-              </div>
-            ))}
-          </div>
-          <UserSearch projectId={this.props.projectId} />
           <PeopleList projectId={this.props.projectId} />
+          <UserSearch projectId={this.props.projectId} />
         </div>
       </div>
     );
@@ -28,6 +22,5 @@ export default class People extends React.Component {
 }
 
 People.propTypes = {
-  projectId: React.PropTypes.string,
-  invitations: React.PropTypes.array
+  projectId: React.PropTypes.string
 };

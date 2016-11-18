@@ -13,26 +13,27 @@ export default class PeopleListItem extends Component {
     this.isThisUserOwner = this.isThisUserOwner.bind(this);
   }
   delete() {
-    deleteUserFromProject(this.props.project._id, this.props.person._id);
+    deleteUserFromProject(this.props.project._id, this.props.id);
   }
   isThisUserOwner() {
     return Meteor.userId() === this.props.project.ownerId;
   }
   render() {
-    const { fullname, avatar } = this.props.person.profile;
     return (
-      <li className="people-list-item">
-        <a href={`/profile/${this.props.person._id}`}>
-          <img alt="avatar" src={avatar} />
-          <span>{fullname}</span>
+      <div className="list-item">
+        <a href={`/profile/${this.props.id}`}>
+          <span>{this.props.fullname}</span>
         </a>
+        {this.props.inProject ? <span>In project</span> : <span>Pending</span>}
         {this.isThisUserOwner() ? <button onClick={this.delete}>Delete</button> : ''}
-      </li>
+      </div>
     );
   }
 }
 
 PeopleListItem.propTypes = {
-  project: React.PropTypes.object,
-  person: React.PropTypes.object
+  id: React.PropTypes.string,
+  fullname: React.PropTypes.string,
+  inProject: React.PropTypes.bool,
+  project: React.PropTypes.object
 };

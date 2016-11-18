@@ -1,6 +1,6 @@
 import React from 'react';
 import Tasks from '/imports/ui/containers/pages/project/tabs/tasks/tasks';
-import People from '/imports/ui/containers/pages/project/tabs/people/people';
+import People from '/imports/ui/pages/project/tabs/people/people';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
@@ -53,7 +53,7 @@ export default class SingleProject extends React.Component {
             <Tasks projectId={project._id} projectOwnerId={project.ownerId} />
           </TabPanel>
           <TabPanel>
-            <People projectId={project._id} projectOwnerId={project.ownerId} />
+            <People projectId={project._id} />
           </TabPanel>
         </Tabs>
       </div>
