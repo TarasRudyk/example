@@ -11,7 +11,7 @@ class AssignUser extends React.Component {
     this.state = {
       assignedUser: null,
       userQuery: '',
-      isItemsVisible: false
+      isItemsVissible: false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -20,17 +20,9 @@ class AssignUser extends React.Component {
   }
 
   handleInputChange({ target }) {
-    if (target.value.length > 1 && this.state.isItemsVisible === false) {
-      this.setState({
-        isItemsVisible: true
-      });
-    }
-
-    if (!target.value) {
-      this.setState({
-        isItemsVisible: false
-      });
-    }
+    this.setState({
+      isItemsVisible: true
+    });
 
     this.setState({
       userQuery: target.value
@@ -68,6 +60,7 @@ class AssignUser extends React.Component {
             placeholder="Type username"
             value={this.state.userQuery}
             onChange={this.handleInputChange}
+            onFocus={this.handleInputChange}
           />
           <AssignUserItems
             project={this.props.project}
