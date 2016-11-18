@@ -1,0 +1,44 @@
+.assign-user-main {
+  position: relative;
+  .assign-user-items {
+    position: absolute;
+    background-color: white;
+    padding: 6px;
+    border-radius: 6px;
+    max-height: 165px;
+    overflow-y: auto;
+    width: 260px;
+    .assign-user-item {
+      display: flex;
+      padding: 5px;
+      cursor: pointer;
+      &:hover{
+        background-color: #eee;
+      }
+    }
+  }
+}
+
+.assigned-user {
+  display: flex;
+  padding: 5px;
+  margin: 8px 0 8px;
+  width: 262px;
+  background: #fff;
+  box-shadow: 0 0 5px #dbd9d9;
+  border-radius: 32px;
+  button {
+    margin-left: auto;
+    cursor: pointer;
+    border: none;
+    background: none;
+    border-radius: 15px;
+    outline: none;
+    padding-top: 2px;
+  }
+}
+
+.assign-user-item .avatar, .assigned-user .avatar {
+  border-radius: 32px;
+  margin-right: 10px;
+}

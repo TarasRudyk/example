@@ -1,4 +1,11 @@
 import React from 'react';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import formatValidation from 'string-format-validation';
+import { TAPi18n } from 'meteor/tap:i18n';
+
+import AssignUser from '/imports/ui/components/assign-user/main';
+
 import { createTask } from '/imports/api/tasks/actions.js';
 
 export default class CreateTask extends React.Component {
@@ -6,24 +13,70 @@ export default class CreateTask extends React.Component {
     super(props);
 
     this.state = {
-      name: '',
-      description: ''
+      name: {
+        value: '',
+        error: ''
+      },
+      description: {
+        value: ''
+      },
+      assignedAt: '',
+      startAt: null
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleOnAssigned = this.handleOnAssigned.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
   onSubmit(event) {
     event.preventDefault();
 
-    const name = this.state.name.trim();
-    const description = this.state.description.trim();
+    const taskName = this.state.name.value.trim();
 
-    createTask(name, description, this.props.projectId);
+    let errors = false;
+
+    if (!formatValidation.validate({ min: 3, max: 25 }, taskName)) {
+      this.setState({
+        name: {
+          value: taskName,
+          error: TAPi18n.__('commonValidation.nameIncorect')
+        }
+      });
+
+      errors = true;
+    }
+
+    if (!errors) {
+      const { name, description, assignedAt, startAt } = this.state;
+
+      createTask({
+        name: name.value,
+        description: description.value,
+        assignedAt,
+        startAt: startAt.toDate ? startAt.toDate() : null
+      }, this.props.project._id);
+    }
   }
   handleChange({ target }) {
     this.setState({
-      [target.name]: target.value
+      [target.name]: {
+        value: target.value,
+        error: ''
+      }
+    });
+  }
+  handleDateChange(date) {
+    if (date.isBefore(moment(), 'day')) return;
+    const validDate = date.isValid() ? date : null;
+    this.setState({
+      startAt: validDate
+    });
+  }
+  handleOnAssigned(user) {
+    const id = user ? user._id : '';
+    this.setState({
+      assignedAt: id
     });
   }
   render() {
@@ -39,17 +92,24 @@ export default class CreateTask extends React.Component {
               name="name"
               placeholder="Name"
               autoFocus
-              value={this.state.email}
+              className={this.state.name.error ? 'error' : ''}
+              value={this.state.name.value}
               onChange={this.handleChange}
-              onCopy={this.handleChange}
             />
+            <span className="field-error">{this.state.name.error}</span>
             <textarea
               name="description"
               placeholder="Description"
-              value={this.state.password}
+              value={this.state.description.value}
               onChange={this.handleChange}
-              onCopy={this.handleChange}
             />
+            <DatePicker
+              selected={this.state.startAt}
+              onChange={this.handleDateChange}
+              placeholderText="Start task at"
+              minDate={moment()}
+            />
+            <AssignUser project={this.props.project} onAssigned={this.handleOnAssigned} />
             <input
               type="submit"
               value="Create"
@@ -63,6 +123,5 @@ export default class CreateTask extends React.Component {
 }
 
 CreateTask.propTypes = {
-  projectId: React.PropTypes.string
-  // projectOwnerId: React.PropTypes.string
+  project: React.PropTypes.object
 };

@@ -8,6 +8,6 @@ export default createContainer(({ projectId }) => {
   const projectHandle = Meteor.subscribe('project', projectId);
   const project = projectHandle.ready() ? Projects.findOne() : {};
   return {
-    projectOwnerId: project.ownerId
+    project: project
   };
 }, CreateTask);

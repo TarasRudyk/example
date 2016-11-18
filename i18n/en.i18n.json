@@ -12,6 +12,9 @@
     "usernameIncorrect": "Username incorrect",
     "fullnameIncorrect": "Full name incorrect"
   },
+  "commonValidation": {
+    "nameIncorect": "Name incorrect"
+  },
   "change": {
     "EmailChanged": "Email changed!",
     "FullnameChanged": "Fullname changed!",
