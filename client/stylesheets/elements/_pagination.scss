@@ -1,0 +1,17 @@
+.pagination {
+  margin: 10px 0;
+  overflow: hidden;
+}
+.pagination li {
+  float: left;
+
+  a {
+    display: block;
+    padding: 10px 16px;
+  }
+  &.active a {
+    background: #1da9fc;
+    color: #fff;
+    border-radius: 6px;
+  }
+}

@@ -21,5 +21,8 @@
     "NewPasswordIncorrect": "New password incorrect!",
     "OldPasswordIncorrect": "Old Ppassword incorrect!",
     "PasswordChanged": "Password changed!"
+  },
+  "create": {
+    "ProjectNameRequired": "Project name is required. Use unique names for your projects (3 to 25 characters)."
   }
 }
