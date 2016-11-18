@@ -36,11 +36,11 @@ export const create = new ValidatedMethod({
       active: true,
       creationDate: new Date()
     });
-    const usersProject = {
+    const projects = {
       projectId,
       color: colors[randomElem]
     };
-    Meteor.users.update({ _id: this.userId }, { $push: { projects: usersProject } });
+    Meteor.users.update({ _id: this.userId }, { $push: { projects } });
     return projectId;
   }
 });
@@ -77,7 +77,7 @@ export const deactivate = new ValidatedMethod({
     if (project.ownerId !== this.userId) {
       throw new Meteor.Error('This is not your project');
     }
-    Meteor.users.update({ _id: this.userId }, { $pull: { projects: { projectId: projectId } } });
+    Meteor.users.update({ _id: this.userId }, { $pull: { projects: { projectId } } });
     return Projects.update({ _id: projectId }, { $set: { active: false } });
   }
 });
@@ -103,7 +103,7 @@ export const deleteUserFromProject = new ValidatedMethod({
       action: 'Revoke access',
       recipientId: userId
     });
-
+    Meteor.users.update({ _id: userId }, { $pull: { projects: { projectId } } });
     return Projects.update({ _id: projectId }, { $pull: { usersIds: userId } });
   }
 });
