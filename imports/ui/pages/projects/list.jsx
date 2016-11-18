@@ -1,4 +1,5 @@
 import { FlowRouter } from 'meteor/kadira:flow-router';
+
 import React from 'react';
 import Pagination from 'react-js-pagination';
 
@@ -11,11 +12,9 @@ export default class Projects extends React.Component {
 
     this.onChange = this.onChange.bind(this);
   }
-
   onChange(page) {
     FlowRouter.setQueryParams({ page });
   }
-
   render() {
     return (
       <div className="page-main-content page-projects">
@@ -24,7 +23,7 @@ export default class Projects extends React.Component {
             <div className="title">
               <h1>Projects <span>all your projects</span></h1>
               <div className="title-right-block">
-                <a href="/projects/create" className="button green">New project</a>
+                <a href="/project/create" className="button green">New project</a>
               </div>
             </div>
           </div>

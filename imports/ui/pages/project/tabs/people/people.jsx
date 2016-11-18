@@ -1,5 +1,5 @@
 import React from 'react';
-import PeopleList from '/imports/ui/containers/pages/project/people/people-list';
+import PeopleList from '/imports/ui/containers/pages/project/tabs/people/people-list';
 import UserSearch from '/imports/ui/containers/components/user-search/main';
 
 

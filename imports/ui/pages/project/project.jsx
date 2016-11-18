@@ -1,12 +1,12 @@
 import React from 'react';
-import Tasks from '/imports/ui/containers/pages/project/tasks/tasks';
-import People from '/imports/ui/containers/pages/project/people/people';
+import Tasks from '/imports/ui/containers/pages/project/tabs/tasks/tasks';
+import People from '/imports/ui/containers/pages/project/tabs/people/people';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import { deleteProject } from '/imports/api/projects/actions.js';
 
-import Overview from './project-tabs/overview';
+import Overview from './tabs/overview';
 
 export default class SingleProject extends React.Component {
   constructor(props) {
@@ -16,7 +16,6 @@ export default class SingleProject extends React.Component {
 
     this.deleteHandler = this.deleteHandler.bind(this);
   }
-
   deleteHandler(e) {
     const id = e.target.value;
     const conf = confirm('Are you sure?'); // eslint-disable-line
@@ -25,16 +24,18 @@ export default class SingleProject extends React.Component {
     }
   }
   render() {
+    const { project } = this.props;
+
     return (
       <div className="page-main-content page-project">
         <div className="separator">
           <div className="container">
             <div className="title">
-              <h1>{this.props.name} <span>Owner: {this.props.ownerName}</span></h1>
+              <h1>{project.name} <span>Owner: {project.ownerName}</span></h1>
               {this.props.isOwner ?
                 <div className="title-right-block">
-                  <a href={`/project/edit/${this.props.id}`} className="button green">Edit</a>
-                  <button className="button red" value={this.props.id} onClick={this.deleteHandler}>Remove</button>
+                  <a href={`/project/edit/${project._id}`} className="button green">Edit</a>
+                  <button className="button red" value={project._id} onClick={this.deleteHandler}>Remove</button>
                 </div> : null}
             </div>
           </div>
@@ -46,13 +47,13 @@ export default class SingleProject extends React.Component {
             <Tab>People</Tab>
           </TabList>
           <TabPanel>
-            <Overview description={this.props.description} />
+            <Overview description={project.description} />
           </TabPanel>
           <TabPanel>
-            <Tasks projectId={this.props.id} projectOwnerId={this.props.ownerId} />
+            <Tasks projectId={project._id} projectOwnerId={project.ownerId} />
           </TabPanel>
           <TabPanel>
-            <People projectId={this.props.id} />
+            <People projectId={project._id} projectOwnerId={project.ownerId} />
           </TabPanel>
         </Tabs>
       </div>
@@ -61,10 +62,6 @@ export default class SingleProject extends React.Component {
 }
 
 SingleProject.propTypes = {
-  id: React.PropTypes.string,
-  name: React.PropTypes.string,
-  ownerName: React.PropTypes.string,
-  description: React.PropTypes.string,
-  ownerId: React.PropTypes.string,
+  project: React.PropTypes.object,
   isOwner: React.PropTypes.bool
 };
