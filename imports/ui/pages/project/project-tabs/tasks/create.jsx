@@ -49,12 +49,13 @@ export default class CreateTask extends React.Component {
 
     if (!errors) {
       const { name, description, assignedAt, startAt } = this.state;
+      const startAtDate = startAt && startAt.toDate();
 
       createTask({
         name: name.value,
         description: description.value,
         assignedAt,
-        startAt: startAt.toDate ? startAt.toDate() : null
+        startAt: startAtDate
       }, this.props.project._id);
     }
   }
