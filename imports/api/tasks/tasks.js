@@ -32,6 +32,14 @@ Tasks.schema = new SimpleSchema({
   },
   creationDate: {
     type: Date
+  },
+  startAt: {
+    type: Date,
+    optional: true
+  },
+  assignedAt: {
+    type: String,
+    optional: true
   }
 });
 
