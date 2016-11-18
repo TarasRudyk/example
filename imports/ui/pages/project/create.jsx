@@ -1,4 +1,6 @@
 import React from 'react';
+import formatValidation from 'string-format-validation';
+import { TAPi18n } from 'meteor/tap:i18n';
 
 import { createProject } from '/imports/api/projects/actions';
 
@@ -7,25 +9,52 @@ export default class CreateProject extends React.Component {
     super(props);
 
     this.state = {
-      name: '',
-      description: ''
+      name: {
+        value: '',
+        error: ''
+      },
+      description: {
+        value: '',
+        error: ''
+      }
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
+
   onSubmit(event) {
     event.preventDefault();
 
-    const name = this.state.name.trim();
-    const description = this.state.description.trim();
+    const name = this.state.name.value.trim();
+    const description = this.state.description.value.trim();
 
-    createProject(name, description);
+    let errors = false;
+
+    if (!formatValidation.validate({ min: 3, max: 25 }, name)) {
+      this.setState({
+        name: {
+          value: name,
+          error: TAPi18n.__('create.ProjectNameRequired')
+        }
+      });
+
+      errors = true;
+    }
+
+    if (!errors) {
+      createProject(name, description);
+    }
   }
   handleChange({ target }) {
-    this.setState({
-      [target.name]: target.value
-    });
+    if (target.name) {
+      this.setState({
+        [target.name]: {
+          value: target.value,
+          error: ''
+        }
+      });
+    }
   }
   render() {
     return (
@@ -36,18 +65,20 @@ export default class CreateProject extends React.Component {
           </div>
           <form onSubmit={this.onSubmit}>
             <input
+              className={this.state.name.error ? 'error' : ''}
               type="text"
               name="name"
               placeholder="Name"
               autoFocus
-              value={this.state.email}
+              value={this.state.name.value}
               onChange={this.handleChange}
               onCopy={this.handleChange}
             />
+            <span className="field-error">{this.state.name.error}</span>
             <textarea
               name="description"
               placeholder="Description"
-              value={this.state.password}
+              value={this.state.description.value}
               onChange={this.handleChange}
               onCopy={this.handleChange}
             />
@@ -62,5 +93,3 @@ export default class CreateProject extends React.Component {
     );
   }
 }
-
-CreateProject.propTypes = {};
