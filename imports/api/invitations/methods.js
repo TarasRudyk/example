@@ -94,3 +94,37 @@ export const accept = new ValidatedMethod({
     });
   }
 });
+
+export const refuse = new ValidatedMethod({
+  name: 'invitation.refuse',
+  validate: new SimpleSchema({
+    invitationId: { type: String }
+  }).validator(),
+  run({ invitationId }) {
+    if (!this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+
+    const invitation = Invitations.findOne({ _id: invitationId, 'user.id': this.userId });
+
+    if (!invitation) {
+      throw new Meteor.Error('invitation-not-found');
+    }
+
+    Invitations.remove({ _id: invitationId });
+
+    Projects.update({
+      _id: invitation.project.id
+    }, {
+      $pull: { usersIds: this.userId }
+    });
+
+    // What kind of actions and types??
+    createNotification.call({
+      description: `${invitation.user.fullname} refused your invitation`,
+      type: 'Invitation',
+      action: 'Invitation',
+      recipientId: invitation.project.ownerId
+    });
+  }
+});

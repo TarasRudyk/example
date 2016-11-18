@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { acceptInvitation } from '/imports/api/invitations/actions';
+import { acceptInvitation, refuseInvitation } from '/imports/api/invitations/actions';
 
 export default class InvitationItem extends React.Component {
   constructor(props) {
@@ -8,10 +7,16 @@ export default class InvitationItem extends React.Component {
 
     this.state = {};
     this.accept = this.accept.bind(this);
+    this.refuse = this.refuse.bind(this);
   }
   accept() {
     if (this.props.invitation) {
       acceptInvitation(this.props.invitation._id);
+    }
+  }
+  refuse() {
+    if (this.props.invitation) {
+      refuseInvitation(this.props.invitation._id);
     }
   }
   render() {
@@ -28,7 +33,7 @@ export default class InvitationItem extends React.Component {
           <a href={`/project/${project.id}`} className="blue">{project.name}</a>
         </div>
         <div className="invitation-actions">
-          <a href="" className="button small red">Refuse</a>
+          <a href="" className="button small red" onClick={this.refuse}>Refuse</a>
           <a href="" className="button small green" onClick={this.accept}>Accept</a>
         </div>
       </div>
