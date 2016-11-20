@@ -4,8 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
 Meteor.publish('user', function () {
-  return Meteor.users.find({ _id: this.userId },
-                           { projects: true });
+  return Meteor.users.find({ _id: this.userId }, { projects: true });
 });
 
 Meteor.publish('usersByUsername', function (username) {

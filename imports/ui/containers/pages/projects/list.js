@@ -14,14 +14,14 @@ export default createContainer(({ page }) => {
   const projectsCount = projectsHandle.ready() ? Projects.find().count() : 0;
 
   const userHandle = Meteor.subscribe('user');
-  const user = userHandle.ready() ? Meteor.users.findOne({ _id: Meteor.userId() }) : {};
-  const userProjects = user.projects || [];
+  const user = userHandle.ready() ? Meteor.user() : [];
+  const projectsColors = user.projects || [];
 
   return {
-    loaded: projectsHandle.ready(),
+    loaded: projectsHandle.ready() && userHandle.ready(),
     projects,
     projectsCount,
-    currentPage: parseInt((page), 10),
-    userProjects
+    projectsColors,
+    currentPage: parseInt((page), 10) || 1
   };
 }, ProjectsList);

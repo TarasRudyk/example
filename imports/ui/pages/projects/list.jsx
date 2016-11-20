@@ -34,8 +34,7 @@ export default class Projects extends React.Component {
               <ProjectItem
                 key={i}
                 project={p}
-                userProjects={this.props.userProjects}
-
+                projectsColors={this.props.projectsColors}
               />
             )) : <Loading /> }
           </div>
@@ -57,6 +56,6 @@ Projects.propTypes = {
   loaded: React.PropTypes.bool,
   projects: React.PropTypes.arrayOf(React.PropTypes.object),
   projectsCount: React.PropTypes.number,
-  currentPage: React.PropTypes.number,
-  userProjects: React.PropTypes.arrayOf(React.PropTypes.object)
+  projectsColors: React.PropTypes.arrayOf(React.PropTypes.object),
+  currentPage: React.PropTypes.number
 };
