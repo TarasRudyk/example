@@ -39,7 +39,6 @@ export const create = new ValidatedMethod({
       project: {
         id: projectId,
         name: project.name,
-        color: project.color,
         ownerId: project.ownerId
       },
       user: {

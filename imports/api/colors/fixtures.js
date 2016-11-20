@@ -10,8 +10,8 @@ if (Colors.find().count() === 0) {
 
   for (let i = 0; i < 20; i += 1) {
     for (let j = 0; j < 20; j += 1) {
-      Colors.insert({ gradient: { start: colors[i], stop: colors[j], direction: 'horizontal' } });
-      Colors.insert({ gradient: { start: colors[i], stop: colors[j], direction: 'vertical' } });
+      Colors.insert({ gradient: { start: colors[i], stop: colors[j], direction: '0deg' } });
+      Colors.insert({ gradient: { start: colors[i], stop: colors[j], direction: '90deg' } });
     }
   }
 }
