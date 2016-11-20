@@ -5,6 +5,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { Projects } from '/imports/api/projects/projects';
 import { Invitations } from './invitations';
 import { create as createNotification } from '../notifications/methods';
+import { Colors } from '../colors/colors';
 
 export const create = new ValidatedMethod({
   name: 'invitation.create',
@@ -72,6 +73,19 @@ export const accept = new ValidatedMethod({
       throw new Meteor.Error('the-user-has-already-been-added-to-the-project');
     }
 
+    const user = Meteor.users.findOne({ _id: this.userId });
+    const usersProjects = user.projects || [];
+    const usedColors = usersProjects.map(projects => projects.color._id);
+    const colors = Colors.find({ _id: { $nin: usedColors } }).fetch();
+    if (!colors.length) {
+      throw new Meteor.Error('Too much projects was created');
+    }
+    const randomElem = Math.floor(Math.random() * (colors.length + 1));
+    const projects = {
+      projectId: invitation.project.id,
+      color: colors[randomElem]
+    };
+
     Invitations.update({
       _id: invitationId
     }, {
@@ -82,6 +96,12 @@ export const accept = new ValidatedMethod({
       _id: invitation.project.id
     }, {
       $push: { usersIds: this.userId }
+    });
+
+    Meteor.users.update({
+      _id: this.userId
+    }, {
+      $push: { projects }
     });
 
     // What kind of actions and types??
