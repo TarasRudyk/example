@@ -12,8 +12,6 @@ export default class SingleProject extends React.Component {
     super(props);
 
     Tabs.setUseDefaultStyles(false);
-
-    this.deleteHandler = this.deleteHandler.bind(this);
   }
   render() {
     const { project } = this.props;
@@ -26,7 +24,6 @@ export default class SingleProject extends React.Component {
         isOwner: this.props.isOwner
       }
     };
-
     return (
       <div className="page-main-content page-project">
         <Header content={content} />

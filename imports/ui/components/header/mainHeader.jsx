@@ -6,6 +6,7 @@ export default class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.deleteHandler = this.deleteHandler.bind(this);
   }
   deleteHandler(e) {
     const id = e.target.value;
