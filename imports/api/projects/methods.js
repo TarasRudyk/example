@@ -1,12 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
-import { _ } from 'lodash';
-import randomArray from 'unique-random-array';
 
 import { Invitations } from '../invitations/invitations';
 import { create as createNotification } from '../notifications/methods';
 import { Projects } from './projects';
+import { Colors } from '../colors/colors';
 
 export const create = new ValidatedMethod({
   name: 'project.create',
@@ -18,27 +17,31 @@ export const create = new ValidatedMethod({
     if (!this.userId) {
       throw new Meteor.Error('User not authorized');
     }
-
     if (Projects.find({ name, ownerId: this.userId }).count()) {
       throw new Meteor.Error('Project with the same name exists');
     }
-
-    const colors = Meteor.user().colors;
-    const unusedColors = _.filter(colors, { used: false });
-    const randomColors = randomArray(unusedColors);
-    const selectedColor = randomColors();
-    const colorIndex = _.findIndex(colors, { used: false, color: selectedColor.color });
-    const resultColor = colors[colorIndex].color;
-
-    return Projects.insert({
+    const user = Meteor.users.findOne({ _id: this.userId });
+    const usersProjects = user.projects || [];
+    const usedColors = usersProjects.map(projects => projects.color._id);
+    const colors = Colors.find({ _id: { $nin: usedColors } }).fetch();
+    if (!colors.length) {
+      throw new Meteor.Error('Too much projects was created');
+    }
+    const randomElem = Math.floor(Math.random() * (colors.length + 1));
+    const projectId = Projects.insert({
       name,
       description,
       ownerId: this.userId,
       ownerName: Meteor.user().profile.fullname,
       active: true,
-      creationDate: new Date(),
-      color: resultColor
+      creationDate: new Date()
     });
+    const projects = {
+      projectId,
+      color: colors[randomElem]
+    };
+    Meteor.users.update({ _id: this.userId }, { $push: { projects } });
+    return projectId;
   }
 });
 
@@ -74,7 +77,7 @@ export const deactivate = new ValidatedMethod({
     if (project.ownerId !== this.userId) {
       throw new Meteor.Error('This is not your project');
     }
-
+    Meteor.users.update({ _id: this.userId }, { $pull: { projects: { projectId } } });
     return Projects.update({ _id: projectId }, { $set: { active: false } });
   }
 });
@@ -100,7 +103,7 @@ export const deleteUserFromProject = new ValidatedMethod({
       action: 'Revoke access',
       recipientId: userId
     });
-
+    Meteor.users.update({ _id: userId }, { $pull: { projects: { projectId } } });
     return Projects.update({ _id: projectId }, { $pull: { usersIds: userId } });
   }
 });

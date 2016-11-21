@@ -5,6 +5,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { Projects } from '/imports/api/projects/projects';
 import { Invitations } from './invitations';
 import { create as createNotification } from '../notifications/methods';
+import { Colors } from '../colors/colors';
 
 export const create = new ValidatedMethod({
   name: 'invitation.create',
@@ -39,7 +40,6 @@ export const create = new ValidatedMethod({
       project: {
         id: projectId,
         name: project.name,
-        color: project.color,
         ownerId: project.ownerId
       },
       user: {
@@ -73,6 +73,19 @@ export const accept = new ValidatedMethod({
       throw new Meteor.Error('the-user-has-already-been-added-to-the-project');
     }
 
+    const user = Meteor.users.findOne({ _id: this.userId });
+    const usersProjects = user.projects || [];
+    const usedColors = usersProjects.map(projects => projects.color._id);
+    const colors = Colors.find({ _id: { $nin: usedColors } }).fetch();
+    if (!colors.length) {
+      throw new Meteor.Error('Too much projects was created');
+    }
+    const randomElem = Math.floor(Math.random() * (colors.length + 1));
+    const projects = {
+      projectId: invitation.project.id,
+      color: colors[randomElem]
+    };
+
     Invitations.update({
       _id: invitationId
     }, {
@@ -85,9 +98,49 @@ export const accept = new ValidatedMethod({
       $push: { usersIds: this.userId }
     });
 
+    Meteor.users.update({
+      _id: this.userId
+    }, {
+      $push: { projects }
+    });
+
     // What kind of actions and types??
     createNotification.call({
       description: `${invitation.user.fullname} accept your invitation`,
+      type: 'Invitation',
+      action: 'Invitation',
+      recipientId: invitation.project.ownerId
+    });
+  }
+});
+
+export const refuse = new ValidatedMethod({
+  name: 'invitation.refuse',
+  validate: new SimpleSchema({
+    invitationId: { type: String }
+  }).validator(),
+  run({ invitationId }) {
+    if (!this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+
+    const invitation = Invitations.findOne({ _id: invitationId, 'user.id': this.userId });
+
+    if (!invitation) {
+      throw new Meteor.Error('invitation-not-found');
+    }
+
+    Invitations.remove({ _id: invitationId });
+
+    Projects.update({
+      _id: invitation.project.id
+    }, {
+      $pull: { usersIds: this.userId }
+    });
+
+    // What kind of actions and types??
+    createNotification.call({
+      description: `${invitation.user.fullname} refused your invitation to ${invitation.project.name}`,
       type: 'Invitation',
       action: 'Invitation',
       recipientId: invitation.project.ownerId

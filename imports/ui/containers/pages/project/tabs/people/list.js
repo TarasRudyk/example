@@ -2,8 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Projects } from '/imports/api/projects/projects';
+import { Invitations } from '/imports/api/invitations/invitations';
 
-import PeopleList from '/imports/ui/pages/project/project-tabs/people/list';
+import PeopleList from '/imports/ui/pages/project/tabs/people/list';
 
 export default createContainer(({ projectId }) => {
   const projectHandle = Meteor.subscribe('project', projectId);
@@ -16,8 +17,15 @@ export default createContainer(({ projectId }) => {
     }
   }).fetch() : [];
 
+  const invitationsHandle = Meteor.subscribe('invitationsByProject', projectId);
+  const invitations = invitationsHandle.ready() ? Invitations.find(
+    { 'project.id': projectId, replied: false },
+    { skip: 0, limit: 25 }
+  ).fetch() : [];
+
   return {
-    project: project,
-    people: people
+    project,
+    people,
+    invitations
   };
 }, PeopleList);
