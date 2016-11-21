@@ -121,7 +121,7 @@ export const refuse = new ValidatedMethod({
 
     // What kind of actions and types??
     createNotification.call({
-      description: `${invitation.user.fullname} refused your invitation`,
+      description: `${invitation.user.fullname} refused your invitation to ${invitation.project.name}`,
       type: 'Invitation',
       action: 'Invitation',
       recipientId: invitation.project.ownerId
