@@ -5,8 +5,11 @@ import { check } from 'meteor/check';
 
 import { Projects } from '../projects';
 
-Meteor.publish('projects', function () {
-  return Projects.find({ 'users.id': this.userId });
+Meteor.publish('projects', function (skip = 0, limit = 0) {
+  check(skip, Number);
+  check(limit, Number);
+
+  return Projects.find({ 'users.id': this.userId }, { skip, limit });
 });
 
 Meteor.publish('project', function (id) {
