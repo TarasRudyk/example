@@ -7,8 +7,7 @@ export default class Task extends React.Component {
   }
 
   render() {
-    const { name, description } = this.props.task;
-
+    const { name, description, startAt, assignedAt } = this.props.task;
     return (
       <div className="page-main-content page-create-project">
         <div className="container">
@@ -17,6 +16,8 @@ export default class Task extends React.Component {
           </div>
           <p>name: {name}</p>
           <p>description: {description}</p>
+          <p>Start at: {startAt ? startAt.toString() : ''}</p>
+          <p>Assigned at: {assignedAt}</p>
         </div>
       </div>
     );

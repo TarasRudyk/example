@@ -1,9 +1,10 @@
 import { FlowRouter } from 'meteor/kadira:flow-router';
+
 import React from 'react';
 import Pagination from 'react-js-pagination';
 
 import ProjectItem from '/imports/ui/pages/projects/item';
-import Loading from '/imports/ui/components/side-content/loading.jsx';
+import Loading from '/imports/ui/components/side-content/loading';
 
 export default class Projects extends React.Component {
   constructor(props) {
@@ -11,11 +12,9 @@ export default class Projects extends React.Component {
 
     this.onChange = this.onChange.bind(this);
   }
-
   onChange(page) {
     FlowRouter.setQueryParams({ page });
   }
-
   render() {
     return (
       <div className="page-main-content page-projects">
@@ -24,7 +23,7 @@ export default class Projects extends React.Component {
             <div className="title">
               <h1>Projects <span>all your projects</span></h1>
               <div className="title-right-block">
-                <a href="/projects/create" className="button green">New project</a>
+                <a href="/project/create" className="button green">New project</a>
               </div>
             </div>
           </div>
@@ -35,6 +34,7 @@ export default class Projects extends React.Component {
               <ProjectItem
                 key={i}
                 project={p}
+                projectsColors={this.props.projectsColors}
               />
             )) : <Loading /> }
           </div>
@@ -56,5 +56,6 @@ Projects.propTypes = {
   loaded: React.PropTypes.bool,
   projects: React.PropTypes.arrayOf(React.PropTypes.object),
   projectsCount: React.PropTypes.number,
+  projectsColors: React.PropTypes.arrayOf(React.PropTypes.object),
   currentPage: React.PropTypes.number
 };
