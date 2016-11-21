@@ -50,3 +50,17 @@ export const editTask = (task) => {
     }
   });
 };
+
+export const deleteTask = (taskId) => {
+  check(taskId, String);
+
+  return Meteor.call('task.delete', { taskId }, (err, res) => {
+    if (err) {
+      addNotice(err.error);
+    }
+
+    if (res) {
+      FlowRouter.go(res);
+    }
+  });
+};
