@@ -10,7 +10,7 @@ export default createContainer(({ projectId }) => {
   const projectHandle = Meteor.subscribe('project', projectId);
   const project = projectHandle.ready() ? Projects.findOne() : {};
 
-  const peopleHandle = Meteor.subscribe('usersByIds', project.usersIds);
+  const peopleHandle = Meteor.subscribe('usersByIds', project.usersIds || []);
   const people = peopleHandle.ready() ? Meteor.users.find({
     _id: {
       $in: project.usersIds
@@ -19,8 +19,7 @@ export default createContainer(({ projectId }) => {
 
   const invitationsHandle = Meteor.subscribe('invitationsByProject', projectId);
   const invitations = invitationsHandle.ready() ? Invitations.find(
-    { 'project.id': projectId, replied: false },
-    { skip: 0, limit: 25 }
+    { 'project.id': projectId, replied: false }
   ).fetch() : [];
 
   return {
