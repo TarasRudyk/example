@@ -6,7 +6,7 @@ import { Projects } from '/imports/api/projects/projects';
 import ProjectsList from '/imports/ui/pages/projects/list';
 
 export default createContainer(({ page }) => {
-  const skip = ((parseInt((page), 10) * 7) - 7);
+  const skip = ((parseInt((page), 10) * 7) - 7) || 0;
   const query = { sort: { ownerId: Meteor.userId() }, skip, limit: 7 };
 
   const projectsHandle = Meteor.subscribe('projects');

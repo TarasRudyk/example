@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from '/imports/ui/components/header/mainHeader';
 
 export default class Dashboard extends React.Component {
   constructor(props) {
@@ -7,15 +8,14 @@ export default class Dashboard extends React.Component {
     this.state = {};
   }
   render() {
+    const content = {
+      header: 'Dashboard',
+      subHeader: 'all your today tasks',
+      rightSide: false
+    };
     return (
       <div className="page-main-content page-dashboard">
-        <div className="separator">
-          <div className="container">
-            <div className="title">
-              <h1>Dashboard <span>all your today tasks</span></h1>
-            </div>
-          </div>
-        </div>
+        <Header content={content} />
       </div>
     );
   }
