@@ -10,7 +10,7 @@ Meteor.publish('user', function () {
 Meteor.publish('usersByUsername', function (username) {
   check(username, String);
 
-  return Meteor.users.find({ _id: { $ne: this.userId }, username: { $regex: username } });
+  return Meteor.users.find({ _id: { $ne: this.userId }, username: { $regex: username, $options: 'i' } });
 });
 
 Meteor.publish('userById', function (id) {
