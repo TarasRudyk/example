@@ -18,6 +18,7 @@ import ProfileEdit from '/imports/ui/containers/pages/profile/profile-edit';
 import Profile from '/imports/ui/containers/pages/profile/profile';
 import CreateTask from '/imports/ui/containers/pages/project/tabs/tasks/create';
 import Task from '/imports/ui/containers/pages/project/tabs/tasks/task';
+import EditTask from '/imports/ui/containers/pages/project/tabs/tasks/edit';
 
 const checkLoggedIn = () => {
   if (!Meteor.userId()) {
@@ -94,6 +95,14 @@ privateRoutes.route('/project/:projectId/task/create', {
   action(params) {
     mount(MainLayout, {
       content: <CreateTask {...params} />
+    });
+  }
+});
+
+privateRoutes.route('/project/:projectId/task/:taskId/edit', {
+  action(params) {
+    mount(MainLayout, {
+      content: <EditTask {...params} />
     });
   }
 });
