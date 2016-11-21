@@ -3,7 +3,6 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 export const Tasks = new Mongo.Collection('tasks');
 
-
 Tasks.deny({
   insert() { return true; },
   update() { return true; },
