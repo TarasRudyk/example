@@ -8,13 +8,18 @@ export default class Task extends React.Component {
     super(props);
     this.state = {};
 
-    this.delete = this.delete.bind(this);
+    this.deleteHandler = this.deleteHandler.bind(this);
+    this.canDelete = this.canDelete.bind(this);
   }
-  isThisUserOwner() {
-    return Meteor.userId() === this.props.task.ownerId;
+  canDelete() {
+    return (Meteor.userId() === this.props.task.ownerId) ||
+    (Meteor.userId() === this.props.task.assignedAt);
   }
-  delete() {
-    deleteTask(this.props.task._id);
+  deleteHandler() {
+    const conf = confirm('Delete this task?'); // eslint-disable-line 
+    if (conf) {
+      deleteTask(this.props.task._id);
+    }
   }
   render() {
     const { name, description, startAt, assignedAt } = this.props.task;
@@ -28,7 +33,7 @@ export default class Task extends React.Component {
           <p>description: {description}</p>
           <p>Start at: {startAt ? startAt.toString() : ''}</p>
           <p>Assigned at: {assignedAt}</p>
-          {this.isThisUserOwner() ? <button onClick={this.delete}>Delete</button> : ''}
+          {this.canDelete() ? <button onClick={this.deleteHandler}>Delete</button> : ''}
         </div>
       </div>
     );

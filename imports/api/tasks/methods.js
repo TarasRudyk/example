@@ -61,11 +61,11 @@ export const edit = new ValidatedMethod({
 
     const task = Tasks.findOne({ _id: taskId });
 
-    if (this.userId !== task.ownerId) {
-      throw new Meteor.Error('You are not owner!');
+    if ((this.userId === task.ownerId) || (this.userId === task.assignedAt)) {
+      Tasks.update({ _id: taskId }, { $set: { name, description, startAt, assignedAt } });
+    } else {
+      throw new Meteor.Error("You can't update this task!");
     }
-
-    Tasks.update({ _id: taskId }, { $set: { name, description, startAt, assignedAt } });
 
     return `/project/${task.projectId}/task/${task._id}`;
   }
@@ -85,11 +85,11 @@ export const deleteTask = new ValidatedMethod({
       throw new Meteor.Error('User not authorized');
     }
 
-    if (this.userId !== task.ownerId) {
-      throw new Meteor.Error('You are not task owner!');
+    if ((this.userId === task.ownerId) || (this.userId === task.assignedAt)) {
+      Tasks.remove({ _id: taskId });
+    } else {
+      throw new Meteor.Error("You can't delete this task!");
     }
-
-    Tasks.remove({ _id: taskId });
 
     return `/project/${task.projectId}`;
   }

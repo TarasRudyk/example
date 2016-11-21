@@ -3,7 +3,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Projects } from '/imports/api/projects/projects';
 import { Tasks } from '/imports/api/tasks/tasks';
 
-import EditTask from '/imports/ui/pages/project/project-tabs/tasks/edit';
+import EditTask from '/imports/ui/pages/project/tabs/tasks/edit';
 
 export default createContainer(({ projectId, taskId }) => {
   const projectHandle = Meteor.subscribe('project', projectId);

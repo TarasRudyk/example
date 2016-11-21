@@ -16,10 +16,9 @@ import ProjectEdit from '/imports/ui/containers/pages/project/edit';
 import Elements from '/imports/ui/pages/elements';
 import ProfileEdit from '/imports/ui/containers/pages/profile/profile-edit';
 import Profile from '/imports/ui/containers/pages/profile/profile';
-import CreateTask from '/imports/ui/containers/pages/project/tasks/create';
-import EditTask from '/imports/ui/containers/pages/project/tasks/edit';
-
-import Task from '/imports/ui/containers/pages/project/tasks/task';
+import CreateTask from '/imports/ui/containers/pages/project/tabs/tasks/create';
+import Task from '/imports/ui/containers/pages/project/tabs/tasks/task';
+import EditTask from '/imports/ui/containers/pages/project/tabs/tasks/edit';
 
 const checkLoggedIn = () => {
   if (!Meteor.userId()) {
@@ -70,18 +69,24 @@ privateRoutes.route('/projects', {
   }
 });
 
-privateRoutes.route('/projects/create', {
-  action() {
-    mount(MainLayout, {
-      content: <ProjectCreate />
-    });
+privateRoutes.route('/project/:point', {
+  action({ point }) {
+    if (point === 'create') {
+      mount(MainLayout, {
+        content: <ProjectCreate />
+      });
+    } else {
+      mount(MainLayout, {
+        content: <Project id={point} />
+      });
+    }
   }
 });
 
-privateRoutes.route('/project/:id', {
+privateRoutes.route('/project/edit/:id', {
   action(params) {
     mount(MainLayout, {
-      content: <Project {...params} />
+      content: <ProjectEdit {...params} />
     });
   }
 });
@@ -130,14 +135,6 @@ FlowRouter.route('/profile/:id', {
   action(params) {
     mount(MainLayout, {
       content: <Profile {...params} />
-    });
-  }
-});
-
-privateRoutes.route('/project/edit/:id', {
-  action(params) {
-    mount(MainLayout, {
-      content: <ProjectEdit {...params} />
     });
   }
 });
