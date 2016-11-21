@@ -23,3 +23,13 @@ export const acceptInvitation = (invitationId) => {
     }
   });
 };
+
+export const refuseInvitation = (invitationId) => {
+  check(invitationId, String);
+
+  return Meteor.call('invitation.refuse', { invitationId }, (err) => {
+    if (err) {
+      addNotice(err.message);
+    }
+  });
+};
