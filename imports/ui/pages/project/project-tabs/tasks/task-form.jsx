@@ -4,30 +4,46 @@ import moment from 'moment';
 import formatValidation from 'string-format-validation';
 import { TAPi18n } from 'meteor/tap:i18n';
 
-import AssignUser from '/imports/ui/components/assign-user/main';
+import AssignUser from '/imports/ui/containers/components/assign-user';
 
 export default class TaskForm extends React.Component {
   constructor(props) {
     super(props);
 
-    const task = this.props.task;
-
     this.state = {
       name: {
-        value: task ? task.name : '',
+        value: '',
         error: ''
       },
       description: {
-        value: task ? task.description : ''
+        value: ''
       },
-      assignedAt: task ? task.assignedAt : '',
-      startAt: task ? task.startAt : null
+      taskId: '',
+      assignedAt: '',
+      startAt: null
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleOnAssigned = this.handleOnAssigned.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+  componentWillReceiveProps(nextProps) {
+    const task = nextProps.task;
+    if (task && this.state.taskId !== task._id) {
+      this.setState({
+        name: {
+          value: task.name,
+          error: ''
+        },
+        description: {
+          value: task.description || ''
+        },
+        assignedAt: task.assignedAt || '',
+        startAt: task.startAt ? moment(task.startAt) : null,
+        taskId: task._id
+      });
+    }
   }
   onSubmit(event) {
     event.preventDefault();
@@ -105,7 +121,11 @@ export default class TaskForm extends React.Component {
           placeholderText="Start task at"
           minDate={moment()}
         />
-        <AssignUser project={this.props.project} onAssigned={this.handleOnAssigned} />
+        <AssignUser
+          project={this.props.project}
+          onAssigned={this.handleOnAssigned}
+          assignedUserId={this.state.assignedAt}
+        />
         <input
           type="submit"
           value={this.props.submitLable}
@@ -118,7 +138,7 @@ export default class TaskForm extends React.Component {
 
 TaskForm.propTypes = {
   project: React.PropTypes.object,
-  task: React.PropTypes.object,
+  task: React.PropTypes.object, // eslint-disable-line 
   submitLable: React.PropTypes.string,
   onSubmit: React.PropTypes.func
 };

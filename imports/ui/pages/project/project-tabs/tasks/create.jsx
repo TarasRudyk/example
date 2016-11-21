@@ -2,7 +2,7 @@ import React from 'react';
 
 import { createTask } from '/imports/api/tasks/actions.js';
 
-import { TaskForm } from './task-form';
+import TaskForm from './task-form';
 
 export default class CreateTask extends React.Component {
   constructor(props) {

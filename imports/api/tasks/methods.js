@@ -31,3 +31,42 @@ export const create = new ValidatedMethod({
     });
   }
 });
+
+export const edit = new ValidatedMethod({
+  name: 'task.edit',
+  validate: new SimpleSchema({
+    taskId: {
+      type: String
+    },
+    name: {
+      type: String
+    },
+    description: {
+      type: String,
+      optional: true
+    },
+    startAt: {
+      type: Date,
+      optional: true
+    },
+    assignedAt: {
+      type: String,
+      optional: true
+    }
+  }).validator(),
+  run({ taskId, name, description, startAt, assignedAt }) {
+    if (!this.userId) {
+      throw new Meteor.Error('User not authorized');
+    }
+
+    const task = Tasks.findOne({ _id: taskId });
+
+    if (this.userId !== task.ownerId) {
+      throw new Meteor.Error('You are not owner!');
+    }
+
+    Tasks.update({ _id: taskId }, { $set: { name, description, startAt, assignedAt } });
+
+    return `/project/${task.projectId}/task/${task._id}`;
+  }
+});

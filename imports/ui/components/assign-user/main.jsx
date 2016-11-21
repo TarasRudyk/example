@@ -1,7 +1,7 @@
 import React from 'react';
 import clickOutside from 'react-click-outside';
 
-import AssignUserItems from '/imports/ui/containers/components/assign-user-items';
+import AssignUserItems from './items';
 import AssignedUser from './assigned-user';
 
 class AssignUser extends React.Component {
@@ -11,6 +11,7 @@ class AssignUser extends React.Component {
     this.state = {
       assignedUser: null,
       userQuery: '',
+      filteredUsers: [],
       isItemsVissible: false
     };
 
@@ -25,7 +26,11 @@ class AssignUser extends React.Component {
     });
 
     this.setState({
-      userQuery: target.value
+      userQuery: target.value,
+      filteredUsers: this.props.users.filter((u) => {
+        const regex = new RegExp(target.value, 'i');
+        return (u.username.match(regex) || u.profile.fullname.match(regex));
+      })
     });
   }
 
@@ -44,10 +49,17 @@ class AssignUser extends React.Component {
 
   render() {
     let view;
+    let assignedUser;
 
     if (this.state.assignedUser) {
+      assignedUser = this.state.assignedUser;
+    } else if (this.props.assignedUserId) {
+      assignedUser = this.props.users.filter(u => u._id === this.props.assignedUserId)[0];
+    }
+
+    if (assignedUser) {
       view = <AssignedUser
-        user={this.state.assignedUser}
+        user={assignedUser}
         onDelete={() => { this.handleUserSelect(null); }}
       />;
     } else {
@@ -63,9 +75,8 @@ class AssignUser extends React.Component {
             onFocus={this.handleInputChange}
           />
           <AssignUserItems
-            project={this.props.project}
-            userQuery={this.state.userQuery}
             isVisible={this.state.isItemsVisible}
+            users={this.state.filteredUsers}
             onUserSelect={this.handleUserSelect}
           />
         </div>);
@@ -76,7 +87,8 @@ class AssignUser extends React.Component {
 }
 
 AssignUser.propTypes = {
-  project: React.PropTypes.object,
+  assignedUserId: React.PropTypes.string,
+  users: React.PropTypes.array,
   onAssigned: React.PropTypes.func
 };
 

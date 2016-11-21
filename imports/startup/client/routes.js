@@ -17,6 +17,8 @@ import Elements from '/imports/ui/pages/elements';
 import ProfileEdit from '/imports/ui/containers/pages/profile/profile-edit';
 import Profile from '/imports/ui/containers/pages/profile/profile';
 import CreateTask from '/imports/ui/containers/pages/project/tasks/create';
+import EditTask from '/imports/ui/containers/pages/project/tasks/edit';
+
 import Task from '/imports/ui/containers/pages/project/tasks/task';
 
 const checkLoggedIn = () => {
@@ -88,6 +90,14 @@ privateRoutes.route('/project/:projectId/task/create', {
   action(params) {
     mount(MainLayout, {
       content: <CreateTask {...params} />
+    });
+  }
+});
+
+privateRoutes.route('/project/:projectId/task/:taskId/edit', {
+  action(params) {
+    mount(MainLayout, {
+      content: <EditTask {...params} />
     });
   }
 });

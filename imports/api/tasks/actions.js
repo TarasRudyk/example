@@ -26,3 +26,27 @@ export const createTask = ({ name, description, assignedAt, startAt }, projectId
     }
   });
 };
+
+export const editTask = (task) => {
+  check(task, {
+    taskId: String,
+    name: String,
+    description: String,
+    startAt: Match.OneOf(null, Date),
+    assignedAt: String
+  });
+
+  if (!formatValidation.validate({ min: 3, max: 25 }, task.name)) {
+    addNotice(TAPi18n.__('Task name is required'));
+    return false;
+  }
+
+  return Meteor.call('task.edit', task, (err, res) => {
+    if (err) {
+      addNotice(err.error);
+    }
+    if (res) {
+      FlowRouter.go(res);
+    }
+  });
+};
