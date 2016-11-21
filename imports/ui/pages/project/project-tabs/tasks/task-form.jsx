@@ -86,6 +86,7 @@ export default class TaskForm extends React.Component {
   handleDateChange(date) {
     if (date.isBefore(moment(), 'day')) return;
     const validDate = date.isValid() ? date : null;
+    this.datePicker.cancelFocusInput();
     this.setState({
       startAt: validDate
     });
@@ -116,6 +117,7 @@ export default class TaskForm extends React.Component {
           onChange={this.handleChange}
         />
         <DatePicker
+          ref={(dp) => { this.datePicker = dp; }}
           selected={this.state.startAt}
           onChange={this.handleDateChange}
           placeholderText="Start task at"
