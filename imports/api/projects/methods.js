@@ -17,24 +17,38 @@ export const create = new ValidatedMethod({
     if (!this.userId) {
       throw new Meteor.Error('User not authorized');
     }
+
     if (Projects.find({ name, ownerId: this.userId }).count()) {
       throw new Meteor.Error('Project with the same name exists');
     }
+
     const user = Meteor.users.findOne({ _id: this.userId });
     const usersProjects = user.projects || [];
     const usedColors = usersProjects.map(projects => projects.color._id);
     const colors = Colors.find({ _id: { $nin: usedColors } }).fetch();
+
     if (!colors.length) {
       throw new Meteor.Error('Too much projects was created');
     }
+
     const randomElem = Math.floor(Math.random() * (colors.length + 1));
     const projectId = Projects.insert({
       name,
       description,
       ownerId: this.userId,
       ownerName: Meteor.user().profile.fullname,
-      active: true,
-      creationDate: new Date()
+      creationDate: new Date(),
+      users: [{
+        id: this.userId,
+        fullname: Meteor.user().profile.fullname || Meteor.user().username,
+        role: 'owner',
+        gradient: {
+          id: colors[randomElem]._id,
+          direction: colors[randomElem].gradient.direction,
+          start: colors[randomElem].gradient.start,
+          stop: colors[randomElem].gradient.stop
+        }
+      }]
     });
     const projects = {
       projectId,

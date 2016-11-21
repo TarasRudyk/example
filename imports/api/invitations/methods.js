@@ -77,9 +77,11 @@ export const accept = new ValidatedMethod({
     const usersProjects = user.projects || [];
     const usedColors = usersProjects.map(projects => projects.color._id);
     const colors = Colors.find({ _id: { $nin: usedColors } }).fetch();
+
     if (!colors.length) {
       throw new Meteor.Error('Too much projects was created');
     }
+
     const randomElem = Math.floor(Math.random() * (colors.length + 1));
     const projects = {
       projectId: invitation.project.id,
@@ -104,7 +106,6 @@ export const accept = new ValidatedMethod({
       $push: { projects }
     });
 
-    // What kind of actions and types??
     createNotification.call({
       description: `${invitation.user.fullname} accept your invitation`,
       type: 'Invitation',
@@ -138,7 +139,6 @@ export const refuse = new ValidatedMethod({
       $pull: { usersIds: this.userId }
     });
 
-    // What kind of actions and types??
     createNotification.call({
       description: `${invitation.user.fullname} refused your invitation to ${invitation.project.name}`,
       type: 'Invitation',

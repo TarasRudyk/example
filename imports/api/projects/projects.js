@@ -1,6 +1,34 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
+const userOfProject = new SimpleSchema({
+  id: {
+    type: String
+  },
+  fullname: {
+    type: String
+  },
+  role: {
+    type: String,
+    allowedValues: ['owner', 'administrator', 'user']
+  },
+  gradient: {
+    type: Object
+  },
+  'gradient.id': {
+    type: String
+  },
+  'gradient.direction': {
+    type: String
+  },
+  'gradient.start': {
+    type: String
+  },
+  'gradient.stop': {
+    type: String
+  }
+});
+
 export const Projects = new Mongo.Collection('projects');
 
 Projects.deny({
@@ -27,7 +55,11 @@ Projects.schema = new SimpleSchema({
     type: Date
   },
   active: {
-    type: Boolean
+    type: Boolean,
+    defaultValue: true
+  },
+  users: {
+    type: [userOfProject]
   },
   usersIds: {
     type: [String],
