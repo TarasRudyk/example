@@ -10,8 +10,16 @@ export default createContainer(() => {
   const userId = Meteor.userId();
   const userProjectIds = Projects.find({ usersIds: userId }).map(project => project._id);
   const tasksHandle = Meteor.subscribe('tasks.byUserProjects', userProjectIds);
-  const tasks = tasksHandle.ready() ?
-    Tasks.find({ projectId: { $in: userProjectIds } }).fetch() : [];
+
+  const assignedAtTasks = tasksHandle.ready() ?
+    Tasks.find({ projectId: { $in: userProjectIds }, assignedAt: userId },
+      { sort: [['estimate', 'asc'], ['creationDate', 'desc']] }).fetch() : [];
+
+  const notAssignedAtTasks = tasksHandle.ready() ?
+    Tasks.find({ projectId: { $in: userProjectIds }, assignedAt: { $ne: userId } },
+      { sort: [['creationDate', 'desc'], ['assignedAt', 'asc']] }).fetch() : [];
+
+  const tasks = assignedAtTasks.concat(notAssignedAtTasks);
 
   return {
     tasks

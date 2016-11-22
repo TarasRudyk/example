@@ -41,6 +41,11 @@ Tasks.schema = new SimpleSchema({
     type: String,
     optional: true,
     label: '_id of assigned user'
+  },
+  estimate: {
+    type: Number,
+    optional: true,
+    label: 'Number of minutes of task estimation'
   }
 });
 
