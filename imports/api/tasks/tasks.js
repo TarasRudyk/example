@@ -39,7 +39,8 @@ Tasks.schema = new SimpleSchema({
   },
   assignedAt: {
     type: String,
-    optional: true
+    optional: true,
+    label: '_id of assigned user'
   }
 });
 
