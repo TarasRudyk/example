@@ -27,18 +27,16 @@ export default class SingleProject extends React.Component {
   }
   render() {
     const { project } = this.props;
-    const content = {
-      header: project.name,
-      subHeader: `Owner:${project.ownerName}`
-    };
+
     return (
       <div className="page-main-content page-project">
-        <PageHeader content={content}>
+        <PageHeader header={project.name} subHeader={project.ownerName} hx={1}>
           {this.props.isOwner ?
-            <div className="title-right-block">
+            <div>
               <a href={`/project/edit/${project._id}`} className="button green">Edit</a>
               <button className="button red" value={project._id} onClick={this.deleteHandler}>Remove</button>
-            </div> : null}
+            </div>
+          : null}
         </PageHeader>
         <Tabs onSelect={this.handleSelect}>
           <TabList>

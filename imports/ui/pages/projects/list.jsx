@@ -17,17 +17,10 @@ export default class Projects extends React.Component {
     FlowRouter.setQueryParams({ page });
   }
   render() {
-    const content = {
-      header: 'Projects',
-      subHeader: 'all your projects'
-
-    };
     return (
       <div className="page-main-content page-projects">
-        <PageHeader content={content}>
-          <div className="title-right-block">
-            <a href="/project/create" className="button green">New project</a>
-          </div>
+        <PageHeader header="Projects" subHeader="all your projects" hx={1}>
+          <a href="/project/create" className="button green">New project</a>
         </PageHeader>
         <div className="list">
           <div className="container">

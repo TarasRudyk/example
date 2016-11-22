@@ -9,13 +9,9 @@ export default class Dashboard extends React.Component {
     this.state = {};
   }
   render() {
-    const content = {
-      header: 'Dashboard',
-      subHeader: 'all your today tasks'
-    };
     return (
       <div className="page-main-content page-dashboard">
-        <PageHeader content={content} />
+        <PageHeader header={'Dashboard'} subHeader={'all your today tasks'} hx={1} />
       </div>
     );
   }
