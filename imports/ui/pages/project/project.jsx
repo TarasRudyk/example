@@ -2,6 +2,7 @@ import React from 'react';
 import Tasks from '/imports/ui/containers/pages/project/tabs/tasks/tasks';
 import People from '/imports/ui/pages/project/tabs/people/people';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { deleteProject } from '/imports/api/projects/actions.js';
 import PageHeader from '/imports/ui/components/header/pageHeader';
 import Overview from './tabs/overview';
 
@@ -11,6 +12,13 @@ export default class SingleProject extends React.Component {
     super(props);
 
     Tabs.setUseDefaultStyles(false);
+  }
+  deleteHandler(e) {
+    const id = e.target.value;
+    const conf = confirm('Are you sure?'); // eslint-disable-line
+    if (conf) {
+      deleteProject(id);
+    }
   }
   render() {
     const { project } = this.props;
