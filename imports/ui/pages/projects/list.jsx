@@ -24,7 +24,7 @@ export default class Projects extends React.Component {
           <a href="/project/create" className="button green">New project</a>
         </PageHeader>
         <div className="list">
-          <div className="container limit">
+          <div className="container">
             {this.props.loaded ? this.props.projects.map((p, i) => (
               <ProjectItem
                 key={i}

@@ -6,15 +6,17 @@
 
 .loader {
   position: relative;
-  border-bottom: 2px solid #53d769;
-
+  border-bottom: 1px solid #F4F4F4;
+  &.active {
+    border-bottom: 1px solid #53d769;
+  }
   &.active:before {
     content: '';
     position: absolute;
     left: 0;
     top: 0;
     width: 150px;
-    height: 2px;
+    height: 1px;
     background: #3E9D4E;
     animation: move 3s infinite ease;
   }
