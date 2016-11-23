@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Notifications from '/imports/ui/containers/components/side-content/notifications';
-import Tasks from '/imports/ui/containers/components/side-content/tasks-list';
+import Tasks from '/imports/ui/containers/components/side-content/tasks';
 import Loading from '/imports/ui/components/side-content/loading';
 
 export default class SideContent extends React.Component {

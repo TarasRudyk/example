@@ -10,6 +10,7 @@ export default class Header extends React.Component {
 
     this.getNotificationsCount = this.getNotificationsCount.bind(this);
     this.getNotificationsClass = this.getNotificationsClass.bind(this);
+    this.getTasksClass = this.getTasksClass.bind(this);
     this.toggleSideContent = this.toggleSideContent.bind(this);
   }
   getNotificationsCount() {
@@ -22,6 +23,9 @@ export default class Header extends React.Component {
   getNotificationsClass() {
     return this.props.notificationsCount ? 'nav-messages with-counter' : 'nav-messages';
   }
+  getTasksClass() {
+    return this.props.assignedTasksCount ? 'nav-tasks with-counter' : 'nav-tasks';
+  }
   getActiveClass(currentTarget) {
     if (!currentTarget) return '';
     return this.props.sideContentName === currentTarget.dataset.name ? 'active' : '';
@@ -32,6 +36,7 @@ export default class Header extends React.Component {
     }
   }
   render() {
+    const { assignedTasksCount } = this.props;
     return (
       <header>
         <div className="container">
@@ -61,10 +66,11 @@ export default class Header extends React.Component {
               <a
                 ref={(c) => { this.tasksBtnElem = c; }}
                 href=""
-                className={`nav-all-tasks ${this.getActiveClass(this.tasksBtnElem)}`}
+                className={`${this.getTasksClass()} ${this.getActiveClass(this.tasksBtnElem)}`}
                 data-name="tasks" onClick={this.toggleSideContent}
               >
                 <i className="material-icons">inbox</i>
+                <span>{assignedTasksCount}</span>
               </a>
             </div>
           </nav>
@@ -78,5 +84,6 @@ Header.propTypes = {
   userIsLogin: React.PropTypes.bool,
   user: React.PropTypes.object,
   notificationsCount: React.PropTypes.number,
+  assignedTasksCount: React.PropTypes.number,
   sideContentName: React.PropTypes.string
 };
