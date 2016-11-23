@@ -1,4 +1,6 @@
 import React from 'react';
+import PageHeader from '/imports/ui/components/header/pageHeader';
+
 
 export default class Dashboard extends React.Component {
   constructor(props) {
@@ -9,13 +11,7 @@ export default class Dashboard extends React.Component {
   render() {
     return (
       <div className="page-main-content page-dashboard">
-        <div className="separator">
-          <div className="container">
-            <div className="title">
-              <h1>Dashboard <span>all your today tasks</span></h1>
-            </div>
-          </div>
-        </div>
+        <PageHeader header={'Dashboard'} subHeader={'all your today tasks'} hx={1} />
       </div>
     );
   }

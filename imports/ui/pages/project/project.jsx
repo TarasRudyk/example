@@ -5,8 +5,10 @@ import People from '/imports/ui/pages/project/tabs/people/people';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import { deleteProject } from '/imports/api/projects/actions.js';
+import PageHeader from '/imports/ui/components/header/pageHeader';
 
 import Overview from './tabs/overview';
+
 
 export default class SingleProject extends React.Component {
   constructor(props) {
@@ -28,18 +30,14 @@ export default class SingleProject extends React.Component {
 
     return (
       <div className="page-main-content page-project">
-        <div className="separator">
-          <div className="container">
-            <div className="title">
-              <h1>{project.name} <span>Owner: {project.ownerName}</span></h1>
-              {this.props.isOwner ?
-                <div className="title-right-block">
-                  <a href={`/project/edit/${project._id}`} className="button green">Edit</a>
-                  <button className="button red" value={project._id} onClick={this.deleteHandler}>Remove</button>
-                </div> : null}
+        <PageHeader header={project.name} subHeader={project.ownerName} hx={1}>
+          {this.props.isOwner ?
+            <div>
+              <a href={`/project/edit/${project._id}`} className="button green">Edit</a>
+              <button className="button red" value={project._id} onClick={this.deleteHandler}>Remove</button>
             </div>
-          </div>
-        </div>
+          : null}
+        </PageHeader>
         <Tabs onSelect={this.handleSelect}>
           <TabList>
             <Tab>Overview</Tab>

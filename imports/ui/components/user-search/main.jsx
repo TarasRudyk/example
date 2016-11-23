@@ -30,7 +30,7 @@ class UserSearch extends React.Component {
       [target.name]: target.value
     });
 
-    if (target.value && target.value.length > 3) {
+    if (target.value && target.value.length > 1) {
       getLocalState().set('username-search', target.value);
       this.setState({ isOpened: true });
     } else {
@@ -42,7 +42,7 @@ class UserSearch extends React.Component {
     }
   }
   focusIn({ target }) {
-    if (target.value && target.value.length > 3) {
+    if (target.value && target.value.length > 1) {
       this.setState({ isOpened: true });
       getLocalState().set('username-search', target.value);
     }
