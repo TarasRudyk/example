@@ -1,13 +1,20 @@
-$body-color: #f8f8f8;
-$header-shadow-color: #dbd9d9;
+$body-color: #fff;
+
+$header-background-color: #fefefe;
+$header-link-color: #7c7c7c;
+$header-link-hover-color: #575556;
+$header-active-icon-color: #53d769;
+
+$loader-border-color: #53d769;
+
 $separator-border-color: #dbd9d9;
-$link-light-color: #747373;
-$link-light-hover-color: #4c4b4b;
-$link-color: #605f5f;
-$link-hover-color: #252323;
-$link-blue-color: #227dac;
-$link-blue-hover-color: #185879;
+
+$link-color: #3779f2;
+$link-hover-color: #2959B1;
+$link-hidden-color: #7c7c7c;
+$link-hidden-hover-color: #575556;
+
 $title-color: #252323;
-$subtitle-color: #4c5c68;
+$subtitle-color: #7c7c7c;
 $blue-button-color: #1da9fc;
 $active-tab-color: #1da9fc;

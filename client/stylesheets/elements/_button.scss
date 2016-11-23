@@ -1,10 +1,10 @@
 .button {
   display: inline-block;
-  height: 42px;
+  height: 39px;
   border: 1px solid #838f9e;
   border-radius: 6px;
   font-size: 16px;
-  padding: 12px 15px;
+  padding: 10px 12px;
   background: #838f9e;
   cursor: pointer;
   color: #fff;
@@ -13,7 +13,7 @@
   vertical-align: middle;
   box-sizing: border-box;
   line-height: 1;
-  min-width: 100px;
+  min-width: 90px;
   font-family: 'Open Sans Light';
 
   &:hover {
@@ -21,11 +21,9 @@
     border-color: #6b7c8f;
     color: #fff;
   }
-
   &:active {
     background: #838f9e;
   }
-
   &:last-child {
     margin-right: 0;
   }
@@ -36,13 +34,13 @@
     font-size: 14px;
   }
   &.green {
-    background: #45b931;
-    border-color: #45b931;
+    background: #53d769;
+    border-color: #53d769;
     color: #fff;
 
     &:hover {
-      background: #31a01a;
-      border-color: #31a01a;
+      background: #46b058;
+      border-color: #46b058;
     }
 
     &:active {

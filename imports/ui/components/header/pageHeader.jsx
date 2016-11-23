@@ -33,7 +33,7 @@ export default class pageHeader extends React.Component {
     }
     return (
       <div className="separator">
-        <div className="container">
+        <div className="container limit">
           <div className="title">
             {leftBlock}
             <div className="title-right-block">
