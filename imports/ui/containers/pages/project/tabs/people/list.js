@@ -9,11 +9,12 @@ import PeopleList from '/imports/ui/pages/project/tabs/people/list';
 export default createContainer(({ projectId }) => {
   const projectHandle = Meteor.subscribe('project', projectId);
   const project = projectHandle.ready() ? Projects.findOne() : {};
+  const usersIds = project.users ? project.users.map(u => u.id) : [];
 
-  const peopleHandle = Meteor.subscribe('usersByIds', project.usersIds || []);
+  const peopleHandle = Meteor.subscribe('usersByIds', usersIds);
   const people = peopleHandle.ready() ? Meteor.users.find({
     _id: {
-      $in: project.usersIds
+      $in: usersIds
     }
   }).fetch() : [];
 
