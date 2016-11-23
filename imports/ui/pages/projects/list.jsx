@@ -5,7 +5,8 @@ import Pagination from 'react-js-pagination';
 
 import ProjectItem from '/imports/ui/pages/projects/item';
 import Loading from '/imports/ui/components/side-content/loading';
-import Header from '/imports/ui/components/header/mainHeader';
+
+import PageHeader from '/imports/ui/components/header/pageHeader';
 
 export default class Projects extends React.Component {
   constructor(props) {
@@ -17,16 +18,11 @@ export default class Projects extends React.Component {
     FlowRouter.setQueryParams({ page });
   }
   render() {
-    const content = {
-      header: 'Dashboard',
-      subHeader: 'all your today tasks',
-      rightSide: {
-        name: 'Projects'
-      }
-    };
     return (
       <div className="page-main-content page-projects">
-        <Header content={content} />
+        <PageHeader header="Projects" subHeader="all your projects" hx={1}>
+          <a href="/project/create" className="button green">New project</a>
+        </PageHeader>
         <div className="list">
           <div className="container">
             {this.props.loaded ? this.props.projects.map((p, i) => (

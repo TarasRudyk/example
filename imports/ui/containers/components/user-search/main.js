@@ -9,10 +9,10 @@ export default createContainer(() => {
   const username = getLocalState().get('username-search');
   let users = [];
 
-  if (username && username.length > 3) {
+  if (username && username.length > 1) {
     const usersHandle = Meteor.subscribe('usersByUsername', username);
     users = usersHandle.ready()
-      ? Meteor.users.find({ _id: { $ne: this.userId }, username: { $regex: username } }).fetch()
+      ? Meteor.users.find({ _id: { $ne: this.userId }, username: { $regex: username, $options: 'i' } }).fetch()
       : [];
   }
 

@@ -1,11 +1,10 @@
 import React from 'react';
 import Tasks from '/imports/ui/containers/pages/project/tabs/tasks/tasks';
 import People from '/imports/ui/pages/project/tabs/people/people';
-import Header from '/imports/ui/components/header/mainHeader';
-
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-
+import PageHeader from '/imports/ui/components/header/pageHeader';
 import Overview from './tabs/overview';
+
 
 export default class SingleProject extends React.Component {
   constructor(props) {
@@ -15,18 +14,16 @@ export default class SingleProject extends React.Component {
   }
   render() {
     const { project } = this.props;
-    const content = {
-      header: project.name,
-      subHeader: `Owner: ${project.ownerName}`,
-      rightSide: {
-        name: 'SingleProject',
-        project,
-        isOwner: this.props.isOwner
-      }
-    };
     return (
       <div className="page-main-content page-project">
-        <Header content={content} />
+        <PageHeader header={project.name} subHeader={project.ownerName} hx={1}>
+          {this.props.isOwner ?
+            <div>
+              <a href={`/project/edit/${project._id}`} className="button green">Edit</a>
+              <button className="button red" value={project._id} onClick={this.deleteHandler}>Remove</button>
+            </div>
+          : null}
+        </PageHeader>
         <Tabs onSelect={this.handleSelect}>
           <TabList>
             <Tab>Overview</Tab>
