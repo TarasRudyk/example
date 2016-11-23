@@ -12,6 +12,7 @@ export default class SingleProject extends React.Component {
     super(props);
 
     Tabs.setUseDefaultStyles(false);
+    this.deleteHandler = this.deleteHandler.bind(this);
   }
   deleteHandler(e) {
     const id = e.target.value;
