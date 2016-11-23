@@ -4,7 +4,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Tasks } from '/imports/api/tasks/tasks';
 import { Projects } from '/imports/api/projects/projects';
 
-import TasksList from '/imports/ui/components/side-content/tasks-list';
+import TasksList from '/imports/ui/components/side-content/tasks';
 
 export default createContainer(() => {
   const userId = Meteor.userId();
