@@ -1,0 +1,22 @@
+import { Meteor } from 'meteor/meteor';
+import { createContainer } from 'meteor/react-meteor-data';
+
+import Dashboard from '/imports/ui/pages/dashboard';
+import { Tasks } from '/imports/api/tasks/tasks';
+import { Projects } from '/imports/api/projects/projects';
+
+export default createContainer(() => {
+  const userIsLogin = !!Meteor.userId();
+  const userId = Meteor.userId();
+  const userProjectIds = Projects.find({ usersIds: userId }).map(project => project._id);
+  const tasksHandle = Meteor.subscribe('tasks.byUserProjects', userProjectIds);
+
+  const tasks = tasksHandle.ready() ?
+    Tasks.find({ projectId: { $in: userProjectIds }, assignedAt: userId, isAccepted: true },
+      { sort: [['estimate', 'asc'], ['creationDate', 'desc']] }).fetch() : [];
+
+  return {
+    userIsLogin,
+    tasks
+  };
+}, Dashboard);

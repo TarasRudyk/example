@@ -45,6 +45,11 @@ Tasks.schema = new SimpleSchema({
     type: Number,
     optional: true,
     label: 'Number of minutes of task estimation'
+  },
+  isAccepted: {
+    type: Boolean,
+    optional: true,
+    label: 'Task is accepted by user'
   }
 });
 
