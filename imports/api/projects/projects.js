@@ -45,12 +45,6 @@ Projects.schema = new SimpleSchema({
     type: String,
     optional: true
   },
-  ownerId: {
-    type: String
-  },
-  ownerName: {
-    type: String
-  },
   creationDate: {
     type: Date
   },
@@ -61,13 +55,15 @@ Projects.schema = new SimpleSchema({
   users: {
     type: [userOfProject]
   },
-  usersIds: {
-    type: [String],
-    optional: true
-  },
   tasksIds: {
     type: [String],
     optional: true
+  }
+});
+
+Projects.helpers({
+  getOwnerInfo() {
+    return this.users.find(u => u.role === 'owner') || {};
   }
 });
 

@@ -22,39 +22,31 @@ export const create = new ValidatedMethod({
       throw new Meteor.Error('Project with the same name exists');
     }
 
-    const user = Meteor.users.findOne({ _id: this.userId });
-    const usersProjects = user.projects || [];
-    const usedColors = usersProjects.map(projects => projects.color._id);
-    const colors = Colors.find({ _id: { $nin: usedColors } }).fetch();
+    const userGradients = Meteor.users.findOne({ _id: this.userId }).getGradientsIds();
+    const colors = Colors.find({ _id: { $nin: userGradients } }).fetch();
 
     if (!colors.length) {
       throw new Meteor.Error('Too much projects was created');
     }
 
-    const randomElem = Math.floor(Math.random() * (colors.length + 1));
+    const random = Math.floor(Math.random() * (colors.length + 1));
     const projectId = Projects.insert({
       name,
       description,
-      ownerId: this.userId,
-      ownerName: Meteor.user().profile.fullname,
       creationDate: new Date(),
       users: [{
         id: this.userId,
         fullname: Meteor.user().profile.fullname || Meteor.user().username,
         role: 'owner',
         gradient: {
-          id: colors[randomElem]._id,
-          direction: colors[randomElem].gradient.direction,
-          start: colors[randomElem].gradient.start,
-          stop: colors[randomElem].gradient.stop
+          id: colors[random]._id,
+          direction: colors[random].gradient.direction,
+          start: colors[random].gradient.start,
+          stop: colors[random].gradient.stop
         }
       }]
     });
-    const projects = {
-      projectId,
-      color: colors[randomElem]
-    };
-    Meteor.users.update({ _id: this.userId }, { $push: { projects } });
+
     return projectId;
   }
 });

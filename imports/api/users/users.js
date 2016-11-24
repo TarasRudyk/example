@@ -1,6 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
+import _ from 'lodash';
+
+import { Projects } from '/imports/api/projects/projects';
+
 Meteor.users.schema = new SimpleSchema({
   createdAt: {
     type: Date
@@ -43,34 +47,14 @@ Meteor.users.schema = new SimpleSchema({
   'profile.avatar': {
     type: String,
     optional: true
-  },
-  projects: {
-    type: Array,
-    optional: true
-  },
-  'projects.$': {
-    type: Object
-  },
-  'projects.$.projectId': {
-    type: String
-  },
-  'projects.$.color': {
-    type: Object
-  },
-  'projects.$.color._id': {
-    type: String
-  },
-  'projects.$.color.gradient': {
-    type: Object
-  },
-  'projects.$.color.gradient.start': {
-    type: String
-  },
-  'projects.$.color.gradient.stop': {
-    type: String
-  },
-  'projects.$.color.gradient.direction': {
-    type: String
+  }
+});
+
+Meteor.users.helpers({
+  getGradientsIds() {
+    const userProjects = Projects.find({ 'users.id': this._id }).fetch();
+    const userInfo = userProjects.map(p => _.find(p.users, u => u.id === this._id));
+    return userInfo.map(g => g.gradient.id) || [];
   }
 });
 
