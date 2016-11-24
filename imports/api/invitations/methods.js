@@ -19,8 +19,9 @@ export const create = new ValidatedMethod({
     }
 
     const project = Projects.findOne({ _id: projectId, active: true });
+    const ownerId = project.getOwnerInfo().id;
 
-    if (!project || project.ownerId !== this.userId) {
+    if (!project || ownerId !== this.userId) {
       throw new Meteor.Error('problem-with-project');
     }
 
@@ -40,7 +41,7 @@ export const create = new ValidatedMethod({
       project: {
         id: projectId,
         name: project.name,
-        ownerId: project.ownerId
+        ownerId: ownerId
       },
       user: {
         id: userId,
@@ -67,7 +68,10 @@ export const accept = new ValidatedMethod({
       throw new Meteor.Error('invitation-not-found');
     }
 
-    const project = Projects.findOne({ _id: invitation.project.id, usersIds: this.userId });
+    const project = Projects.findOne({
+      _id: invitation.project.id,
+      users: { $elemMatch: { id: this.userId } }
+    });
 
     if (project) {
       throw new Meteor.Error('the-user-has-already-been-added-to-the-project');
