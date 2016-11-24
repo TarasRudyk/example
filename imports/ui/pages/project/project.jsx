@@ -1,12 +1,9 @@
 import React from 'react';
 import Tasks from '/imports/ui/containers/pages/project/tabs/tasks/tasks';
 import People from '/imports/ui/pages/project/tabs/people/people';
-
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-
 import { deleteProject } from '/imports/api/projects/actions.js';
 import PageHeader from '/imports/ui/components/header/pageHeader';
-
 import Overview from './tabs/overview';
 
 
@@ -15,7 +12,6 @@ export default class SingleProject extends React.Component {
     super(props);
 
     Tabs.setUseDefaultStyles(false);
-
     this.deleteHandler = this.deleteHandler.bind(this);
   }
   deleteHandler(e) {
@@ -27,7 +23,6 @@ export default class SingleProject extends React.Component {
   }
   render() {
     const { project } = this.props;
-
     return (
       <div className="page-main-content page-project">
         <PageHeader header={project.name} subHeader={project.ownerName} hx={1}>

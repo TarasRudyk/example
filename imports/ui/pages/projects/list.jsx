@@ -5,6 +5,7 @@ import Pagination from 'react-js-pagination';
 
 import ProjectItem from '/imports/ui/pages/projects/item';
 import Loading from '/imports/ui/components/side-content/loading';
+
 import PageHeader from '/imports/ui/components/header/pageHeader';
 
 export default class Projects extends React.Component {

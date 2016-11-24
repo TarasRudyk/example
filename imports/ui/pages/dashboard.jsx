@@ -1,7 +1,6 @@
 import React from 'react';
 import PageHeader from '/imports/ui/components/header/pageHeader';
 
-
 export default class Dashboard extends React.Component {
   constructor(props) {
     super(props);
