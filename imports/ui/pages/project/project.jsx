@@ -13,6 +13,7 @@ export default class SingleProject extends React.Component {
 
     Tabs.setUseDefaultStyles(false);
     this.deleteHandler = this.deleteHandler.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
   }
   deleteHandler(e) {
     const id = e.target.value;
@@ -21,8 +22,17 @@ export default class SingleProject extends React.Component {
       deleteProject(id);
     }
   }
+  handleSelect(index) {
+    const tabIndex = {
+      projectId: this.props.project._id,
+      index
+    };
+    localStorage.setItem('tabIndex', JSON.stringify(tabIndex));  // eslint-disable-line
+  }
   render() {
     const { project, owner } = this.props;
+    const index = JSON.parse(localStorage.getItem('tabIndex')); // eslint-disable-line
+
     return (
       <div className="page-main-content page-project">
         <PageHeader header={project.name} subHeader={owner.fullname} hx={1}>
@@ -33,7 +43,10 @@ export default class SingleProject extends React.Component {
             </div>
           : null}
         </PageHeader>
-        <Tabs onSelect={this.handleSelect}>
+        <Tabs
+          onSelect={this.handleSelect}
+          selectedIndex={(index.projectId === project._id) ? index.index : 0}
+        >
           <TabList>
             <Tab>Overview</Tab>
             <Tab>Tasks</Tab>
