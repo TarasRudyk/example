@@ -110,6 +110,6 @@ export const deleteUserFromProject = new ValidatedMethod({
       recipientId: userId
     });
     Meteor.users.update({ _id: userId }, { $pull: { projects: { projectId } } });
-    return Projects.update({ _id: projectId }, { $pull: { usersIds: userId } });
+    return Projects.update({ _id: projectId }, { $pull: { users: { id: userId } } });
   }
 });

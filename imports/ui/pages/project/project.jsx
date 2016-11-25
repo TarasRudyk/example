@@ -43,7 +43,7 @@ export default class SingleProject extends React.Component {
             <Overview description={project.description} />
           </TabPanel>
           <TabPanel>
-            <Tasks projectId={project._id} projectOwnerId={project.ownerId} />
+            <Tasks projectId={project._id} projectOwnerId={owner.id} />
           </TabPanel>
           <TabPanel>
             <People projectId={project._id} />
