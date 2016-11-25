@@ -22,10 +22,10 @@ export default class SingleProject extends React.Component {
     }
   }
   render() {
-    const { project } = this.props;
+    const { project, owner } = this.props;
     return (
       <div className="page-main-content page-project">
-        <PageHeader header={project.name} subHeader={project.ownerName} hx={1}>
+        <PageHeader header={project.name} subHeader={owner.fullname} hx={1}>
           {this.props.isOwner ?
             <div>
               <a href={`/project/edit/${project._id}`} className="button green">Edit</a>
@@ -43,7 +43,7 @@ export default class SingleProject extends React.Component {
             <Overview description={project.description} />
           </TabPanel>
           <TabPanel>
-            <Tasks projectId={project._id} projectOwnerId={project.ownerId} />
+            <Tasks projectId={project._id} projectOwnerId={owner.id} />
           </TabPanel>
           <TabPanel>
             <People projectId={project._id} />
@@ -56,5 +56,6 @@ export default class SingleProject extends React.Component {
 
 SingleProject.propTypes = {
   project: React.PropTypes.object,
+  owner: React.PropTypes.object,
   isOwner: React.PropTypes.bool
 };

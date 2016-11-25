@@ -19,8 +19,9 @@ export const create = new ValidatedMethod({
     }
 
     const project = Projects.findOne({ _id: projectId, active: true });
+    const ownerId = project.getOwnerInfo().id;
 
-    if (!project || project.ownerId !== this.userId) {
+    if (!project || ownerId !== this.userId) {
       throw new Meteor.Error('problem-with-project');
     }
 
@@ -40,7 +41,7 @@ export const create = new ValidatedMethod({
       project: {
         id: projectId,
         name: project.name,
-        ownerId: project.ownerId
+        ownerId: ownerId
       },
       user: {
         id: userId,
@@ -67,24 +68,23 @@ export const accept = new ValidatedMethod({
       throw new Meteor.Error('invitation-not-found');
     }
 
-    const project = Projects.findOne({ _id: invitation.project.id, usersIds: this.userId });
+    const project = Projects.findOne({
+      _id: invitation.project.id,
+      users: { $elemMatch: { id: this.userId } }
+    });
 
     if (project) {
       throw new Meteor.Error('the-user-has-already-been-added-to-the-project');
     }
 
-    const user = Meteor.users.findOne({ _id: this.userId });
-    const usersProjects = user.projects || [];
-    const usedColors = usersProjects.map(projects => projects.color._id);
-    const colors = Colors.find({ _id: { $nin: usedColors } }).fetch();
+    const userGradients = Meteor.users.findOne({ _id: this.userId }).getGradientsIds();
+    const colors = Colors.find({ _id: { $nin: userGradients } }).fetch();
+
     if (!colors.length) {
       throw new Meteor.Error('Too much projects was created');
     }
-    const randomElem = Math.floor(Math.random() * (colors.length + 1));
-    const projects = {
-      projectId: invitation.project.id,
-      color: colors[randomElem]
-    };
+
+    const random = Math.floor(Math.random() * (colors.length + 1));
 
     Invitations.update({
       _id: invitationId
@@ -95,16 +95,21 @@ export const accept = new ValidatedMethod({
     Projects.update({
       _id: invitation.project.id
     }, {
-      $push: { usersIds: this.userId }
+      $push: {
+        users: {
+          id: this.userId,
+          fullname: Meteor.user().profile.fullname || Meteor.user().username,
+          role: 'user',
+          gradient: {
+            id: colors[random]._id,
+            direction: colors[random].gradient.direction,
+            start: colors[random].gradient.start,
+            stop: colors[random].gradient.stop
+          }
+        }
+      }
     });
 
-    Meteor.users.update({
-      _id: this.userId
-    }, {
-      $push: { projects }
-    });
-
-    // What kind of actions and types??
     createNotification.call({
       description: `${invitation.user.fullname} accept your invitation`,
       type: 'Invitation',
@@ -135,10 +140,9 @@ export const refuse = new ValidatedMethod({
     Projects.update({
       _id: invitation.project.id
     }, {
-      $pull: { usersIds: this.userId }
+      $pull: { users: { id: this.userId } }
     });
 
-    // What kind of actions and types??
     createNotification.call({
       description: `${invitation.user.fullname} refused your invitation to ${invitation.project.name}`,
       type: 'Invitation',
