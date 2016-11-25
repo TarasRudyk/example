@@ -77,20 +77,14 @@ export const accept = new ValidatedMethod({
       throw new Meteor.Error('the-user-has-already-been-added-to-the-project');
     }
 
-    const user = Meteor.users.findOne({ _id: this.userId });
-    const usersProjects = user.projects || [];
-    const usedColors = usersProjects.map(projects => projects.color._id);
-    const colors = Colors.find({ _id: { $nin: usedColors } }).fetch();
+    const userGradients = Meteor.users.findOne({ _id: this.userId }).getGradientsIds();
+    const colors = Colors.find({ _id: { $nin: userGradients } }).fetch();
 
     if (!colors.length) {
       throw new Meteor.Error('Too much projects was created');
     }
 
-    const randomElem = Math.floor(Math.random() * (colors.length + 1));
-    const projects = {
-      projectId: invitation.project.id,
-      color: colors[randomElem]
-    };
+    const random = Math.floor(Math.random() * (colors.length + 1));
 
     Invitations.update({
       _id: invitationId
@@ -101,13 +95,19 @@ export const accept = new ValidatedMethod({
     Projects.update({
       _id: invitation.project.id
     }, {
-      $push: { usersIds: this.userId }
-    });
-
-    Meteor.users.update({
-      _id: this.userId
-    }, {
-      $push: { projects }
+      $push: {
+        users: {
+          id: this.userId,
+          fullname: Meteor.user().profile.fullname || Meteor.user().username,
+          role: 'user',
+          gradient: {
+            id: colors[random]._id,
+            direction: colors[random].gradient.direction,
+            start: colors[random].gradient.start,
+            stop: colors[random].gradient.stop
+          }
+        }
+      }
     });
 
     createNotification.call({
@@ -140,7 +140,7 @@ export const refuse = new ValidatedMethod({
     Projects.update({
       _id: invitation.project.id
     }, {
-      $pull: { usersIds: this.userId }
+      $pull: { users: { id: this.userId } }
     });
 
     createNotification.call({
