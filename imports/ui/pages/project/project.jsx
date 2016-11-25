@@ -45,7 +45,7 @@ export default class SingleProject extends React.Component {
         </PageHeader>
         <Tabs
           onSelect={this.handleSelect}
-          selectedIndex={(index.projectId === project._id) ? index.index : 0}
+          selectedIndex={(index && index.projectId === project._id) ? index.index : 0}
         >
           <TabList>
             <Tab>Overview</Tab>
