@@ -25,6 +25,7 @@
     "react-datepicker": "^0.34.0",
     "react-delete-confirm": "^1.0.1",
     "react-dom": "^15.3.2",
+    "react-drag-and-drop": "^2.2.0",
     "react-js-pagination": "^2.0.1",
     "react-mounter": "^1.2.0",
     "react-notification": "^6.3.0",
