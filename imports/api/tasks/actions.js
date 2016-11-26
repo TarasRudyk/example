@@ -64,3 +64,17 @@ export const deleteTask = (taskId) => {
     }
   });
 };
+
+export const acceptTask = (taskId) => {
+  check(taskId, String);
+
+  return Meteor.call('task.accept', { taskId }, (err, res) => {
+    if (err) {
+      addNotice(err.error);
+    }
+
+    if (res) {
+      console.log('New task is accepted! Now you can see it at the dashboard.');
+    }
+  });
+};
