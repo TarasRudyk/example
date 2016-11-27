@@ -6,6 +6,8 @@ import Pagination from 'react-js-pagination';
 import ProjectItem from '/imports/ui/pages/projects/item';
 import Loading from '/imports/ui/components/side-content/loading';
 
+import PageHeader from '/imports/ui/components/header/pageHeader';
+
 export default class Projects extends React.Component {
   constructor(props) {
     super(props);
@@ -18,23 +20,15 @@ export default class Projects extends React.Component {
   render() {
     return (
       <div className="page-main-content page-projects">
-        <div className="separator">
-          <div className="container">
-            <div className="title">
-              <h1>Projects <span>all your projects</span></h1>
-              <div className="title-right-block">
-                <a href="/project/create" className="button green">New project</a>
-              </div>
-            </div>
-          </div>
-        </div>
+        <PageHeader header="Projects" subHeader="all your projects" hx={1}>
+          <a href="/project/create" className="button green">New project</a>
+        </PageHeader>
         <div className="list">
           <div className="container">
             {this.props.loaded ? this.props.projects.map((p, i) => (
               <ProjectItem
                 key={i}
                 project={p}
-                projectsColors={this.props.projectsColors}
               />
             )) : <Loading /> }
           </div>
@@ -56,6 +50,5 @@ Projects.propTypes = {
   loaded: React.PropTypes.bool,
   projects: React.PropTypes.arrayOf(React.PropTypes.object),
   projectsCount: React.PropTypes.number,
-  projectsColors: React.PropTypes.arrayOf(React.PropTypes.object),
   currentPage: React.PropTypes.number
 };

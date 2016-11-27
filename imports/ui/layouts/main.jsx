@@ -17,6 +17,7 @@ export default class MainLayout extends React.Component {
         user={this.props.user}
         userIsLogin={this.props.userIsLogin}
         notificationsCount={this.props.notificationsCount}
+        assignedTasksCount={this.props.assignedTasksCount}
       />;
     }
 
@@ -40,5 +41,6 @@ MainLayout.propTypes = {
   content: React.PropTypes.element,
   userIsLogin: React.PropTypes.bool,
   user: React.PropTypes.object,
-  notificationsCount: React.PropTypes.number
+  notificationsCount: React.PropTypes.number,
+  assignedTasksCount: React.PropTypes.number
 };

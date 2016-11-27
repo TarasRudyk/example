@@ -22,3 +22,9 @@ Meteor.publish('tasks.byAssignedUser', function (userId) {
   const tasks = Tasks.find({ assignedAt: userId });
   return tasks;
 });
+
+Meteor.publish('tasks.byUserProjects', function (userProjectIds) {
+  check(userProjectIds, Array);
+
+  return Tasks.find({ projectId: { $in: userProjectIds } });
+});

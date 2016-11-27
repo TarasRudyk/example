@@ -3,7 +3,6 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 export const Tasks = new Mongo.Collection('tasks');
 
-
 Tasks.deny({
   insert() { return true; },
   update() { return true; },
@@ -39,7 +38,13 @@ Tasks.schema = new SimpleSchema({
   },
   assignedAt: {
     type: String,
-    optional: true
+    optional: true,
+    label: '_id of assigned user'
+  },
+  estimate: {
+    type: Number,
+    optional: true,
+    label: 'Number of minutes of task estimation'
   }
 });
 

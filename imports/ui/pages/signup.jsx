@@ -3,6 +3,7 @@ import formatValidation from 'string-format-validation';
 import { TAPi18n } from 'meteor/tap:i18n';
 
 import { signup } from '/imports/api/users/actions';
+import InputField from '/imports/ui/components/input';
 
 export default class Signup extends React.Component {
   constructor(props) {
@@ -26,87 +27,92 @@ export default class Signup extends React.Component {
         error: ''
       }
     };
-
-    this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.togglePassVisibility = this.togglePassVisibility.bind(this);
+    this.textOnChange = this.textOnChange.bind(this);
   }
   onSubmit(event) {
     event.preventDefault();
-
-    const email = this.state.email.value.trim().toLowerCase();
-    const username = this.state.username.value.trim();
-    const fullname = this.state.fullname.value.trim();
-    const password = this.state.password.value.trim();
+    const email = this.state.email.value;
+    const username = this.state.username.value;
+    const fullname = this.state.fullname.value;
+    const password = this.state.password.value;
     const regExp = /^\w+$/;
     let errors = false;
-
     if (!formatValidation.validate({ type: 'email' }, email)) {
       this.setState({
         email: {
-          value: email,
           error: TAPi18n.__('auth.emailIncorrect')
         }
       });
-
       errors = true;
     }
     if (!regExp.test(username)) {
       this.setState({
         username: {
-          value: username,
           error: 'Only letters and numbers'
         }
       });
-
       errors = true;
     }
     if (!formatValidation.validate({ min: 3, max: 25 }, username)) {
       this.setState({
         username: {
-          value: username,
           error: TAPi18n.__('auth.usernameIncorrect')
         }
       });
-
       errors = true;
     }
     if (!formatValidation.validate({ min: 3, max: 25 }, fullname)) {
       this.setState({
         fullname: {
-          value: fullname,
           error: TAPi18n.__('auth.fullnameIncorrect')
         }
       });
-
       errors = true;
     }
     if (!formatValidation.validate({ min: 3, max: 25 }, password)) {
       this.setState({
         password: {
-          value: password,
           error: TAPi18n.__('auth.passwordIncorrect')
         }
       });
-
       errors = true;
     }
     if (!errors) {
       signup(email, username, fullname, password);
     }
   }
-  handleChange({ target }) {
-    if (target.name) {
-      this.setState({
-        [target.name]: {
-          value: target.value,
-          error: ''
-        }
-      });
+  textOnChange(target) {
+    switch (target.name) {      // eslint-disable-line 
+      case 'email':
+        this.setState({
+          email: {
+            value: target.value.trim().toLowerCase()
+          }
+        });
+        break;
+      case 'username':
+        this.setState({
+          username: {
+            value: target.value.trim()
+          }
+        });
+        break;
+      case 'fullname':
+        this.setState({
+          fullname: {
+            value: target.value.trim()
+          }
+        });
+        break;
+      case 'password':
+        this.setState({
+          password: {
+            value: target.value.trim()
+          }
+        });
+        break;
     }
-  }
-  togglePassVisibility(event) {
-    this.setState({ showPass: event.target.checked });
   }
   render() {
     return (
@@ -116,51 +122,10 @@ export default class Signup extends React.Component {
             <h1>Sign up</h1>
           </div>
           <form onSubmit={this.onSubmit}>
-            <input
-              className={this.state.email.error ? 'error' : ''}
-              type="text"
-              name="email"
-              placeholder="Email"
-              value={this.state.email.value}
-              onChange={this.handleChange}
-            />
-            <span className="field-error">{this.state.email.error}</span>
-            <input
-              className={this.state.username.error ? 'error' : ''}
-              type="text"
-              name="username"
-              placeholder="Username"
-              value={this.state.username.value}
-              onChange={this.handleChange}
-            />
-            <span className="field-error">{this.state.username.error}</span>
-            <input
-              className={this.state.fullname.error ? 'error' : ''}
-              type="text"
-              name="fullname"
-              placeholder="Full name"
-              value={this.state.fullname.value}
-              onChange={this.handleChange}
-            />
-            <span className="field-error">{this.state.fullname.error}</span>
-            <input
-              className={this.state.password.error ? 'error' : ''}
-              type={this.state.showPass ? 'text' : 'password'}
-              name="password"
-              placeholder="Password"
-              value={this.state.password.value}
-              onChange={this.handleChange}
-            />
-            <span className="field-error">{this.state.password.error}</span>
-            <div className="show-password hidden">
-              <input
-                id="show-password"
-                type="checkbox"
-                checked={this.state.showPass}
-                onChange={this.togglePassVisibility}
-              />
-              <label htmlFor="show-password">Show password</label>
-            </div>
+            <InputField name="email" error={this.state.email.error} callback={this.textOnChange} />
+            <InputField name="username" error={this.state.username.error} callback={this.textOnChange} />
+            <InputField name="fullname" error={this.state.fullname.error} callback={this.textOnChange} />
+            <InputField name="password" type="password" error={this.state.password.error} callback={this.textOnChange} />
             <a href="/" className="button">Back</a>
             <input type="submit" value="Sign up" className="button green" />
           </form>

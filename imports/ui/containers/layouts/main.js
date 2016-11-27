@@ -3,6 +3,8 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 import { Notifications } from '/imports/api/notifications/notifications';
 import { Invitations } from '/imports/api/invitations/invitations';
+import { Tasks } from '/imports/api/tasks/tasks';
+import { Projects } from '/imports/api/projects/projects';
 
 import MainLayout from '/imports/ui/layouts/main';
 
@@ -20,9 +22,17 @@ export default createContainer(() => {
 
   const count = notificationsCount + invitationsCount;
 
+  const userId = Meteor.userId();
+  const userProjectIds = Projects.find({ usersIds: userId }).map(project => project._id);
+  const tasksHandle = Meteor.subscribe('tasks.byUserProjects', userProjectIds);
+
+  const assignedTasks = tasksHandle.ready() ?
+    Tasks.find({ projectId: { $in: userProjectIds }, assignedAt: userId }).count() : 0;
+
   return {
     userIsLogin,
     user,
-    notificationsCount: count
+    notificationsCount: count,
+    assignedTasksCount: assignedTasks
   };
 }, MainLayout);
