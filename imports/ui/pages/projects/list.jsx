@@ -5,6 +5,7 @@ import Pagination from 'react-js-pagination';
 
 import ProjectItem from '/imports/ui/pages/projects/item';
 import Loading from '/imports/ui/components/side-content/loading';
+
 import PageHeader from '/imports/ui/components/header/pageHeader';
 
 export default class Projects extends React.Component {
@@ -28,7 +29,6 @@ export default class Projects extends React.Component {
               <ProjectItem
                 key={i}
                 project={p}
-                projectsColors={this.props.projectsColors}
               />
             )) : <Loading /> }
           </div>
@@ -50,6 +50,5 @@ Projects.propTypes = {
   loaded: React.PropTypes.bool,
   projects: React.PropTypes.arrayOf(React.PropTypes.object),
   projectsCount: React.PropTypes.number,
-  projectsColors: React.PropTypes.arrayOf(React.PropTypes.object),
   currentPage: React.PropTypes.number
 };

@@ -25,12 +25,12 @@ Meteor.publish('usersByIds', function (usersIds) {
   return Meteor.users.find({ _id: { $in: usersIds } });
 });
 
-Meteor.publish('usersInProjectByName', function (project) {
+Meteor.publish('usersInProject', function (project) {
   check(project, Object);
 
-  if (!project.usersIds) return null;
+  const usersIds = project.users.map(u => u.id);
 
   return Meteor.users.find({
-    $and: [{ _id: { $ne: this.userId } }, { _id: { $in: project.usersIds } }]
+    _id: { $in: usersIds }
   });
 });
