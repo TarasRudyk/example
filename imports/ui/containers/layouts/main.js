@@ -26,7 +26,7 @@ export default createContainer(() => {
 
   const projectsHandle = Meteor.subscribe('projects');
 
-  const userProjectIds = projectsHandle ? Projects.find({ usersIds: userId }).map(
+  const userProjectIds = projectsHandle ? Projects.find({ 'users.id': userId }).map(
     project => project._id
   ) : [];
   const tasksHandle = Meteor.subscribe('tasks.byUserProjects', userProjectIds);

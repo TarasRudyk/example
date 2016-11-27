@@ -8,7 +8,7 @@ import { Projects } from '/imports/api/projects/projects';
 export default createContainer(() => {
   const userIsLogin = !!Meteor.userId();
   const userId = Meteor.userId();
-  const userProjectIds = Projects.find({ usersIds: userId }).map(project => project._id);
+  const userProjectIds = Projects.find({ 'users.id': userId }).map(project => project._id);
   const tasksHandle = Meteor.subscribe('tasks.byUserProjects', userProjectIds);
 
   const tasks = tasksHandle.ready() ?

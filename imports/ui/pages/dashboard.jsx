@@ -97,7 +97,7 @@ export default class Dashboard extends React.Component {
       <div className="page-main-content page-dashboard">
         <PageHeader header={'Dashboard'} subHeader={'all your today tasks'} hx={1} />
         <Droppable
-          className="container"
+          className="container page-dashboard-content"
           types={['_id']}
           onDrop={this.onDrop}
         >
