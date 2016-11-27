@@ -65,10 +65,16 @@ export const deleteTask = (taskId) => {
   });
 };
 
-export const acceptTask = (taskId) => {
+export const acceptTask = (taskId, estimate) => {
   check(taskId, String);
+  check(estimate, Number);
 
-  return Meteor.call('task.accept', { taskId }, (err, res) => {
+  if (estimate < 15) {
+    addNotice(TAPi18n.__('change.incorrectEstimate'));
+    return false;
+  }
+
+  return Meteor.call('task.accept', { taskId, estimate }, (err, res) => {
     if (err) {
       addNotice(err.error);
     }

@@ -44,6 +44,7 @@ Tasks.schema = new SimpleSchema({
   estimate: {
     type: Number,
     optional: true,
+    min: 15,
     label: 'Number of minutes of task estimation'
   },
   isAccepted: {

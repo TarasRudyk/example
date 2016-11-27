@@ -100,18 +100,21 @@ export const acceptTask = new ValidatedMethod({
   validate: new SimpleSchema({
     taskId: {
       type: String
+    },
+    estimate: {
+      type: Number
     }
   }).validator(),
-  run({ taskId }) {
+  run({ taskId, estimate }) {
     const task = Tasks.findOne({ _id: taskId });
 
     if (!this.userId) {
       throw new Meteor.Error('User not authorized');
     }
 
-    // TODO: Add condition for estimation (accept task only after estimation)
-    if ((task.isAccepted !== true)) {
-      Tasks.update({ _id: taskId }, { $set: { isAccepted: true, assignedAt: this.userId } });
+    if ((task.isAccepted !== true && estimate >= 15)) {
+      Tasks.update({ _id: taskId },
+        { $set: { isAccepted: true, assignedAt: this.userId, estimate } });
     } else {
       throw new Meteor.Error("You can't accept this task!");
     }

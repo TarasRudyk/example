@@ -16,7 +16,7 @@ export default createContainer(() => {
       assignedAt: userId,
       active: true,
       isAccepted: true,
-      // estimate: { $ne: null }, // TODO: uncomment when setting 'estimate' field will be possible
+      estimate: { $ne: null },
       startAt: { $lte: new Date() } },
       { sort: [['startAt', 'asc']] }).fetch() : [];
 
