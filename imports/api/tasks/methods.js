@@ -114,7 +114,7 @@ export const acceptTask = new ValidatedMethod({
 
     if ((task.isAccepted !== true && estimate >= 15)) {
       Tasks.update({ _id: taskId },
-        { $set: { isAccepted: true, assignedAt: this.userId, estimate } });
+        { $set: { isAccepted: true, assignedAt: this.userId, estimate, startAt: new Date() } });
     } else {
       throw new Meteor.Error("You can't accept this task!");
     }
