@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Draggable } from 'react-drag-and-drop';
 import TaskItem from './items/task';
 
 export default class Notifications extends React.Component {
@@ -15,7 +15,9 @@ export default class Notifications extends React.Component {
         <div className="list">
           {
             this.props.tasks.map(t => (
-              <TaskItem key={t._id} task={t} />
+              <Draggable key={t._id} type="_id" data={t._id}>
+                <TaskItem key={t._id} task={t} />
+              </Draggable>
             ))
           }
         </div>

@@ -20,7 +20,8 @@
     "FullnameChanged": "Fullname changed!",
     "NewPasswordIncorrect": "New password incorrect!",
     "OldPasswordIncorrect": "Old Ppassword incorrect!",
-    "PasswordChanged": "Password changed!"
+    "PasswordChanged": "Password changed!",
+    "incorrectEstimate": "Estimation should be min 15 min per task"
   },
   "create": {
     "ProjectNameRequired": "Project name is required. Use unique names for your projects (3 to 25 characters)."
