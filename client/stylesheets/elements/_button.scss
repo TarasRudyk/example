@@ -1,11 +1,11 @@
 .button {
   display: inline-block;
   height: 39px;
-  border: 1px solid #838f9e;
+  border: 1px solid $grey-color;
   border-radius: 6px;
   font-size: 16px;
   padding: 10px 12px;
-  background: #838f9e;
+  background: $grey-color;
   cursor: pointer;
   color: #fff;
   text-align: center;
@@ -17,12 +17,12 @@
   font-family: 'Open Sans Light';
 
   &:hover {
-    background: #6b7c8f;
-    border-color: #6b7c8f;
+    background: #7c878c;
+    border-color: #7c878c;
     color: #fff;
   }
   &:active {
-    background: #838f9e;
+    background: $grey-color;
   }
   &:last-child {
     margin-right: 0;
@@ -34,13 +34,13 @@
     font-size: 14px;
   }
   &.green {
-    background: #53d769;
-    border-color: #53d769;
+    background: #04D25A;
+    border-color: #04D25A;
     color: #fff;
 
     &:hover {
-      background: #46b058;
-      border-color: #46b058;
+      background: #04BE51;
+      border-color: #04BE51;
     }
 
     &:active {
@@ -49,17 +49,17 @@
   }
 
   &.blue {
-    background: #1da9fc;
-    border-color: #1da9fc;
+    background: $blue-button-color;
+    border-color: $blue-button-color;
     color: #fff;
 
     &:hover {
-      background: #178fd8;
-      border-color: #178fd8;
+      background: #0171f9;
+      border-color: #0171f9;
     }
 
     &:active {
-      background: #1da9fc;
+      background: $blue-button-color;
     }
   }
 

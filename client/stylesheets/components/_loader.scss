@@ -1,23 +1,24 @@
 @keyframes move {
-  0% {left: -150px;}
+  0% {left: -200px;}
   50% {left: 100%;}
-  100% {left: -150px;}
+  100% {left: -200px;}
 }
 
 .loader {
   position: relative;
-  border-bottom: 1px solid #F4F4F4;
+  border-bottom: 1px solid $separator-border-color;
+
   &.active {
-    border-bottom: 1px solid #53d769;
+    border-bottom: 1px solid $blue-color;
   }
   &.active:before {
     content: '';
     position: absolute;
     left: 0;
     top: 0;
-    width: 150px;
+    width: 200px;
     height: 1px;
-    background: #3E9D4E;
-    animation: move 3s infinite ease;
+    background: rgba(255, 255, 255, .5);
+    animation: move 5s infinite linear;
   }
 }

@@ -61,14 +61,14 @@ export default class CreateProject extends React.Component {
       <div className="page-main-content page-create-project">
         <div className="container">
           <div className="title">
-            <h1>Create project</h1>
+            <h1>New project</h1>
           </div>
           <form onSubmit={this.onSubmit}>
             <input
-              className={this.state.name.error ? 'error' : ''}
+              className={this.state.name.error ? 'error' : 'light'}
               type="text"
               name="name"
-              placeholder="Name"
+              placeholder="Project name"
               autoFocus
               value={this.state.name.value}
               onChange={this.handleChange}
@@ -77,6 +77,7 @@ export default class CreateProject extends React.Component {
             <span className="field-error">{this.state.name.error}</span>
             <textarea
               name="description"
+              className="light"
               placeholder="Description"
               value={this.state.description.value}
               onChange={this.handleChange}
