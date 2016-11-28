@@ -64,3 +64,23 @@ export const deleteTask = (taskId) => {
     }
   });
 };
+
+export const acceptTask = (taskId, estimate) => {
+  check(taskId, String);
+  check(estimate, Number);
+
+  if (estimate < 15) {
+    addNotice(TAPi18n.__('change.incorrectEstimate'));
+    return false;
+  }
+
+  return Meteor.call('task.accept', { taskId, estimate }, (err, res) => {
+    if (err) {
+      addNotice(err.error);
+    }
+
+    if (res) {
+      console.log('New task is accepted! Now you can see it at the dashboard.');
+    }
+  });
+};

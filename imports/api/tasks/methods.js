@@ -94,3 +94,30 @@ export const deleteTask = new ValidatedMethod({
     return `/project/${task.projectId}`;
   }
 });
+
+export const acceptTask = new ValidatedMethod({
+  name: 'task.accept',
+  validate: new SimpleSchema({
+    taskId: {
+      type: String
+    },
+    estimate: {
+      type: Number
+    }
+  }).validator(),
+  run({ taskId, estimate }) {
+    const task = Tasks.findOne({ _id: taskId });
+
+    if (!this.userId) {
+      throw new Meteor.Error('User not authorized');
+    }
+
+    if ((task.isAccepted !== true && estimate >= 15)) {
+      Tasks.update({ _id: taskId },
+        { $set: { isAccepted: true, assignedAt: this.userId, estimate, startAt: new Date() } });
+    } else {
+      throw new Meteor.Error("You can't accept this task!");
+    }
+    return taskId;
+  }
+});
