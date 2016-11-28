@@ -107,10 +107,11 @@ header {
 			    content: '';
 			    position: absolute;
 			    left: 0;
-					bottom: -14px;
+					bottom: -13px;
 					width: 24px;
-					height: 2px;
+					height: 1px;
 					background: $header-link-color;
+					z-index: 200;
 			  }
 			}
 			&.with-counter {
