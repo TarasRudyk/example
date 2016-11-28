@@ -85,12 +85,12 @@ export const acceptTask = (taskId, estimate) => {
   });
 };
 
-export const reassignTask = (taskId, description, assignAt) => {
+export const reassignTask = (taskId, description, assignedAt) => {
   check(taskId, String);
   check(description, String);
-  check(assignAt, String);
+  check(assignedAt, String);
 
-  return Meteor.call('task.reassign', { taskId, description, assignAt }, (err, res) => {
+  return Meteor.call('task.reassign', { taskId, description, assignedAt }, (err, res) => {
     if (err) {
       addNotice(err.error);
     }

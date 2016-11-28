@@ -189,6 +189,8 @@ export const reassign = new ValidatedMethod({
       throw new Meteor.Error("You can't reassign user in this task!");
     }
 
-    return `/project/${task.projectId}`;
+    const assignedUser = Meteor.users.findOne({ _id: assignedAt });
+
+    return `Task reassigned at ${assignedUser.profile.fullname}`;
   }
 });
