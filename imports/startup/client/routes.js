@@ -70,14 +70,14 @@ privateRoutes.route('/projects', {
 });
 
 privateRoutes.route('/project/:point', {
-  action({ point }, get) {
+  action({ point }, index) {
     if (point === 'create') {
       mount(MainLayout, {
         content: <ProjectCreate />
       });
     } else {
       mount(MainLayout, {
-        content: <Project id={point} index={get} />
+        content: <Project id={point} index={index} />
       });
     }
   }
