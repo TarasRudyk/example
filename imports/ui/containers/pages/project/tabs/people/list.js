@@ -8,7 +8,7 @@ import PeopleList from '/imports/ui/pages/project/tabs/people/list';
 
 export default createContainer(({ projectId }) => {
   const projectHandle = Meteor.subscribe('project', projectId);
-  const project = projectHandle.ready() ? Projects.findOne() : {};
+  const project = projectHandle.ready() ? Projects.findOne({ _id: projectId }) : {};
   const usersIds = project.users ? project.users.map(u => u.id) : [];
 
   const owner = projectHandle.ready() ? Projects.findOne({ _id: project._id }).ownerInfo() : {};

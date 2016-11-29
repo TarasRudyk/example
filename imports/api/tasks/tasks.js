@@ -9,6 +9,18 @@ Tasks.deny({
   remove() { return true; }
 });
 
+const AssignHistoryItem = new SimpleSchema({
+  description: {
+    type: String
+  },
+  assignedAt: {
+    type: String
+  },
+  date: {
+    type: Date
+  }
+});
+
 Tasks.schema = new SimpleSchema({
   name: {
     type: String
@@ -51,6 +63,10 @@ Tasks.schema = new SimpleSchema({
     type: Boolean,
     optional: true,
     label: 'Task is accepted by user'
+  },
+  assignHistory: {
+    type: [AssignHistoryItem],
+    optional: false
   }
 });
 
