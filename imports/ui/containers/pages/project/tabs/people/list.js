@@ -11,6 +11,8 @@ export default createContainer(({ projectId }) => {
   const project = projectHandle.ready() ? Projects.findOne() : {};
   const usersIds = project.users ? project.users.map(u => u.id) : [];
 
+  const owner = projectHandle.ready() ? Projects.findOne({ _id: project._id }).ownerInfo() : {};
+
   const peopleHandle = Meteor.subscribe('usersByIds', usersIds);
   const people = peopleHandle.ready() ? Meteor.users.find({
     _id: {
@@ -25,6 +27,7 @@ export default createContainer(({ projectId }) => {
 
   return {
     project,
+    owner,
     people,
     invitations
   };

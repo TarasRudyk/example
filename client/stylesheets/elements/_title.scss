@@ -1,6 +1,6 @@
 .title {
   font-family: 'Open Sans Light';
-  color: $link-color;
+  color: $title-color;
   display: table;
   width: 100%;
 
@@ -15,8 +15,8 @@
     }
   }
   h1 {
-    font-size: 26px;
-    padding: 20px 0;
+    font-size: 24px;
+    padding: 12px 0 14px;
 
     span {
       font-size: 16px;

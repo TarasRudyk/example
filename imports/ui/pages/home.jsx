@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Dashboard from './dashboard';
+import Dashboard from '/imports/ui/containers/pages/dashboard';
 import Landing from './landing';
 
 export default class Home extends React.Component {

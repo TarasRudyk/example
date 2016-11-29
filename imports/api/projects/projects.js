@@ -62,7 +62,7 @@ Projects.schema = new SimpleSchema({
 });
 
 Projects.helpers({
-  getOwnerInfo() {
+  ownerInfo() {
     return this.users.find(u => u.role === 'owner') || {};
   }
 });
