@@ -6,10 +6,6 @@ body {
 a {
   color: $link-color;
   text-decoration: none;
-
-  &.blue {
-    color: $link-blue-color;
-  }
 }
 a:hover {
   color: $link-hover-color;

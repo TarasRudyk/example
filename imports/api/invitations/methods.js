@@ -19,7 +19,7 @@ export const create = new ValidatedMethod({
     }
 
     const project = Projects.findOne({ _id: projectId, active: true });
-    const ownerId = project.getOwnerInfo().id;
+    const ownerId = project.ownerInfo().id;
 
     if (!project || ownerId !== this.userId) {
       throw new Meteor.Error('problem-with-project');
@@ -45,7 +45,8 @@ export const create = new ValidatedMethod({
       },
       user: {
         id: userId,
-        fullname: user.profile.fullname
+        fullname: user.profile.fullname,
+        avatar: user.profile.avatar || '/images/avatar.png'
       },
       replied: false
     });

@@ -5,7 +5,7 @@ input[type="tel"] {
   display: block;
   width: 240px;
   height: 42px;
-  border: 1px solid #838f9f;
+  border: 1px solid $grey-color;
   outline: none;
   background: none;
   font-family: 'Open Sans Light';
@@ -16,8 +16,8 @@ input[type="tel"] {
   margin: 8px 0 4px;
 
   &:focus {
-    box-shadow: 0 0 0 1px #2babf9;
-    border-color: #2babf9;
+    box-shadow: 0 0 0 1px $blue-color;
+    border-color: $blue-color;
   }
   &:disabled {
     background: #e4ecf0;
@@ -45,7 +45,6 @@ input[type="tel"] {
     display: inline-block;
   }
 }
-
 .field-error {
   color: #f14142;
   display: block;

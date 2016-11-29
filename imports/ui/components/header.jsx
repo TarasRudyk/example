@@ -75,6 +75,7 @@ export default class Header extends React.Component {
             </div>
           </nav>
         </div>
+        <div className="loader" />
       </header>
     );
   }
