@@ -1,4 +1,5 @@
 import React from 'react';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import Tasks from '/imports/ui/containers/pages/project/tabs/tasks/tasks';
 import People from '/imports/ui/pages/project/tabs/people/people';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -23,15 +24,11 @@ export default class SingleProject extends React.Component {
     }
   }
   handleSelect(index) {
-    const tabIndex = {
-      projectId: this.props.project._id,
-      index
-    };
-    localStorage.setItem('tabIndex', JSON.stringify(tabIndex));  // eslint-disable-line
+    const tab = index;
+    FlowRouter.setQueryParams({ tab });
   }
   render() {
-    const { project, owner } = this.props;
-    const index = JSON.parse(localStorage.getItem('tabIndex')); // eslint-disable-line
+    const { project, owner, tab } = this.props;
 
     return (
       <div className="page-main-content page-project">
@@ -45,7 +42,7 @@ export default class SingleProject extends React.Component {
         </PageHeader>
         <Tabs
           onSelect={this.handleSelect}
-          selectedIndex={(index && index.projectId === project._id) ? index.index : 0}
+          selectedIndex={tab || 0}
         >
           <TabList>
             <Tab>Overview</Tab>
@@ -70,5 +67,6 @@ export default class SingleProject extends React.Component {
 SingleProject.propTypes = {
   project: React.PropTypes.object,
   owner: React.PropTypes.object,
-  isOwner: React.PropTypes.bool
+  isOwner: React.PropTypes.bool,
+  tab: React.PropTypes.number
 };

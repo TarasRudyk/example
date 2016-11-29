@@ -5,7 +5,7 @@ import { Projects } from '/imports/api/projects/projects';
 
 import SingleProject from '/imports/ui/pages/project/project';
 
-export default createContainer(({ id }) => {
+export default createContainer(({ id, index }) => {
   const projectHandle = Meteor.subscribe('project', id);
   const project = projectHandle.ready() ? Projects.findOne({ _id: id }) : {};
   const owner = projectHandle.ready() ? Projects.findOne({ _id: id }).getOwnerInfo() : {};
@@ -14,6 +14,7 @@ export default createContainer(({ id }) => {
     loaded: projectHandle.ready(),
     isOwner: owner.id === Meteor.userId(),
     project,
-    owner
+    owner,
+    tab: parseInt(index.tab, 10)
   };
 }, SingleProject);
