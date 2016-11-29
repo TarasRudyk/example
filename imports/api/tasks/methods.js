@@ -18,18 +18,6 @@ export const create = new ValidatedMethod({
       throw new Meteor.Error('User not authorized');
     }
 
-    const assignHistory = [];
-
-    if (assignedAt) {
-      const assignedUser = Meteor.users.findOne({ _id: assignedAt });
-
-      assignHistory.push({
-        description: `Task assigned at ${assignedUser.profile.fullname} when create.`,
-        assignedAt: assignedAt,
-        date: new Date()
-      });
-    }
-
     return Tasks.insert({
       name,
       description,
@@ -39,8 +27,7 @@ export const create = new ValidatedMethod({
       active: true,
       creationDate: new Date(),
       startAt,
-      assignedAt,
-      assignHistory
+      assignedAt
     });
   }
 });
@@ -75,26 +62,7 @@ export const edit = new ValidatedMethod({
     const task = Tasks.findOne({ _id: taskId });
 
     if ((this.userId === task.ownerId) || (this.userId === task.assignedAt)) {
-      let updateQuery;
-
-      if (assignedAt) {
-        const assignedUser = Meteor.users.findOne({ _id: assignedAt });
-
-        const assignHistObj = {
-          description: `Task reassigned at ${assignedUser.profile.fullname} in edit mode.`,
-          assignedAt: assignedAt,
-          date: new Date()
-        };
-
-        updateQuery = {
-          $set: { name, description, startAt, assignedAt },
-          $push: { assignHistory: assignHistObj }
-        };
-      } else {
-        updateQuery = { $set: { name, description, startAt } };
-      }
-
-      Tasks.update({ _id: taskId }, updateQuery);
+      Tasks.update({ _id: taskId }, { $set: { name, description, startAt, assignedAt } });
     } else {
       throw new Meteor.Error("You can't update this task!");
     }
@@ -175,15 +143,8 @@ export const reassign = new ValidatedMethod({
     }
 
     if ((this.userId === task.ownerId) || (this.userId === task.assignedAt)) {
-      const assignHistObj = {
-        description: description,
-        assignedAt: assignedAt,
-        date: new Date()
-      };
-
       Tasks.update({ _id: taskId }, {
-        $set: { assignedAt },
-        $push: { assignHistory: assignHistObj }
+        $set: { assignedAt }
       });
     } else {
       throw new Meteor.Error("You can't reassign user in this task!");
@@ -191,6 +152,6 @@ export const reassign = new ValidatedMethod({
 
     const assignedUser = Meteor.users.findOne({ _id: assignedAt });
 
-    return `Task reassigned at ${assignedUser.profile.fullname}`;
+    return `Task reassigned at ${assignedUser.profile.fullname}. Description: ${description}`;
   }
 });

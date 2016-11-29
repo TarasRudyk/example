@@ -1,5 +1,8 @@
+// import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+
+import { logTasksChanges } from '/imports/api/history/methods';
 
 export const Tasks = new Mongo.Collection('tasks');
 
@@ -7,18 +10,6 @@ Tasks.deny({
   insert() { return true; },
   update() { return true; },
   remove() { return true; }
-});
-
-const AssignHistoryItem = new SimpleSchema({
-  description: {
-    type: String
-  },
-  assignedAt: {
-    type: String
-  },
-  date: {
-    type: Date
-  }
 });
 
 Tasks.schema = new SimpleSchema({
@@ -63,11 +54,25 @@ Tasks.schema = new SimpleSchema({
     type: Boolean,
     optional: true,
     label: 'Task is accepted by user'
-  },
-  assignHistory: {
-    type: [AssignHistoryItem],
-    optional: false
   }
+});
+
+Tasks.after.insert((userId, doc) => {
+  const task = Object.assign({}, doc);
+
+  logTasksChanges(task, 'CREATE');
+});
+
+Tasks.after.update((userId, doc) => {
+  const task = Object.assign({}, doc);
+
+  logTasksChanges(task, 'EDIT');
+});
+
+Tasks.after.remove((userId, doc) => {
+  const task = Object.assign({}, doc);
+
+  logTasksChanges(task, 'DELETE');
 });
 
 Tasks.attachSchema(Tasks.schema);

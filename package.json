@@ -31,6 +31,7 @@
     "react-mounter": "^1.2.0",
     "react-notification": "^6.3.0",
     "react-tabs": "^0.8.2",
+    "rp": "^0.2.0",
     "string-format-validation": "^2.0.2",
     "unique-random-array": "^1.0.0"
   },
