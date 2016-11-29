@@ -96,7 +96,10 @@ export const deleteUserFromProject = new ValidatedMethod({
   }).validator(),
   run({ projectId, userId }) {
     const project = Projects.findOne({ _id: projectId });
-    if (project.ownerId !== this.userId) {
+
+    const owner = project.users.find(u => u.role === 'owner');
+
+    if (owner.id !== this.userId) {
       throw new Meteor.Error('This is not your project');
     }
 
@@ -104,12 +107,12 @@ export const deleteUserFromProject = new ValidatedMethod({
     Invitations.remove(invitation);
 
     createNotification.call({
-      description: `${project.ownerName} revoked your access to the ${project.name} project`,
+      description: `${owner.fullname} revoked your access to the ${project.name} project`,
       type: 'Revoke access',
       action: 'Revoke access',
       recipientId: userId
     });
-    Meteor.users.update({ _id: userId }, { $pull: { projects: { projectId } } });
+
     return Projects.update({ _id: projectId }, { $pull: { users: { id: userId } } });
   }
 });

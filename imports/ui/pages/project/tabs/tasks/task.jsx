@@ -1,25 +1,45 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 
-import { deleteTask } from '/imports/api/tasks/actions';
+import ReassignTask from '/imports/ui/containers/pages/project/tabs/tasks/reassign-task';
+
+import { deleteTask, reassignTask } from '/imports/api/tasks/actions';
 
 export default class Task extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { isModalOpen: false };
 
-    this.deleteHandler = this.deleteHandler.bind(this);
-    this.canDelete = this.canDelete.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleReassign = this.handleReassign.bind(this);
+    this.handleReassignSubmit = this.handleReassignSubmit.bind(this);
+    this.handleReassignClose = this.handleReassignClose.bind(this);
+    this.canEdit = this.canEdit.bind(this);
   }
-  canDelete() {
+  canEdit() {
     return (Meteor.userId() === this.props.task.ownerId) ||
-    (Meteor.userId() === this.props.task.assignedAt);
+      (Meteor.userId() === this.props.task.assignedAt);
   }
-  deleteHandler() {
+  handleDelete() {
     const conf = confirm('Delete this task?'); // eslint-disable-line 
     if (conf) {
       deleteTask(this.props.task._id);
     }
+  }
+  handleReassign() {
+    this.setState({
+      isModalOpen: true
+    });
+  }
+  handleReassignSubmit({ assignedAt, description }) {
+    if (this.props.task.assignedAt !== assignedAt) {
+      reassignTask(this.props.task._id, description, assignedAt);
+    }
+  }
+  handleReassignClose() {
+    this.setState({
+      isModalOpen: false
+    });
   }
   render() {
     const { name, description, startAt, assignedAt } = this.props.task;
@@ -33,8 +53,15 @@ export default class Task extends React.Component {
           <p>description: {description}</p>
           <p>Start at: {startAt ? startAt.toString() : ''}</p>
           <p>Assigned at: {assignedAt}</p>
-          {this.canDelete() ? <button onClick={this.deleteHandler}>Delete</button> : ''}
+          {this.canEdit() ? <button onClick={this.handleDelete}>Delete</button> : ''}
+          {this.canEdit() ? <button onClick={this.handleReassign}>Reassign</button> : ''}
         </div>
+        <ReassignTask
+          task={this.props.task}
+          isOpen={this.state.isModalOpen}
+          onSubmit={this.handleReassignSubmit}
+          onClose={this.handleReassignClose}
+        />
       </div>
     );
   }
