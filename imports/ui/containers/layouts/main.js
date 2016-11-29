@@ -32,7 +32,9 @@ export default createContainer(() => {
   const tasksHandle = Meteor.subscribe('tasks.byUserProjects', userProjectIds);
 
   const assignedTasks = tasksHandle.ready() ?
-    Tasks.find({ projectId: { $in: userProjectIds }, assignedAt: userId }).count() : 0;
+    Tasks.find({
+      projectId: { $in: userProjectIds }, assignedAt: userId, isAccepted: { $in: [null, false] }
+    }).count() : 0;
 
   return {
     userIsLogin,
