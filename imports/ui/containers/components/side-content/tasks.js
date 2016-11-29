@@ -33,7 +33,7 @@ export default createContainer(() => {
   const notAssignedAtTasks = tasksHandle.ready() ?
     Tasks.find({
       projectId: { $in: selectedProjId },
-      assignedAt: { $ne: userId },
+      assignedAt: { $exists: false },
       isAccepted: { $in: [null, false] }
     }, { sort: [['creationDate', 'desc'], ['assignedAt', 'asc']] }).fetch() : [];
 
