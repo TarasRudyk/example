@@ -8,7 +8,7 @@ import SingleProject from '/imports/ui/pages/project/project';
 export default createContainer(({ id }) => {
   const projectHandle = Meteor.subscribe('project', id);
   const project = projectHandle.ready() ? Projects.findOne({ _id: id }) : {};
-  const owner = projectHandle.ready() ? Projects.findOne({ _id: id }).getOwnerInfo() : {};
+  const owner = projectHandle.ready() ? Projects.findOne({ _id: id }).ownerInfo() : {};
 
   return {
     loaded: projectHandle.ready(),

@@ -10,8 +10,8 @@
     outline: none;
   }
   .ReactTabs__Tab--selected {
-    color: $active-tab-color;
-    border-bottom: 2px solid $active-tab-color;
+    color: $blue-color;
+    border-bottom: 1px solid $blue-color;
     margin-bottom: -1px;
   }
 }
