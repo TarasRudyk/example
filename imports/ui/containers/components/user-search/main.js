@@ -8,13 +8,13 @@ import UserSearch from '/imports/ui/components/user-search/main';
 export default createContainer(() => {
   const username = getLocalState().get('username-search');
   let users = [];
-  const invitationsUsersIds = getLocalState().get('usersListIds');
-  invitationsUsersIds.push(Meteor.userId());
+
+  const allUsersList = getLocalState().get('allUsersList');
 
   if (username && username.length > 1) {
     const usersHandle = Meteor.subscribe('usersByUsername', username);
     users = usersHandle.ready()
-      ? Meteor.users.find({ _id: { $nin: invitationsUsersIds }, username: { $regex: username, $options: 'i' } }).fetch()
+      ? Meteor.users.find({ _id: { $nin: allUsersList }, username: { $regex: username, $options: 'i' } }).fetch()
       : [];
   }
 

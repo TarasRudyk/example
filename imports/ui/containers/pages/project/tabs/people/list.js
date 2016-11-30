@@ -25,7 +25,8 @@ export default createContainer(({ projectId }) => {
     { 'project.id': projectId, replied: false }
   ).fetch() : [];
   const invitationsUsersIds = invitations.map(u => u.user.id);
-  getLocalState().set('usersListIds', invitationsUsersIds);
+  const allUsersList = usersIds.concat(invitationsUsersIds);
+  getLocalState().set('allUsersList', allUsersList);
 
   return {
     project,
