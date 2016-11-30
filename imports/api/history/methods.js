@@ -40,6 +40,7 @@ export const logTasksChanges = (task, action) => {
 
   const taskState = {
     id: taskId,
+    projectId: task.projectId,
     name: task.name,
     description: task.description,
     active: task.active,
