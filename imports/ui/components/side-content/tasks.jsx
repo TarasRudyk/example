@@ -1,40 +1,26 @@
 import React from 'react';
 import { Draggable } from 'react-drag-and-drop';
-import { Meteor } from 'meteor/meteor';
+import { getLocalState } from '/imports/startup/client/local-state';
 import TaskItem from './items/task';
 
 export default class Notifications extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selectedProj: '',
-      isAssigned: false
-    };
+    this.state = { isAssigned: false };
+
 
     this.getTasks = this.getTasks.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.toggleCheckbox = this.toggleCheckbox.bind(this);
   }
   getTasks() {
-    const { selectedProj, isAssigned } = this.state;
     if (this.props.tasks.length > 0) {
       return (
         <div className="list">
           {
-            this.props.tasks.filter((t) => {
-              if (selectedProj && isAssigned) {
-                return t.projectId === selectedProj && t.assignedAt === Meteor.userId();
-              }
-              if (!selectedProj && isAssigned) {
-                return t.assignedAt === Meteor.userId();
-              }
-              if (selectedProj && !isAssigned) {
-                return t.projectId === selectedProj;
-              }
-              return t;
-            }).map(t => (
+            this.props.tasks.map(t => (
               <Draggable key={t._id} type="_id" data={t._id}>
-                <TaskItem key={t._id} task={t} filter={selectedProj} isAssigned={isAssigned} />
+                <TaskItem key={t._id} task={t} />
               </Draggable>
             ))
           }
@@ -45,14 +31,13 @@ export default class Notifications extends React.Component {
     return null;
   }
   handleChange(e) {
-    this.setState({
-      selectedProj: e.target.value
-    });
+    const selectedProjId = e.target.value;
+    getLocalState().set('userProjectIds', selectedProjId);
   }
   toggleCheckbox(e) {
-    this.setState({
-      isAssigned: e.target.checked
-    });
+    const isAssigned = e.target.checked;
+    this.setState({ isAssigned });
+    getLocalState().set('isAssigned', isAssigned);
   }
   render() {
     const { userProjects } = this.props;
