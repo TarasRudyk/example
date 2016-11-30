@@ -27,8 +27,12 @@ export default class HistoryListGroup extends React.Component {
     });
     return (
       <div className="history-list-group">
-        { groupListView.length > 1 ? <button onClick={this.listToggle} >{this.state.isOpen ? 'Close' : 'Open'}</button> : ''}
-        {groupListView}
+        <div className="lable" />
+        <div className="items">
+          {groupListView}
+        </div>
+        { groupListView.length > 1 ?
+          <button onClick={this.listToggle} >{this.state.isOpen ? 'Close' : 'Open'}</button> : ''}
       </div>
     );
   }

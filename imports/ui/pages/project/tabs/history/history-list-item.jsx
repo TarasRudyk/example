@@ -1,4 +1,5 @@
 import React from 'react';
+import { getHistoryItemText } from '/imports/api/history/actions';
 
 export default class HistoryListItem extends React.Component {
   constructor(props) {
@@ -7,12 +8,11 @@ export default class HistoryListItem extends React.Component {
   }
 
   render() {
-    const { action, targetState, editor, date, type } = this.props.item;
-
+    const text = getHistoryItemText(this.props.item);
     return (
       <div className="history-list-item">
-        <div>{editor.fullname} {action} {type} {targetState.name}</div>
-        <div>{date.toString()}</div>
+        <div>{text}</div>
+        <div>{this.props.item.date.toString()}</div>
       </div>
     );
   }
