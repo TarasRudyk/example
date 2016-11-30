@@ -135,9 +135,13 @@ export const acceptTask = new ValidatedMethod({
     },
     estimate: {
       type: Number
+    },
+    startAt: {
+      type: Date,
+      optional: true
     }
   }).validator(),
-  run({ taskId, estimate }) {
+  run({ taskId, estimate, startAt }) {
     const task = Tasks.findOne({ _id: taskId });
 
     if (!this.userId) {
@@ -145,12 +149,15 @@ export const acceptTask = new ValidatedMethod({
     }
 
     if ((task.isAccepted !== true && estimate >= 15)) {
-      Tasks.update({ _id: taskId },
-        { $set: { isAccepted: true, assignedAt: this.userId, estimate, startAt: new Date() } });
+      Tasks.update({ _id: taskId }, {
+        $set: {
+          isAccepted: true, assignedAt: this.userId, estimate, startAt: startAt || new Date()
+        }
+      });
     } else {
       throw new Meteor.Error("You can't accept this task!");
     }
-    return taskId;
+    return 'Task is accepted now';
   }
 });
 
