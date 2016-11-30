@@ -28,8 +28,8 @@ export default class SingleProject extends React.Component {
     FlowRouter.setQueryParams({ tab });
   }
   render() {
-    const { project, owner, tab } = this.props;
-
+    const { project, owner, index } = this.props;
+    const tab = parseInt(index.tab, 10);
     return (
       <div className="page-main-content page-project">
         <PageHeader header={project.name} subHeader={owner.fullname} hx={1}>
@@ -68,5 +68,5 @@ SingleProject.propTypes = {
   project: React.PropTypes.object,
   owner: React.PropTypes.object,
   isOwner: React.PropTypes.bool,
-  tab: React.PropTypes.number
+  index: React.PropTypes.object
 };
