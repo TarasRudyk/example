@@ -1,4 +1,5 @@
 import React from 'react';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import Tasks from '/imports/ui/containers/pages/project/tabs/tasks/tasks';
 import People from '/imports/ui/pages/project/tabs/people/people';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -13,6 +14,7 @@ export default class SingleProject extends React.Component {
 
     Tabs.setUseDefaultStyles(false);
     this.deleteHandler = this.deleteHandler.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
   }
   deleteHandler(e) {
     const id = e.target.value;
@@ -21,8 +23,13 @@ export default class SingleProject extends React.Component {
       deleteProject(id);
     }
   }
+  handleSelect(index) {
+    const tab = index;
+    FlowRouter.setQueryParams({ tab });
+  }
   render() {
-    const { project, owner } = this.props;
+    const { project, owner, index } = this.props;
+    const tab = parseInt(index.tab, 10);
     return (
       <div className="page-main-content page-project">
         <PageHeader header={project.name} subHeader={owner.fullname} hx={1}>
@@ -33,7 +40,10 @@ export default class SingleProject extends React.Component {
             </div>
           : null}
         </PageHeader>
-        <Tabs onSelect={this.handleSelect}>
+        <Tabs
+          onSelect={this.handleSelect}
+          selectedIndex={tab || 0}
+        >
           <TabList>
             <Tab>Overview</Tab>
             <Tab>Tasks</Tab>
@@ -57,5 +67,6 @@ export default class SingleProject extends React.Component {
 SingleProject.propTypes = {
   project: React.PropTypes.object,
   owner: React.PropTypes.object,
-  isOwner: React.PropTypes.bool
+  isOwner: React.PropTypes.bool,
+  index: React.PropTypes.object
 };
