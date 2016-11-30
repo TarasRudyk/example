@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-
+import { getLocalState } from '/imports/startup/client/local-state';
 import { Projects } from '/imports/api/projects/projects';
 import { Invitations } from '/imports/api/invitations/invitations';
 
@@ -24,6 +24,9 @@ export default createContainer(({ projectId }) => {
   const invitations = invitationsHandle.ready() ? Invitations.find(
     { 'project.id': projectId, replied: false }
   ).fetch() : [];
+  const invitationsUsersIds = invitations.map(u => u.user.id);
+  const allUsersList = usersIds.concat(invitationsUsersIds);
+  getLocalState().set('allUsersList', allUsersList);
 
   return {
     project,
