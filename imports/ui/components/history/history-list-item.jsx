@@ -1,5 +1,4 @@
 import React from 'react';
-import { getHistoryItemText } from '/imports/api/history/actions';
 
 export default class HistoryListItem extends React.Component {
   constructor(props) {
@@ -8,10 +7,9 @@ export default class HistoryListItem extends React.Component {
   }
 
   render() {
-    const text = getHistoryItemText(this.props.item);
     return (
       <div className="history-list-item">
-        <div>{text}</div>
+        <div dangerouslySetInnerHTML={({ __html: this.props.item.view })} />
         <div>{this.props.item.date.toString()}</div>
       </div>
     );

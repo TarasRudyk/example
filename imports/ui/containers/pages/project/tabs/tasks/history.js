@@ -5,11 +5,11 @@ import { History } from '/imports/api/history/history';
 
 import { History as HistoryComponent } from '/imports/ui/components/history/history';
 
-export default createContainer(({ projectId }) => {
-  const handleProjectTasksHistory = Meteor.subscribe('projectTasksHistory', projectId);
+export default createContainer(({ taskId }) => {
+  const handleProjectTasksHistory = Meteor.subscribe('taskHistory', taskId);
 
   const items = handleProjectTasksHistory.ready() ?
-    History.find({ type: 'task', 'currentState.projectId': projectId }).fetch() : [];
+    History.find({ type: 'task', 'currentState.id': taskId }).fetch() : [];
 
   return {
     items: items

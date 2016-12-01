@@ -80,9 +80,23 @@ History.schema = new SimpleSchema({
   action: {
     type: String
   },
-  targetState: {
+  currentState: {
     type: Object,
     blackbox: true
+  },
+  prevState: {
+    type: Object,
+    blackbox: true,
+    optional: true,
+    defaultValue: null
+  },
+  changedFields: {
+    type: [String],
+    optional: true,
+    defaultValue: []
+  },
+  view: {
+    type: String
   },
   editor: {
     type: Editor

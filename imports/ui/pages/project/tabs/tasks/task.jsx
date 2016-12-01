@@ -1,7 +1,10 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import PageHeader from '/imports/ui/components/header/pageHeader';
 import AcceptTask from '/imports/ui/containers/pages/project/tabs/tasks/accept-task';
 import ReassignTask from '/imports/ui/containers/pages/project/tabs/tasks/reassign-task';
+import History from '/imports/ui/containers/pages/project/tabs/tasks/history';
 import { deleteTask, reassignTask } from '/imports/api/tasks/actions';
 
 export default class Task extends React.Component {
@@ -56,21 +59,10 @@ export default class Task extends React.Component {
     });
   }
   render() {
-    const { name, description, startAt, assignedAt } = this.props.task;
+    const { _id, name, description, startAt, assignedAt } = this.props.task;
     return (
       <div className="page-main-content page-create-project">
-        <div className="container">
-          <div className="title">
-            <h1>Task</h1>
-          </div>
-          <p>name: {name}</p>
-          <p>description: {description}</p>
-          <p>Start at: {startAt ? startAt.toString() : ''}</p>
-          <p>Assigned at: {assignedAt}</p>
-          {this.canEdit() ? <button onClick={this.handleDelete}>Delete</button> : ''}
-          {this.canEdit() ? <button onClick={this.handleReassign}>Reassign</button> : ''}
-          {this.canEdit() ? <button onClick={this.handleAccept}>Accept</button> : ''}
-        </div>
+        <PageHeader header={name} hx={1} />
         <ReassignTask
           task={this.props.task}
           isOpen={this.state.isReassignModalOpen}
@@ -82,6 +74,24 @@ export default class Task extends React.Component {
           isOpen={this.state.isAcceptModalOpen}
           onClose={this.handleAcceptClose}
         />
+        <Tabs>
+          <TabList>
+            <Tab>Overview</Tab>
+            <Tab>History</Tab>
+          </TabList>
+          <TabPanel>
+            <p>name: {name}</p>
+            <p>description: {description}</p>
+            <p>Start at: {startAt ? startAt.toString() : ''}</p>
+            <p>Assigned at: {assignedAt}</p>
+            {this.canEdit() ? <button onClick={this.handleDelete}>Delete</button> : ''}
+            {this.canEdit() ? <button onClick={this.handleReassign}>Reassign</button> : ''}
+            {this.canEdit() ? <button onClick={this.handleAccept}>Accept</button> : ''}
+          </TabPanel>
+          <TabPanel>
+            <History taskId={_id} />
+          </TabPanel>
+        </Tabs>
       </div>
     );
   }

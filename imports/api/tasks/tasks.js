@@ -1,3 +1,4 @@
+/* eslint-disable prefer-arrow-callback */
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
@@ -62,15 +63,15 @@ Tasks.after.insert((userId, doc) => {
   logTasksChanges(task, 'CREATE');
 });
 
-Tasks.after.update((userId, doc) => {
-  const task = Object.assign({}, doc);
+Tasks.after.update(function (userId, doc, fieldNames) {
+  const newData = Object.assign({}, doc);
+  const oldData = this.previous;
 
-  logTasksChanges(task, 'EDIT');
+  logTasksChanges(newData, 'EDIT', oldData, fieldNames);
 });
 
 Tasks.after.remove((userId, doc) => {
   const task = Object.assign({}, doc);
-
   logTasksChanges(task, 'DELETE');
 });
 

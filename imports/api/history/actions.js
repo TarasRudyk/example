@@ -14,15 +14,3 @@ export const hisotryLog = (type, target, description) => {
     }
   });
 };
-
-const getTaskText = item => item.targetState.name;
-
-export const getHistoryItemText = (item) => {
-  switch (item.type) {
-    case 'task': {
-      return getTaskText(item);
-    }
-    default:
-      return '';
-  }
-};
