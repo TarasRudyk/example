@@ -1,7 +1,7 @@
 /* eslint-disable prefer-arrow-callback */
 
 import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
+import { check, Match } from 'meteor/check';
 import { Tasks } from '../tasks';
 
 Meteor.publish('tasks.byProject', function (projectId) {
@@ -23,8 +23,16 @@ Meteor.publish('tasks.byAssignedUser', function (userId) {
   return tasks;
 });
 
-Meteor.publish('tasks.byUserProjects', function (userProjectIds) {
-  check(userProjectIds, Array);
+Meteor.publish('tasks.byUserProjects', function (selectedProjId, isAssigned) {
+  check(selectedProjId, Array);
+  check(isAssigned, Match.OneOf(undefined, null, Boolean));
 
-  return Tasks.find({ projectId: { $in: userProjectIds } });
+  let query = { projectId: { $in: selectedProjId } };
+  if (isAssigned) {
+    query = {
+      projectId: { $in: selectedProjId },
+      assignedAt: this.userId
+    };
+  }
+  return Tasks.find(query);
 });

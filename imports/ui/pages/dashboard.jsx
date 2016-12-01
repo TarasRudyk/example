@@ -65,7 +65,7 @@ export default class Dashboard extends React.Component {
       this.setState({
         estimate: {
           value: this.state.estimate.value,
-          error: TAPi18n.__('auth.emailIncorrect')
+          error: TAPi18n.__('change.incorrectEstimate')
         }
       });
     } else {
@@ -131,6 +131,7 @@ export default class Dashboard extends React.Component {
           />
           <button onClick={this.acceptEstimate}>Accept</button>
           <button onClick={this.closeModal}>Cancel</button>
+          <span className="field-error">{this.state.estimate.error}</span>
         </Modal>
       </div>
     );
