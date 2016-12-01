@@ -18,15 +18,16 @@ export default class InputField extends React.Component {
     });
   }
   render() {
-    const { name, error, type } = this.props;
+    const { name, placeholder, error, type, autoFocus } = this.props;
     return (
       <div>
         <input
           className={error ? 'error' : ''}
           type={type || 'text'}
           name={name}
-          placeholder={name}
+          placeholder={placeholder}
           value={this.state.value}
+          autoFocus={autoFocus}
           onChange={this.handleChange}
         />
         <span className="field-error">{error}</span>
@@ -37,7 +38,9 @@ export default class InputField extends React.Component {
 
 InputField.propTypes = {
   name: React.PropTypes.string,
+  placeholder: React.PropTypes.string,
   type: React.PropTypes.string,
   error: React.PropTypes.string,
+  autoFocus: React.PropTypes.bool,
   callback: React.PropTypes.func
 };

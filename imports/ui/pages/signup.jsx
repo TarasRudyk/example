@@ -83,36 +83,12 @@ export default class Signup extends React.Component {
     }
   }
   textOnChange(target) {
-    switch (target.name) {      // eslint-disable-line 
-      case 'email':
-        this.setState({
-          email: {
-            value: target.value.trim().toLowerCase()
-          }
-        });
-        break;
-      case 'username':
-        this.setState({
-          username: {
-            value: target.value.trim()
-          }
-        });
-        break;
-      case 'fullname':
-        this.setState({
-          fullname: {
-            value: target.value.trim()
-          }
-        });
-        break;
-      case 'password':
-        this.setState({
-          password: {
-            value: target.value.trim()
-          }
-        });
-        break;
-    }
+    this.setState({
+      [target.name]: {
+        value: target.value.trim(),
+        error: ''
+      }
+    });
   }
   render() {
     return (
@@ -122,10 +98,32 @@ export default class Signup extends React.Component {
             <h1>Sign up</h1>
           </div>
           <form onSubmit={this.onSubmit}>
-            <InputField name="email" error={this.state.email.error} callback={this.textOnChange} />
-            <InputField name="username" error={this.state.username.error} callback={this.textOnChange} />
-            <InputField name="fullname" error={this.state.fullname.error} callback={this.textOnChange} />
-            <InputField name="password" type="password" error={this.state.password.error} callback={this.textOnChange} />
+            <InputField
+              name="email"
+              placeholder="Email"
+              error={this.state.email.error}
+              callback={this.textOnChange}
+              autoFocus
+            />
+            <InputField
+              name="username"
+              placeholder="Username"
+              error={this.state.username.error}
+              callback={this.textOnChange}
+            />
+            <InputField
+              name="fullname"
+              placeholder="Full name"
+              error={this.state.fullname.error}
+              callback={this.textOnChange}
+            />
+            <InputField
+              name="password"
+              placeholder="Password"
+              type="password"
+              error={this.state.password.error}
+              callback={this.textOnChange}
+            />
             <a href="/" className="button">Back</a>
             <input type="submit" value="Sign up" className="button green" />
           </form>

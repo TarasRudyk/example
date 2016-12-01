@@ -1,0 +1,33 @@
+.accept-modal-content {
+  form {
+    input[type="number"] {
+    width: 100%;
+    }
+
+    .week-with-tasks {
+      display: flex;
+      align-items: center;
+      margin: 8px 0px;
+
+      .day-of-week {
+        margin: 2px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 0.5px solid #ccc;
+        font-size: 90%;
+        &:hover{
+          background-color: #eee;
+        }
+        &.date-is-selected {
+          background: #ccc;
+        }
+      }
+    }
+    button {
+      margin: 8px 4px;
+      float: right;
+    }
+  }
+}
