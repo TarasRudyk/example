@@ -4,6 +4,7 @@ import PageHeader from '/imports/ui/components/header/pageHeader';
 import { Droppable } from 'react-drag-and-drop';
 import { acceptTask } from '/imports/api/tasks/actions';
 import Modal from 'react-modal';
+import DashboardCalendar from '/imports/ui/containers/pages/dashboard-calendar';
 import { TAPi18n } from 'meteor/tap:i18n';
 
 const customModalStyles = {
@@ -28,7 +29,8 @@ export default class Dashboard extends React.Component {
         value: 15,
         error: ''
       },
-      chosenTaskId: ''
+      chosenTaskId: '',
+      chosenDay: ''
     };
 
     this.onDrop = this.onDrop.bind(this);
@@ -36,6 +38,7 @@ export default class Dashboard extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.acceptEstimate = this.acceptEstimate.bind(this);
+    this.handleChildClick = this.handleChildClick.bind(this);
   }
 
   onDrop(data) {
@@ -92,10 +95,16 @@ export default class Dashboard extends React.Component {
     }
   }
 
+  handleChildClick() {
+    this.setState({ chosenDay: new Date() });
+  }
+
   render() {
     return (
       <div className="page-main-content page-dashboard">
-        <PageHeader header={'Dashboard'} subHeader={'all your today tasks'} hx={1} />
+        <PageHeader header={'Dashboard'} subHeader={'all your today tasks'} hx={1}>
+          <DashboardCalendar click={this.handleChildClick} params={this.state.chosenDay} />
+        </PageHeader>
         <Droppable
           className="container page-dashboard-content"
           types={['_id']}
