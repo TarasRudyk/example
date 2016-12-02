@@ -9,54 +9,6 @@ History.deny({
   remove() { return true; }
 });
 
-// const StateOfTask = new SimpleSchema({
-//   id: {
-//     type: String
-//   },
-//   name: {
-//     type: String
-//   },
-//   description: {
-//     type: String
-//   },
-//   active: {
-//     type: Boolean
-//   },
-//   startAt: {
-//     type: Date
-//   },
-//   assignedAt: {
-//     type: String
-//   },
-//   estimate: {
-//     type: Number
-//   },
-//   isAccepted: {
-//     type: Boolean
-//   }
-// });
-
-// const StateOfProject = new SimpleSchema({
-//   id: {
-//     type: String
-//   },
-//   name: {
-//     type: String
-//   },
-//   description: {
-//     type: String
-//   },
-//   active: {
-//     type: Boolean
-//   },
-//   usersIds: {
-//     type: [String]
-//   },
-//   tasksIds: {
-//     type: [String]
-//   }
-// });
-
 const Editor = new SimpleSchema({
   id: {
     type: String
@@ -82,7 +34,9 @@ History.schema = new SimpleSchema({
   },
   currentState: {
     type: Object,
-    blackbox: true
+    blackbox: true,
+    optional: true,
+    defaultValue: null
   },
   prevState: {
     type: Object,
@@ -90,19 +44,23 @@ History.schema = new SimpleSchema({
     optional: true,
     defaultValue: null
   },
-  changedFields: {
-    type: [String],
+  changedField: {
+    type: String,
     optional: true,
-    defaultValue: []
+    defaultValue: null
   },
   view: {
     type: String
   },
   editor: {
     type: Editor
+  },
+  additional: {
+    type: Object,
+    blackbox: true,
+    optional: true,
+    defaultValue: null
   }
 });
-
-// History.helpers({});
 
 History.attachSchema(History.schema);

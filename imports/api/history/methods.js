@@ -1,93 +1,126 @@
 import { Meteor } from 'meteor/meteor';
-import { Match } from 'meteor/check';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 
-import { Tasks } from '/imports/api/tasks/tasks';
 import { History } from './history';
+import { isDockChanged, getViewText } from './utils';
 
-import { getTaskText } from './utils';
-
-export const log = new ValidatedMethod({
-  name: 'history.log',
+export const logCreate = new ValidatedMethod({
+  name: 'history.logCreate',
   validate: (new SimpleSchema({
-    type: { type: String },
-    currentState: { type: Object, blackbox: true },
-    prevState: { type: Object, blackbox: true, optional: true },
-    changedFields: { type: [String], optional: true },
-    action: { type: String },
-    view: { type: String }
+    userId: { type: String },
+    doc: { type: Object, blackbox: true },
+    docType: { type: String }
   }).validator()),
-  run({ type, currentState, prevState, changedFields, action, view }) {
-    const user = Meteor.user();
+  run({ userId, doc, docType }) {
+    const docId = doc._id;
+    delete doc._id;
+    doc.id = docId;
 
-    return History.insert({
-      type,
-      date: new Date(),
-      action,
-      currentState,
-      prevState,
-      changedFields,
-      view,
-      editor: {
-        id: user._id,
-        fullname: user.profile.fullname,
-        username: user.username
+    const user = Meteor.users.findOne({ _id: userId });
+
+    Object.keys(doc).forEach((fieldKey) => {
+      if (isDockChanged(fieldKey, docType)) {
+        if (doc[fieldKey]) {
+          const itemToInsert = {
+            type: docType,
+            date: new Date(),
+            action: 'CREATE',
+            currentState: doc,
+            prevState: null,
+            changedField: fieldKey,
+            editor: {
+              id: user._id,
+              username: user.username,
+              fullname: user.profile.fullname
+            }
+          };
+          // itemToInsert.additional = getAdditionalData(itemToInsert);
+          itemToInsert.view = getViewText(itemToInsert);
+
+          History.insert(itemToInsert);
+        }
       }
     });
   }
 });
 
-export const logTasksChanges = (newData, action, oldData, changedFields) => {
-  const taskId = newData._id;
-  const view = getTaskText(newData, action, oldData, changedFields, Meteor.user());
-  delete newData._id;
+export const logEdit = new ValidatedMethod({
+  name: 'history.logEdit',
+  validate: (new SimpleSchema({
+    userId: { type: String },
+    doc: { type: Object, blackbox: true },
+    prevDoc: { type: Object, blackbox: true },
+    fieldNames: { type: [String] },
+    docType: { type: String }
+  }).validator()),
+  run({ userId, doc, prevDoc, fieldNames, docType }) {
+    const docId = doc._id;
+    delete doc._id;
+    doc.id = docId;
 
-  if (!Match.test(newData, Tasks.schema)) {
-    throw new Meteor.Error('Target is not an Task object.');
+    const prevId = prevDoc._id;
+    delete prevDoc._id;
+    prevDoc.id = prevId;
+
+    const user = Meteor.users.findOne({ _id: userId });
+
+    fieldNames.forEach((fieldKey) => {
+      if (isDockChanged(fieldKey, docType)) {
+        if (doc[fieldKey] !== prevDoc[fieldKey]) {
+          const itemToInsert = {
+            type: docType,
+            date: new Date(),
+            action: 'EDIT',
+            currentState: doc,
+            prevState: prevDoc,
+            changedField: fieldKey,
+            editor: {
+              id: user._id,
+              username: user.username,
+              fullname: user.profile.fullname
+            }
+          };
+          // itemToInsert.additional = getAdditionalData(itemToInsert);
+          itemToInsert.view = getViewText(itemToInsert);
+
+          History.insert(itemToInsert);
+        }
+      }
+    });
   }
+});
 
-  const currentState = {
-    id: taskId,
-    projectId: newData.projectId,
-    name: newData.name,
-    description: newData.description,
-    active: newData.active,
-    startAt: newData.startAt,
-    assignedAt: newData.assignedAt,
-    estimate: newData.estimate,
-    isAccepted: newData.isAccepted
-  };
+export const logDelete = new ValidatedMethod({
+  name: 'history.logDelete',
+  validate: (new SimpleSchema({
+    userId: { type: String },
+    doc: { type: Object, blackbox: true },
+    docType: { type: String }
+  }).validator()),
+  run({ userId, doc, docType }) {
+    const docId = doc._id;
+    delete doc._id;
+    doc.id = docId;
 
-  let prevState;
-  if (oldData) {
-    prevState = {
-      id: taskId,
-      projectId: oldData.projectId,
-      name: oldData.name,
-      description: oldData.description,
-      active: oldData.active,
-      startAt: oldData.startAt,
-      assignedAt: oldData.assignedAt,
-      estimate: oldData.estimate,
-      isAccepted: oldData.isAccepted
+    const user = Meteor.users.findOne({ _id: userId });
+
+    const itemToInsert = {
+      type: docType,
+      date: new Date(),
+      action: 'DELETE',
+      currentState: null,
+      prevState: doc,
+      changedField: null,
+      editor: {
+        id: user._id,
+        username: user.username,
+        fullname: user.profile.fullname
+      }
     };
-  } else {
-    prevState = null;
+    // itemToInsert.additional = getAdditionalData(itemToInsert);
+    itemToInsert.view = getViewText(itemToInsert);
+
+    History.insert(itemToInsert);
   }
-
-  log.call({
-    type: 'task',
-    prevState,
-    currentState,
-    changedFields,
-    action,
-    view
-  });
-};
-
-// const logProjectChanges = (project, action) => {
-//   // TODO: project changes log
-//   console.log(action);
-//   console.log(project);
-// };
+});
