@@ -2,11 +2,11 @@ textarea {
   display: block;
   width: 240px;
   height: 90px;
-  border: 1px solid #838f9e;
+  border: 1px solid $grey-color;
   outline: none;
   background: none;
   font-family: 'Open Sans Light';
-  font-size: 18px;
+  font-size: 16px;
   padding: 8px 15px;
   color: #000;
   border-radius: 6px;
@@ -14,8 +14,8 @@ textarea {
   resize: none;
 
   &:focus {
-    box-shadow: 0 0 0 1px #2babf9;
-    border-color: #2babf9;
+    box-shadow: 0 0 0 1px $blue-color;
+    border-color: $blue-color;
   }
   &:disabled {
     background: #e4ecf0;

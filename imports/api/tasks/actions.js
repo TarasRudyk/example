@@ -64,3 +64,40 @@ export const deleteTask = (taskId) => {
     }
   });
 };
+
+export const acceptTask = (taskId, estimate, startAt) => {
+  check(taskId, String);
+  check(estimate, Number);
+  check(startAt, Match.OneOf(undefined, null, Date));
+
+  if (estimate < 15) {
+    addNotice(TAPi18n.__('change.incorrectEstimate'));
+    return false;
+  }
+
+  return Meteor.call('task.accept', { taskId, estimate, startAt }, (err, res) => {
+    if (err) {
+      addNotice(err.error);
+    }
+
+    if (res) {
+      addNotice(res);
+    }
+  });
+};
+
+export const reassignTask = (taskId, description, assignedAt) => {
+  check(taskId, String);
+  check(description, String);
+  check(assignedAt, String);
+
+  return Meteor.call('task.reassign', { taskId, description, assignedAt }, (err, res) => {
+    if (err) {
+      addNotice(err.error);
+    }
+
+    if (res) {
+      addNotice(res);
+    }
+  });
+};

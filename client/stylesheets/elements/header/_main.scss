@@ -1,11 +1,20 @@
 header {
 	position: relative;
-	background: #fff;
-	box-shadow: 0 0 5px $header-shadow-color;
-	padding: 12px 0;
 	font-size: 14px;
 	z-index: 200;
 
+	a {
+		color: $header-link-color;
+		font-family: 'Open Sans Regular';
+
+		&:hover {
+			color: $header-link-hover-color;
+		}
+	}
+	.container {
+		padding-top: 8px;
+		padding-bottom: 8px;
+	}
 	&:after {
 		content: "";
 		display: table;
@@ -22,7 +31,7 @@ header {
 		a {
 			display: block;
 			float: left;
-			margin: 9px 16px 9px 0;
+			margin: 9px 12px 9px 0;
 			line-height: 1;
 		}
 		.header-logo {
@@ -75,12 +84,12 @@ header {
 			position: relative;
 			display: inline-block;
 			margin: 4px 0 0 10px;
-			color: $link-light-color;
+			color: $header-link-color;
 
 			span {
 				position: absolute;
 				font-size: 8px;
-				background: #45b931;
+				background: $header-active-icon-color;
 				color: #fff;
 				left: 14px;
 				top: 0;
@@ -89,7 +98,7 @@ header {
 				display: none;
 			}
 			&:hover {
-				color: $link-light-hover-color;
+				color: $header-link-hover-color;
 			}
 			&.active {
 				position: relative;
@@ -98,14 +107,15 @@ header {
 			    content: '';
 			    position: absolute;
 			    left: 0;
-					bottom: -16px;
+					bottom: -13px;
 					width: 24px;
-					height: 2px;
-					background: $link-light-color;
+					height: 1px;
+					background: $header-link-color;
+					z-index: 200;
 			  }
 			}
 			&.with-counter {
-				color: #45b931;
+				color: $header-active-icon-color;
 
 				span {
 					display: block;

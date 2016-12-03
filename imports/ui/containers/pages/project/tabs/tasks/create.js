@@ -6,7 +6,7 @@ import CreateTask from '/imports/ui/pages/project/tabs/tasks/create';
 
 export default createContainer(({ projectId }) => {
   const projectHandle = Meteor.subscribe('project', projectId);
-  const project = projectHandle.ready() ? Projects.findOne() : {};
+  const project = projectHandle.ready() ? Projects.findOne(projectId) : {};
   return {
     project: project
   };

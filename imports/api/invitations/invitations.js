@@ -31,6 +31,9 @@ Invitations.schema = new SimpleSchema({
   'user.fullname': {
     type: String
   },
+  'user.avatar': {
+    type: String
+  },
   replied: {
     type: Boolean,
     optional: true

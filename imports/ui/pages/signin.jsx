@@ -47,22 +47,12 @@ export default class Signin extends React.Component {
     }
   }
   textOnChange(target) {
-    switch (target.name) {          // eslint-disable-line 
-      case 'email':
-        this.setState({
-          email: {
-            value: target.value.trim().toLowerCase()
-          }
-        });
-        break;
-      case 'password':
-        this.setState({
-          password: {
-            value: target.value.trim()
-          }
-        });
-        break;
-    }
+    this.setState({
+      [target.name]: {
+        value: target.value.trim(),
+        error: ''
+      }
+    });
   }
   render() {
     return (
@@ -72,8 +62,20 @@ export default class Signin extends React.Component {
             <h1>Sign in</h1>
           </div>
           <form onSubmit={this.onSubmit}>
-            <InputField name="email" error={this.state.email.error} callback={this.textOnChange} />
-            <InputField name="password" type="password" error={this.state.password.error} callback={this.textOnChange} />
+            <InputField
+              name="email"
+              placeholder="Email"
+              error={this.state.email.error}
+              callback={this.textOnChange}
+              autoFocus
+            />
+            <InputField
+              name="password"
+              placeholder="Password"
+              type="password"
+              error={this.state.password.error}
+              callback={this.textOnChange}
+            />
             <a href="/" className="button">Back</a>
             <input type="submit" value="Sign in" className="button green" />
           </form>

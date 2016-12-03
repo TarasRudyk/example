@@ -26,9 +26,11 @@
 @import "{}/client/stylesheets/pages/projects/project-single.scss";
 @import "{}/client/stylesheets/pages/projects/people/people-list.scss";
 @import "{}/client/stylesheets/pages/projects/people/people-list-item.scss";
+@import "{}/client/stylesheets/pages/projects/tasks/accept-task-modal.scss";
 @import "{}/client/stylesheets/pages/elements/main.scss";
 @import "{}/client/stylesheets/pages/dashboard/main.scss";
 
+@import "{}/client/stylesheets/components/loader.scss";
 @import "{}/client/stylesheets/components/user-search.scss";
 @import "{}/client/stylesheets/components/assign-user.scss";
 @import "{}/client/stylesheets/components/invitation-item.scss";

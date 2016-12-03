@@ -9,10 +9,10 @@
   font-size: 16px;
   padding: 10px 0 0;
   border: 2px solid #fff;
-  box-shadow: 0 0 5px $header-shadow-color;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 
   &.dark {
-    color: $link-light-color;
+    color: red;
   }
 }
 

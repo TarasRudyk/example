@@ -1,5 +1,5 @@
 import React from 'react';
-import TaskItem from './item';
+import TaskItem from '/imports/ui/containers/pages/project/tabs/tasks/item';
 
 export default class Tasks extends React.Component {
   constructor() {
