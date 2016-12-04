@@ -9,7 +9,7 @@ Meteor.publish('projects', function (skip = 0, limit = 0) {
   check(skip, Number);
   check(limit, Number);
 
-  return Projects.find({ 'users.id': this.userId }, { skip, limit });
+  return Projects.find({ 'users.id': this.userId, active: true }, { skip, limit });
 });
 
 Meteor.publish('project', function (id) {

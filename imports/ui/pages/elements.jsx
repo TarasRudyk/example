@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Button from '/imports/ui/components/button';
+
 const Elements = () => (
   <div className="page-main-content page-elements">
     <div className="separator">
@@ -24,29 +26,24 @@ const Elements = () => (
         <div className="elements-box" style={{ background: '#227dac' }}>#227dac</div>
         <div className="elements-box" style={{ background: '#185879' }}>#185879</div>
       </div>
+
       <div className="title">
-        <h2>Forms</h2>
+        <h2>Buttons</h2>
       </div>
-      <div className="title">
-        <h3>Normal buttons</h3>
-      </div>
-
-      <a href="/" className="button">Default button</a>
-      <a href="/" className="button green">Green button</a>
-      <a href="/" className="button blue">Blue button</a>
-      <a href="/" className="button red">Red button</a>
-      <input type="submit" defaultValue="Submit" className="button" />
-
-      <div className="title">
-        <h3>Small buttons</h3>
-      </div>
-
-      <a href="/" className="button small">Default button</a>
-      <a href="/" className="button small green">Green button</a>
-      <a href="/" className="button small blue">Blue button</a>
+      <code>
+        <p>
+          <span style={{ color: '#2060a0' }}>import</span> Button from <span style={{ color: '#c03030' }}>&apos;/imports/ui/components/button&apos;</span>;
+        </p>
+      </code>
+      <Button disabled>Disabled button</Button>
+      <Button rounded>Rounded button</Button>
+      <Button small color={'red'}>Small button</Button>
+      <Button small rounded>Small rounded button</Button>
+      <Button bordered color={'blue'} small>Bordered button</Button>
+      <Button bordered color={'green'} small rounded>Bordered button</Button>
 
       <div className="title">
-        <h3>Text fields</h3>
+        <h2>Text fields</h2>
       </div>
 
       <input type="text" placeholder="Type something..." />

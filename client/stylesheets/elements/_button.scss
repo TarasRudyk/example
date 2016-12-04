@@ -21,18 +21,33 @@
     border-color: #7c878c;
     color: #fff;
   }
+  &:disabled {
+    background: #e4ecf0;
+    border-color: #e4ecf0;
+    color: #b2a9a9;
+  }
   &:active {
     background: $grey-color;
   }
   &:last-child {
     margin-right: 0;
   }
+
+  &.rounded {
+    border-radius: 21px;
+  }
+
   &.small {
     min-width: 50px;
     height: 26px;
     padding: 5px 8px;
     font-size: 14px;
   }
+
+  &.small.rounded {
+    border-radius: 18px;
+  }
+
   &.green {
     background: #04D25A;
     border-color: #04D25A;
@@ -45,6 +60,10 @@
 
     &:active {
       background: #45b931;
+    }
+
+    &.bordered {
+      color: #45b931;
     }
   }
 
@@ -61,6 +80,10 @@
     &:active {
       background: $blue-button-color;
     }
+
+    &.bordered {
+      color: #1da9fc;
+    }
   }
 
   &.red {
@@ -76,5 +99,23 @@
     &:active {
       background: #f14142;
     }
+
+    &.bordered {
+      color: #f14142;
+    }
+  }
+
+  &.bordered {
+    background: none;
+    border-width: 2px;
+    color: #838f9e;
+    padding: 11px 15px;
+
+    &:hover {
+      background: none;
+    }
+  }
+  &.bordered.small {
+    padding: 4px 8px;
   }
 }
