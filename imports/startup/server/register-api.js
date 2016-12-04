@@ -16,3 +16,6 @@ import '/imports/api/projects/methods';
 
 import '/imports/api/tasks/server/publications';
 import '/imports/api/tasks/methods';
+
+import '/imports/api/history/server/publications';
+import '/imports/api/history/methods';
