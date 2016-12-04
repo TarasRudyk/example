@@ -10,8 +10,10 @@ Meteor.publish('projectTasksHistory', function (projectId) {
   return History.find({ type: 'task', 'currentState.projectId': projectId });
 });
 
-Meteor.publish('taskHistory', function (taskId) {
+Meteor.publish('taskHistory', function (taskId, limit) {
   check(taskId, String);
+  check(limit, Number);
 
-  return History.find({ type: 'task', 'currentState.id': taskId });
+  return History.find({ type: 'task', 'currentState.id': taskId },
+  { sort: { date: -1 }, limit: limit });
 });

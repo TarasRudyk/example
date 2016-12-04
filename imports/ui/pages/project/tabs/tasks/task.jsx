@@ -10,9 +10,12 @@ import { deleteTask, reassignTask } from '/imports/api/tasks/actions';
 export default class Task extends React.Component {
   constructor(props) {
     super(props);
+
+    this.limit = 3;
     this.state = {
       isReassignModalOpen: false,
-      isAcceptModalOpen: false
+      isAcceptModalOpen: false,
+      itemsToLoad: this.limit
     };
 
     this.handleDelete = this.handleDelete.bind(this);
@@ -21,6 +24,7 @@ export default class Task extends React.Component {
     this.handleReassignSubmit = this.handleReassignSubmit.bind(this);
     this.handleReassignClose = this.handleReassignClose.bind(this);
     this.handleAcceptClose = this.handleAcceptClose.bind(this);
+    this.handleHistoryLoadMore = this.handleHistoryLoadMore.bind(this);
     this.canEdit = this.canEdit.bind(this);
   }
   canEdit() {
@@ -58,6 +62,9 @@ export default class Task extends React.Component {
       isAcceptModalOpen: false
     });
   }
+  handleHistoryLoadMore(loadedItemsCount) {
+    this.setState({ itemsToLoad: loadedItemsCount + this.limit });
+  }
   render() {
     const { _id, name, description, startAt, assignedAt } = this.props.task;
     return (
@@ -89,7 +96,11 @@ export default class Task extends React.Component {
             {this.canEdit() ? <button onClick={this.handleAccept}>Accept</button> : ''}
           </TabPanel>
           <TabPanel>
-            <History taskId={_id} />
+            <History
+              taskId={_id}
+              limit={this.state.itemsToLoad}
+              onLoadMore={this.handleHistoryLoadMore}
+            />
           </TabPanel>
         </Tabs>
       </div>

@@ -6,8 +6,13 @@ export class History extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-  }
 
+    this.handleLoadMore = this.handleLoadMore.bind(this);
+  }
+  handleLoadMore(event) {
+    event.preventDefault();
+    this.props.onLoadMore(this.props.items.length);
+  }
   render() {
     return (
       <div className="tasks-history">
@@ -19,11 +24,13 @@ export class History extends React.Component {
           </div>
         </div>
         <HistoryList items={this.props.items} />
+        <button onClick={this.handleLoadMore}>Load More</button>
       </div>
     );
   }
 }
 
 History.propTypes = {
-  items: React.PropTypes.array
+  items: React.PropTypes.array,
+  onLoadMore: React.PropTypes.func
 };
