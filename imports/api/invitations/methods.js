@@ -15,26 +15,26 @@ export const create = new ValidatedMethod({
   }).validator(),
   run({ projectId, userId }) {
     if (!this.userId) {
-      throw new Meteor.Error('not-authorized');
+      throw new Meteor.Error('User not authorized');
     }
 
     const project = Projects.findOne({ _id: projectId, active: true });
     const ownerId = project.ownerInfo().id;
 
     if (!project || ownerId !== this.userId) {
-      throw new Meteor.Error('problem-with-project');
+      throw new Meteor.Error('You are not an owner of project');
     }
 
     const user = Meteor.users.findOne({ _id: userId });
 
     if (!user || !user.profile) {
-      throw new Meteor.Error('problem-with-user');
+      throw new Meteor.Error('Problem with user');
     }
 
     const invitations = Invitations.find({ 'user.id': userId, 'project.id': projectId }).count();
 
     if (invitations) {
-      throw new Meteor.Error('already-have-invitations-for-this-user');
+      throw new Meteor.Error('Already have invitation for this user');
     }
 
     return Invitations.insert({
@@ -60,13 +60,13 @@ export const accept = new ValidatedMethod({
   }).validator(),
   run({ invitationId }) {
     if (!this.userId) {
-      throw new Meteor.Error('not-authorized');
+      throw new Meteor.Error('User not authorized');
     }
 
     const invitation = Invitations.findOne({ _id: invitationId, 'user.id': this.userId });
 
     if (!invitation) {
-      throw new Meteor.Error('invitation-not-found');
+      throw new Meteor.Error('Invitation not found');
     }
 
     const project = Projects.findOne({
@@ -75,7 +75,7 @@ export const accept = new ValidatedMethod({
     });
 
     if (project) {
-      throw new Meteor.Error('the-user-has-already-been-added-to-the-project');
+      throw new Meteor.Error('The user has already been added to the project');
     }
 
     const userGradients = Meteor.users.findOne({ _id: this.userId }).getGradientsIds();
@@ -127,13 +127,13 @@ export const refuse = new ValidatedMethod({
   }).validator(),
   run({ invitationId }) {
     if (!this.userId) {
-      throw new Meteor.Error('not-authorized');
+      throw new Meteor.Error('User not authorized');
     }
 
     const invitation = Invitations.findOne({ _id: invitationId, 'user.id': this.userId });
 
     if (!invitation) {
-      throw new Meteor.Error('invitation-not-found');
+      throw new Meteor.Error('Invitation not found');
     }
 
     Invitations.remove({ _id: invitationId });

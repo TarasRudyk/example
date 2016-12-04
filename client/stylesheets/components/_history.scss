@@ -1,0 +1,15 @@
+.history-list-group{
+    display: flex;
+    align-items: flex-start;
+    padding: 10px;
+    .lable{
+        width: 20px;
+        height: 20px;
+        background-color: #0182f9;
+        border-radius: 20px;
+        margin: 6px;
+    }
+    button{
+        margin: 8px;
+    }
+}
