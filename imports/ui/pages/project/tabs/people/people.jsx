@@ -14,7 +14,7 @@ export default class People extends React.Component {
       <div className="project-people">
         <div className="container">
           <PeopleList projectId={this.props.projectId} />
-          <UserSearch projectId={this.props.projectId} />
+          {this.props.isOwner ? <UserSearch projectId={this.props.projectId} /> : null}
         </div>
       </div>
     );
@@ -22,5 +22,6 @@ export default class People extends React.Component {
 }
 
 People.propTypes = {
-  projectId: React.PropTypes.string
+  projectId: React.PropTypes.string,
+  isOwner: React.PropTypes.bool
 };

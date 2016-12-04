@@ -38,7 +38,7 @@ export default class SingleProject extends React.Component {
               <a href={`/project/edit/${project._id}`} className="button green">Edit</a>
               <button className="button red" value={project._id} onClick={this.deleteHandler}>Remove</button>
             </div>
-          : null}
+            : null}
         </PageHeader>
         <Tabs
           onSelect={this.handleSelect}
@@ -57,7 +57,7 @@ export default class SingleProject extends React.Component {
             <Tasks projectId={project._id} projectOwnerId={owner.id} />
           </TabPanel>
           <TabPanel>
-            <People projectId={project._id} />
+            <People projectId={project._id} isOwner={this.props.isOwner} />
           </TabPanel>
           <TabPanel>
             <History projectId={project._id} />
