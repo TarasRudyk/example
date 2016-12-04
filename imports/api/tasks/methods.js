@@ -151,7 +151,7 @@ export const reassign = new ValidatedMethod({
 
     if ((this.userId === task.ownerId) || (this.userId === task.assignedAt)) {
       Tasks.update({ _id: taskId }, {
-        $set: { assignedAt }
+        $set: { assignedAt, lastReassignReason: description }
       });
     } else {
       throw new Meteor.Error("You can't reassign user in this task!");
@@ -159,6 +159,6 @@ export const reassign = new ValidatedMethod({
 
     const assignedUser = Meteor.users.findOne({ _id: assignedAt });
 
-    return `Task reassigned at ${assignedUser.profile.fullname}. Description: ${description}`;
+    return `Task reassigned at ${assignedUser.profile.fullname}`;
   }
 });

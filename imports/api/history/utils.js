@@ -24,7 +24,7 @@ export const isDockChanged = (fieldKey, docType) => {
 
 // Item views constructors
 export const getTaskViewText = (historyItem) => {
-  const { action, currentState, prevState, changedField, editor } = historyItem;
+  const { action, currentState, prevState, changedField, editor, additional } = historyItem;
 
   if (action === 'CREATE' && changedField === 'name') {
     return `<a href="/profile/${editor.id}">${editor.fullname}</a> 
@@ -58,12 +58,16 @@ export const getTaskViewText = (historyItem) => {
       if (currentState.assignedAt) {
         const assignedUserName =
           Meteor.users.findOne({ _id: currentState.assignedAt }).profile.fullname;
+
+        const reason = additional.reason ? `Reason is : ${additional.reason}` : '';
+
         return `<a href="/profile/${editor.id}">${editor.fullname}</a> 
           assign task <a href="/project/${currentState.projectId}/task/${currentState.id}">
-          ${currentState.name}</a> at <a href="/profile/${currentState.assignedAt}">${assignedUserName}</a>`;
+          ${currentState.name}</a> at <a href="/profile/${currentState.assignedAt}">${assignedUserName}</a>.
+           ${reason}`;
       }
       const assignedUserName =
-          Meteor.users.findOne({ _id: prevState.assignedAt }).profile.fullname;
+        Meteor.users.findOne({ _id: prevState.assignedAt }).profile.fullname;
       return `<a href="/profile/${editor.id}">${editor.fullname}</a> 
         unassign task <a href="/project/${currentState.projectId}/task/${currentState.id}">
         ${currentState.name}</a> from <a href="/profile/${prevState.assignedAt}">${assignedUserName}</a>`;
@@ -79,22 +83,22 @@ export const getViewText = (historyItem) => {
   }
 };
 
-// Additional data constructors
-// export const getTaskAdditionalData = (historyItem) => {
-//   switch (historyItem.changedField) {
-//     case 'assignedAt': {
-//       const reason = historyItem.currentState.assignedAt.reason;
-//       return {
-//         reason
-//       };
-//     }
-//     default: return null;
-//   }
-// };
+// Additional data getters
+export const getTaskAdditionalData = (historyItem) => {
+  switch (historyItem.changedField) {
+    case 'assignedAt': {
+      const reason = historyItem.currentState.lastReassignReason;
+      return {
+        reason
+      };
+    }
+    default: return null;
+  }
+};
 
-// export const getAdditionalData = (historyItem) => {
-//   switch (historyItem.type) {
-//     case 'task': return getTaskAdditionalData(historyItem);
-//     default: return null;
-//   }
-// };
+export const getAdditionalData = (historyItem) => {
+  switch (historyItem.type) {
+    case 'task': return getTaskAdditionalData(historyItem);
+    default: return null;
+  }
+};

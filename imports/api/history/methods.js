@@ -3,7 +3,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 
 import { History } from './history';
-import { isDockChanged, getViewText } from './utils';
+import { isDockChanged, getViewText, getAdditionalData } from './utils';
 
 export const logCreate = new ValidatedMethod({
   name: 'history.logCreate',
@@ -35,7 +35,6 @@ export const logCreate = new ValidatedMethod({
               fullname: user.profile.fullname
             }
           };
-          // itemToInsert.additional = getAdditionalData(itemToInsert);
           itemToInsert.view = getViewText(itemToInsert);
 
           History.insert(itemToInsert);
@@ -81,7 +80,7 @@ export const logEdit = new ValidatedMethod({
               fullname: user.profile.fullname
             }
           };
-          // itemToInsert.additional = getAdditionalData(itemToInsert);
+          itemToInsert.additional = getAdditionalData(itemToInsert);
           itemToInsert.view = getViewText(itemToInsert);
 
           History.insert(itemToInsert);
@@ -118,7 +117,6 @@ export const logDelete = new ValidatedMethod({
         fullname: user.profile.fullname
       }
     };
-    // itemToInsert.additional = getAdditionalData(itemToInsert);
     itemToInsert.view = getViewText(itemToInsert);
 
     History.insert(itemToInsert);

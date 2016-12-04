@@ -44,6 +44,11 @@ Tasks.schema = new SimpleSchema({
     optional: true,
     label: '_id of assigned user'
   },
+  lastReassignReason: {
+    type: String,
+    optional: true,
+    defaultValue: ''
+  },
   estimate: {
     type: Number,
     optional: true,
