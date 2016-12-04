@@ -6,9 +6,23 @@ export class History extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.isWillUpdate = true;
 
     this.handleLoadMore = this.handleLoadMore.bind(this);
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.items.length > this.props.items.length) {
+      this.isWillUpdate = true;
+    } else {
+      this.isWillUpdate = false;
+    }
+  }
+
+  shouldComponentUpdate() {
+    return this.isWillUpdate;
+  }
+
   handleLoadMore(event) {
     event.preventDefault();
     this.props.onLoadMore(this.props.items.length);
