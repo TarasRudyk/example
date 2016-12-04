@@ -30,7 +30,8 @@ export default class Dashboard extends React.Component {
         error: ''
       },
       chosenTaskId: '',
-      chosenDay: ''
+      chosenDay: moment().startOf('day'),
+      startOfWeek: moment().startOf('isoweek')
     };
 
     this.onDrop = this.onDrop.bind(this);
@@ -38,7 +39,9 @@ export default class Dashboard extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.acceptEstimate = this.acceptEstimate.bind(this);
-    this.handleChildClick = this.handleChildClick.bind(this);
+    this.handleChoseDay = this.handleChoseDay.bind(this);
+    this.handleClickNextWeek = this.handleClickNextWeek.bind(this);
+    this.handleClickPreviousWeek = this.handleClickPreviousWeek.bind(this);
   }
 
   onDrop(data) {
@@ -95,15 +98,36 @@ export default class Dashboard extends React.Component {
     }
   }
 
-  handleChildClick() {
-    this.setState({ chosenDay: new Date() });
+  handleChoseDay({ currentTarget }) {
+    const selectedDate = moment(parseInt(currentTarget.dataset.date, 10));
+    this.setState({ chosenDay: selectedDate });
+  }
+
+  handleClickNextWeek() {
+    const startOfWeek = moment(this.state.startOfWeek).add(1, 'weeks');
+    this.setState({
+      startOfWeek: startOfWeek
+    });
+  }
+
+  handleClickPreviousWeek() {
+    const startOfWeek = moment(this.state.startOfWeek).subtract(1, 'weeks');
+    this.setState({
+      startOfWeek: startOfWeek
+    });
   }
 
   render() {
     return (
       <div className="page-main-content page-dashboard">
         <PageHeader header={'Dashboard'} subHeader={'all your today tasks'} hx={1}>
-          <DashboardCalendar click={this.handleChildClick} params={this.state.chosenDay} />
+          <DashboardCalendar
+            choseDay={this.handleChoseDay}
+            goNextWeek={this.handleClickNextWeek}
+            goPreviousWeek={this.handleClickPreviousWeek}
+            chosenDay={this.state.chosenDay}
+            startOfWeek={this.state.startOfWeek}
+          />
         </PageHeader>
         <Droppable
           className="container page-dashboard-content"

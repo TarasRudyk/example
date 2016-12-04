@@ -10,6 +10,20 @@ export default class DashboardCalendar extends React.Component {
       day: '',
       startOfWeek: moment().startOf('isoweek')
     };
+    this.nextWeek = this.nextWeek.bind(this);
+    this.previousWeek = this.previousWeek.bind(this);
+  }
+  nextWeek() {
+    const startOfWeek = moment(this.state.startOfWeek).add(1, 'weeks');
+    this.setState({
+      startOfWeek: startOfWeek
+    });
+  }
+  previousWeek() {
+    const startOfWeek = moment(this.state.startOfWeek).subtract(1, 'weeks');
+    this.setState({
+      startOfWeek: startOfWeek
+    });
   }
 
   render() {
@@ -18,17 +32,21 @@ export default class DashboardCalendar extends React.Component {
         <div className="container">
           <div className="title">
             <div className="title-right-block">
-              <span>this is dashboard calendar</span>
-              <button type="button" onClick={this.previousWeek}>&#171;</button>
-              {this.props.days.map((d, i) => (
-                <a href="" key={i} onClick={this.props.click} data-date={d}>
-                  <div className="">
-                    <span>{d.day}</span>
-                    <span>{d.estimate}</span>
+              <div className="dashboard-calendar">
+                <button type="button" onClick={this.props.goPreviousWeek}>&#171;</button>
+                {this.props.days.map((d, i) => (
+                  <div key={i} className="dashboard-calendar-day">
+                    <a href="" onClick={this.props.choseDay} data-date={d}>
+                      <div className="">
+                        <p>{moment(d.date).format('DD-MM-YYYY')}</p>
+                        <p>Tasks: {d.tasksCount || 0}</p>
+                        <p>Estimate: {d.estimate.hh} hh, {d.estimate.mm} mm</p>
+                      </div>
+                    </a>
                   </div>
-                </a>
-              ))}
-              <button type="button" onClick={this.nextWeek}> &#187; </button>
+                ))}
+                <button type="button" onClick={this.props.goNextWeek}> &#187; </button>
+              </div>
             </div>
           </div>
         </div>
@@ -38,5 +56,7 @@ export default class DashboardCalendar extends React.Component {
 }
 DashboardCalendar.propTypes = {
   days: React.PropTypes.array,
-  click: React.PropTypes.func
+  choseDay: React.PropTypes.func,
+  goPreviousWeek: React.PropTypes.func,
+  goNextWeek: React.PropTypes.func
 };
