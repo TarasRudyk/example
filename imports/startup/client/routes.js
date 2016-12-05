@@ -38,9 +38,9 @@ const privateRoutes = FlowRouter.group({
 });
 
 FlowRouter.route('/', {
-  action() {
+  action(params, get) {
     mount(MainLayout, {
-      content: <Home />
+      content: <Home {...get} />
     });
   }
 });
@@ -70,14 +70,14 @@ privateRoutes.route('/projects', {
 });
 
 privateRoutes.route('/project/:point', {
-  action({ point }, index) {
+  action({ point }) {
     if (point === 'create') {
       mount(MainLayout, {
         content: <ProjectCreate />
       });
     } else {
       mount(MainLayout, {
-        content: <Project id={point} index={index} />
+        content: <Project id={point} />
       });
     }
   }

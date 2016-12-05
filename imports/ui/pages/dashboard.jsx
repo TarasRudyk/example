@@ -99,7 +99,7 @@ export default class Dashboard extends React.Component {
   }
 
   handleChoseDay({ currentTarget }) {
-    const selectedDate = moment(parseInt(currentTarget.dataset.date, 10));
+    const selectedDate = new Date(currentTarget.dataset.date);
     this.setState({ chosenDay: selectedDate });
   }
 

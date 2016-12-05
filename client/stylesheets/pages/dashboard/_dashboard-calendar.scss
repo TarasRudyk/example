@@ -12,5 +12,8 @@
     &:hover{
       background-color: #eee;
     }
+    &.date-is-selected {
+      background: #ccc;
+    }
   }
 }

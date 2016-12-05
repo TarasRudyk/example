@@ -18,6 +18,7 @@ export default createContainer(({ startOfWeek, chosenDay }) => {
   };
   const days = tasksHandle.ready() ?
     weekDates().map((day) => {
+      const isSelected = day.format('DD-MM-YYYY') === moment(chosenDay).format('DD-MM-YYYY');
       let estimate = null;
       const startOfDay = moment(day).startOf('day').toDate();
       const endOfDay = moment(day).endOf('day').toDate();
@@ -35,7 +36,7 @@ export default createContainer(({ startOfWeek, chosenDay }) => {
       const tasksCount = dayTasks.count();
       const hh = Math.floor(estimate / 60);
       const mm = estimate % 60;
-      return { date: startOfDay, estimate: { mm, hh }, tasksCount };
+      return { date: startOfDay, estimate: { mm, hh }, tasksCount, isSelected };
     }) : [];
 
   return {

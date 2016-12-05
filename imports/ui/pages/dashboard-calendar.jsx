@@ -25,6 +25,9 @@ export default class DashboardCalendar extends React.Component {
       startOfWeek: startOfWeek
     });
   }
+  dateIsSelected(isSelected) {
+    return isSelected ? 'dashboard-calendar-day date-is-selected' : 'dashboard-calendar-day';
+  }
 
   render() {
     return (
@@ -35,8 +38,8 @@ export default class DashboardCalendar extends React.Component {
               <div className="dashboard-calendar">
                 <button type="button" onClick={this.props.goPreviousWeek}>&#171;</button>
                 {this.props.days.map((d, i) => (
-                  <div key={i} className="dashboard-calendar-day">
-                    <a href="" onClick={this.props.choseDay} data-date={d}>
+                  <div key={i} className={`${this.dateIsSelected(d.isSelected)}`}>
+                    <a href={`/?date=${moment(d.date).format('DD-MM-YYYY')}`} onClick={this.props.choseDay} data-date={d.date}>
                       <div className="">
                         <p>{moment(d.date).format('DD-MM-YYYY')}</p>
                         <p>Tasks: {d.tasksCount || 0}</p>
