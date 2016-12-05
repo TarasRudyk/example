@@ -29,7 +29,7 @@ export default class SingleProject extends React.Component {
   }
   render() {
     const { project, owner, index } = this.props;
-    const tab = parseInt(index.tab, 10);
+    const tab = index ? parseInt(index.tab, 10) : 0;
     return (
       <div className="page-main-content page-project">
         <PageHeader header={project.name} subHeader={owner.fullname} hx={1}>
