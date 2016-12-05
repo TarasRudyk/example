@@ -32,7 +32,7 @@ export default class Task extends React.Component {
       (Meteor.userId() === this.props.task.assignedAt);
   }
   handleDelete() {
-    const conf = confirm('Delete this task?'); // eslint-disable-line 
+    const conf = confirm('Delete this task?'); // eslint-disable-line
     if (conf) {
       deleteTask(this.props.task._id);
     }

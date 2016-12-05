@@ -65,7 +65,7 @@ export const edit = new ValidatedMethod({
       throw new Meteor.Error('User not authorized');
     }
 
-    const project = Projects.findOne({ name, ownerId: this.userId, active: true });
+    const project = Projects.findOne({ name, 'users.id': this.userId, active: true });
 
     if (project && project._id !== projectId) {
       throw new Meteor.Error('Project with the same name exists');
