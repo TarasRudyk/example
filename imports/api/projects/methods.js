@@ -113,7 +113,6 @@ export const removeUserFromProject = new ValidatedMethod({
     createNotification.call({
       description: `${owner.fullname} revoked your access to the ${project.name} project`,
       type: 'Revoke access',
-      action: 'Revoke access',
       recipientId: userId
     });
 

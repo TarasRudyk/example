@@ -16,9 +16,6 @@ Notifications.schema = new SimpleSchema({
   type: {
     type: String
   },
-  action: {
-    type: String
-  },
   recipientId: {
     type: String
   },
