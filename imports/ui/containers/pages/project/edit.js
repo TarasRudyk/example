@@ -8,6 +8,7 @@ import EditProject from '/imports/ui/pages/project/edit';
 export default createContainer(({ id }) => {
   const projectHandle = Meteor.subscribe('project', id);
   const project = projectHandle.ready() ? Projects.findOne({ _id: id, active: true }) : {};
+
   return {
     project
   };

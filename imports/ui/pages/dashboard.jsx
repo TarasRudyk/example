@@ -4,6 +4,7 @@ import PageHeader from '/imports/ui/components/header/pageHeader';
 import { Droppable } from 'react-drag-and-drop';
 import { acceptTask } from '/imports/api/tasks/actions';
 import Modal from 'react-modal';
+import DashboardCalendar from '/imports/ui/containers/pages/dashboard-calendar';
 import { TAPi18n } from 'meteor/tap:i18n';
 
 const customModalStyles = {
@@ -28,7 +29,9 @@ export default class Dashboard extends React.Component {
         value: 15,
         error: ''
       },
-      chosenTaskId: ''
+      chosenTaskId: '',
+      chosenDay: moment().startOf('day'),
+      startOfWeek: moment().startOf('isoweek')
     };
 
     this.onDrop = this.onDrop.bind(this);
@@ -36,6 +39,9 @@ export default class Dashboard extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.acceptEstimate = this.acceptEstimate.bind(this);
+    this.handleChoseDay = this.handleChoseDay.bind(this);
+    this.handleClickNextWeek = this.handleClickNextWeek.bind(this);
+    this.handleClickPreviousWeek = this.handleClickPreviousWeek.bind(this);
   }
 
   onDrop(data) {
@@ -92,10 +98,37 @@ export default class Dashboard extends React.Component {
     }
   }
 
+  handleChoseDay({ currentTarget }) {
+    const selectedDate = new Date(currentTarget.dataset.date);
+    this.setState({ chosenDay: selectedDate });
+  }
+
+  handleClickNextWeek() {
+    const startOfWeek = moment(this.state.startOfWeek).add(1, 'weeks');
+    this.setState({
+      startOfWeek: startOfWeek
+    });
+  }
+
+  handleClickPreviousWeek() {
+    const startOfWeek = moment(this.state.startOfWeek).subtract(1, 'weeks');
+    this.setState({
+      startOfWeek: startOfWeek
+    });
+  }
+
   render() {
     return (
       <div className="page-main-content page-dashboard">
-        <PageHeader header={'Dashboard'} subHeader={'all your today tasks'} hx={1} />
+        <PageHeader header={'Dashboard'} subHeader={'all your today tasks'} hx={1}>
+          <DashboardCalendar
+            choseDay={this.handleChoseDay}
+            goNextWeek={this.handleClickNextWeek}
+            goPreviousWeek={this.handleClickPreviousWeek}
+            chosenDay={this.state.chosenDay}
+            startOfWeek={this.state.startOfWeek}
+          />
+        </PageHeader>
         <Droppable
           className="container page-dashboard-content"
           types={['_id']}

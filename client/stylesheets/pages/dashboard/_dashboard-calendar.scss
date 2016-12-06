@@ -1,0 +1,19 @@
+.dashboard-calendar {
+  display: flex;
+  min-height: 64px;
+
+  .dashboard-calendar-day {
+    text-align: center;
+    font-size: small;
+    margin: 0px 3px;
+    cursor: pointer;
+    border: 0.5px solid #ccc;
+    font-size: 90%;
+    &:hover{
+      background-color: #eee;
+    }
+    &.date-is-selected {
+      background: #ccc;
+    }
+  }
+}

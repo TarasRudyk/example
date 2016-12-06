@@ -38,7 +38,7 @@ export class History extends React.Component {
           </div>
         </div>
         <HistoryList items={this.props.items} />
-        <button onClick={this.handleLoadMore}>Load More</button>
+        {this.props.onLoadMore ? <button onClick={this.handleLoadMore}>Load More</button> : null}
       </div>
     );
   }

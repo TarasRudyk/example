@@ -11,7 +11,7 @@ export default class Home extends React.Component {
   }
   getContent() {
     if (this.props.userIsLogin) {
-      return <Dashboard />;
+      return <Dashboard date={this.props.date} />;
     }
 
     return <Landing />;
@@ -24,5 +24,6 @@ export default class Home extends React.Component {
 }
 
 Home.propTypes = {
+  date: React.PropTypes.string,
   userIsLogin: React.PropTypes.bool
 };
