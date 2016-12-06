@@ -7,6 +7,8 @@ import Modal from 'react-modal';
 import DashboardCalendar from '/imports/ui/containers/pages/dashboard-calendar';
 import { TAPi18n } from 'meteor/tap:i18n';
 
+import Ttimelogs from '/imports/ui/components/ttimelogs/main';
+
 const customModalStyles = {
   content: {
     top: '50%',
@@ -129,6 +131,7 @@ export default class Dashboard extends React.Component {
             startOfWeek={this.state.startOfWeek}
           />
         </PageHeader>
+        <Ttimelogs />
         <Droppable
           className="container page-dashboard-content"
           types={['_id']}

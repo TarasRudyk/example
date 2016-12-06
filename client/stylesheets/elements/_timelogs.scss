@@ -1,0 +1,21 @@
+.timelogs {
+  padding: 20px;
+}
+.timelogs table {
+  width: 100%;
+  user-select: none;
+
+  .time td {
+    font-size: 12px;
+    padding: 15px 0 0;
+  }
+}
+.timelogs-track {
+  background: #eee;
+}
+.timelogs-time {
+  width: 100px;
+  height: 20px;
+  background: pink;
+  cursor: grab;
+}
