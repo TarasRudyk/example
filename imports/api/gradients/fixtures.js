@@ -1,6 +1,6 @@
-import { Colors } from '/imports/api/colors/colors';
+import { Gradients } from '/imports/api/gradients/gradients';
 
-if (Colors.find().count() === 0) {
+if (Gradients.find().count() === 0) {
   const colors = [
     '#1da9fc', '#fc363b', '#FFFC54', '#F77A52', '#9D397E',
     '#BEDB39', '#79BD8F', '#77fc75', '#1F8A70', '#911146',
@@ -10,8 +10,8 @@ if (Colors.find().count() === 0) {
 
   for (let i = 0; i < 20; i += 1) {
     for (let j = 0; j < 20; j += 1) {
-      Colors.insert({ gradient: { start: colors[i], stop: colors[j], direction: '0deg' } });
-      Colors.insert({ gradient: { start: colors[i], stop: colors[j], direction: '90deg' } });
+      Gradients.insert({ gradient: { start: colors[i], stop: colors[j], direction: '0deg' } });
+      Gradients.insert({ gradient: { start: colors[i], stop: colors[j], direction: '90deg' } });
     }
   }
 }

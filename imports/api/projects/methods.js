@@ -5,7 +5,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { Invitations } from '../invitations/invitations';
 import { create as createNotification } from '../notifications/methods';
 import { Projects } from './projects';
-import { Colors } from '../colors/colors';
+import { Gradients } from '../gradients/gradients';
 
 export const create = new ValidatedMethod({
   name: 'project.create',
@@ -25,13 +25,13 @@ export const create = new ValidatedMethod({
     }
 
     const userGradients = Meteor.users.findOne({ _id: this.userId }).getGradientsIds();
-    const colors = Colors.find({ _id: { $nin: userGradients } }).fetch();
+    const gradients = Gradients.find({ _id: { $nin: userGradients } }).fetch();
 
-    if (!colors.length) {
+    if (!gradients.length) {
       throw new Meteor.Error('Too much projects was created');
     }
 
-    const random = Math.floor(Math.random() * (colors.length + 1));
+    const random = Math.floor(Math.random() * (gradients.length + 1));
     const projectId = Projects.insert({
       name,
       description,
@@ -41,10 +41,10 @@ export const create = new ValidatedMethod({
         fullname: Meteor.user().profile.fullname || Meteor.user().username,
         role: 'owner',
         gradient: {
-          id: colors[random]._id,
-          direction: colors[random].gradient.direction,
-          start: colors[random].gradient.start,
-          stop: colors[random].gradient.stop
+          id: gradients[random]._id,
+          direction: gradients[random].gradient.direction,
+          start: gradients[random].gradient.start,
+          stop: gradients[random].gradient.stop
         }
       }]
     });
