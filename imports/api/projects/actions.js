@@ -32,10 +32,10 @@ export const editProject = (name, description, projectId) => {
   });
 };
 
-export const deleteProject = (projectId) => {
+export const removeProject = (projectId) => {
   check(projectId, String);
 
-  Meteor.call('project.delete', { projectId }, (err, res) => {
+  Meteor.call('project.remove', { projectId }, (err, res) => {
     if (err) {
       addNotice(err.error);
     }

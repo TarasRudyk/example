@@ -45,7 +45,7 @@ Projects.schema = new SimpleSchema({
     type: String,
     optional: true
   },
-  creationDate: {
+  createdAt: {
     type: Date
   },
   active: {
@@ -64,6 +64,9 @@ Projects.schema = new SimpleSchema({
 Projects.helpers({
   ownerInfo() {
     return this.users.find(u => u.role === 'owner') || {};
+  },
+  userInfo(id) {
+    return this.users.find(u => u.id === id) || {};
   }
 });
 

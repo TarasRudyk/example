@@ -24,7 +24,7 @@ export const logCreate = new ValidatedMethod({
         if (doc[fieldKey]) {
           const itemToInsert = {
             type: docType,
-            date: new Date(),
+            createdAt: new Date(),
             action: 'CREATE',
             currentState: doc,
             prevState: null,
@@ -35,7 +35,7 @@ export const logCreate = new ValidatedMethod({
               fullname: user.profile.fullname
             }
           };
-          itemToInsert.view = getViewText(itemToInsert);
+          itemToInsert.message = getViewText(itemToInsert);
 
           History.insert(itemToInsert);
         }
@@ -69,7 +69,7 @@ export const logEdit = new ValidatedMethod({
         if (doc[fieldKey] !== prevDoc[fieldKey]) {
           const itemToInsert = {
             type: docType,
-            date: new Date(),
+            createdAt: new Date(),
             action: 'EDIT',
             currentState: doc,
             prevState: prevDoc,
@@ -81,7 +81,7 @@ export const logEdit = new ValidatedMethod({
             }
           };
           itemToInsert.additional = getAdditionalData(itemToInsert);
-          itemToInsert.view = getViewText(itemToInsert);
+          itemToInsert.message = getViewText(itemToInsert);
 
           History.insert(itemToInsert);
         }
@@ -106,7 +106,7 @@ export const logDelete = new ValidatedMethod({
 
     const itemToInsert = {
       type: docType,
-      date: new Date(),
+      createdAt: new Date(),
       action: 'DELETE',
       currentState: null,
       prevState: doc,
@@ -117,7 +117,7 @@ export const logDelete = new ValidatedMethod({
         fullname: user.profile.fullname
       }
     };
-    itemToInsert.view = getViewText(itemToInsert);
+    itemToInsert.message = getViewText(itemToInsert);
 
     History.insert(itemToInsert);
   }

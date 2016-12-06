@@ -4,7 +4,7 @@ import Tasks from '/imports/ui/containers/pages/project/tabs/tasks/tasks';
 import People from '/imports/ui/pages/project/tabs/people/people';
 import History from '/imports/ui/containers/pages/project/tabs/history/history';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { deleteProject } from '/imports/api/projects/actions.js';
+import { removeProject } from '/imports/api/projects/actions.js';
 import PageHeader from '/imports/ui/components/header/pageHeader';
 import Overview from './tabs/overview';
 
@@ -20,7 +20,7 @@ export default class SingleProject extends React.Component {
     const id = e.target.value;
     const conf = confirm('Are you sure?'); // eslint-disable-line
     if (conf) {
-      deleteProject(id);
+      removeProject(id);
     }
   }
   handleSelect(index) {

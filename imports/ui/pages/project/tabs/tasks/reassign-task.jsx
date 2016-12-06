@@ -9,7 +9,7 @@ export default class ReassignTask extends React.Component {
 
     this.state = {
       description: '',
-      assignedAt: ''
+      assignedTo: ''
     };
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -37,7 +37,7 @@ export default class ReassignTask extends React.Component {
     const task = nextProps.task;
     if (task && this.state.taskId !== task._id) {
       this.setState({
-        assignedAt: task.assignedAt || ''
+        assignedTo: task.assignedTo || ''
       });
     }
   }
@@ -53,7 +53,7 @@ export default class ReassignTask extends React.Component {
   handleOnAssigned(user) {
     const id = user ? user._id : '';
     this.setState({
-      assignedAt: id
+      assignedTo: id
     });
   }
 
@@ -69,7 +69,7 @@ export default class ReassignTask extends React.Component {
     this.props.onClose();
     this.setState({
       description: '',
-      assignedAt: ''
+      assignedTo: ''
     });
   }
 
@@ -86,7 +86,7 @@ export default class ReassignTask extends React.Component {
               <AssignUser
                 project={this.props.project}
                 onAssigned={this.handleOnAssigned}
-                assignedUserId={this.state.assignedAt}
+                assignedUserId={this.state.assignedTo}
               />
               <textarea
                 value={this.state.description}

@@ -20,26 +20,29 @@ Tasks.schema = new SimpleSchema({
     type: String,
     optional: true
   },
-  ownerId: {
+  author: {
+    type: Object
+  },
+  'author.id': {
     type: String
   },
-  ownerName: {
+  'author.fullname': {
     type: String
   },
-  active: {
+  isRemoved: {
     type: Boolean
   },
   projectId: {
     type: String
   },
-  creationDate: {
+  createdAt: {
     type: Date
   },
   startAt: {
     type: Date,
     optional: true
   },
-  assignedAt: {
+  assignedTo: {
     type: String,
     optional: true,
     label: '_id of assigned user'

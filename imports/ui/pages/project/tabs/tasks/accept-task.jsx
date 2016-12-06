@@ -11,7 +11,7 @@ export default class AcceptTask extends React.Component {
 
     this.state = {
       description: '',
-      assignedAt: '',
+      assignedTo: '',
       isOpen: false,
       startAt: new Date(),
       startOfWeek: moment().startOf('isoweek'),
@@ -50,7 +50,7 @@ export default class AcceptTask extends React.Component {
     const task = nextProps.task;
     if (task && this.state.taskId !== task._id) {
       this.setState({
-        assignedAt: task.assignedAt || ''
+        assignedTo: task.assignedTo || ''
       });
     }
   }
@@ -71,7 +71,7 @@ export default class AcceptTask extends React.Component {
     this.props.onClose();
     this.setState({
       description: '',
-      assignedAt: '',
+      assignedTo: '',
       estimate: {
         value: 15,
         error: ''

@@ -19,7 +19,7 @@ Meteor.publish('task.byId', function (taskId) {
 Meteor.publish('tasks.byAssignedUser', function (userId) {
   check(userId, String);
 
-  const tasks = Tasks.find({ assignedAt: userId });
+  const tasks = Tasks.find({ assignedTo: userId });
   return tasks;
 });
 
@@ -31,7 +31,7 @@ Meteor.publish('tasks.byUserProjects', function (selectedProjId, isAssigned) {
   if (isAssigned) {
     query = {
       projectId: { $in: selectedProjId },
-      assignedAt: this.userId
+      assignedTo: this.userId
     };
   }
   return Tasks.find(query);

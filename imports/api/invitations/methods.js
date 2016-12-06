@@ -48,7 +48,7 @@ export const create = new ValidatedMethod({
         fullname: user.profile.fullname,
         avatar: user.profile.avatar || '/images/avatar.png'
       },
-      replied: false
+      replied: 'pending'
     });
   }
 });

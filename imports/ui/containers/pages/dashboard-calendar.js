@@ -23,7 +23,7 @@ export default createContainer(({ startOfWeek, chosenDay }) => {
       const startOfDay = moment(day).startOf('day').toDate();
       const endOfDay = moment(day).endOf('day').toDate();
       const dayTasks = Tasks.find({ projectId: { $in: userProjectIds },
-        assignedAt: userId,
+        assignedTo: userId,
         active: true,
         isAccepted: true,
         estimate: { $ne: null },

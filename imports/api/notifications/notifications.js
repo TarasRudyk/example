@@ -19,14 +19,14 @@ Notifications.schema = new SimpleSchema({
   action: {
     type: String
   },
-  creationDate: {
+  recipientId: {
+    type: String
+  },
+  createdAt: {
     type: Date,
     autoValue() {
       return new Date();
     }
-  },
-  recipientId: {
-    type: String
   },
   read: {
     type: Boolean

@@ -5,10 +5,10 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import formatValidation from 'string-format-validation';
 import { addNotice } from '/imports/api/notices/actions';
 
-export const createTask = ({ name, description, assignedAt, startAt }, projectId) => {
+export const createTask = ({ name, description, assignedTo, startAt }, projectId) => {
   check(name, String);
   check(description, String);
-  check(assignedAt, String);
+  check(assignedTo, String);
   check(startAt, Match.OneOf(null, Date));
   check(projectId, String);
 
@@ -17,12 +17,12 @@ export const createTask = ({ name, description, assignedAt, startAt }, projectId
     return false;
   }
 
-  return Meteor.call('task.create', { name, description, assignedAt, startAt, projectId }, (err, res) => {
+  return Meteor.call('task.create', { name, description, assignedTo, startAt, projectId }, (err, res) => {
     if (err) {
       addNotice(err.error);
     }
     if (res) {
-      FlowRouter.go(`/project/${projectId}/task/${res}`);
+      FlowRouter.go(`/task/${res}`);
     }
   });
 };
@@ -33,7 +33,7 @@ export const editTask = (task) => {
     name: String,
     description: String,
     startAt: Match.OneOf(null, Date),
-    assignedAt: String
+    assignedTo: String
   });
 
   if (!formatValidation.validate({ min: 3, max: 25 }, task.name)) {
@@ -86,12 +86,12 @@ export const acceptTask = (taskId, estimate, startAt) => {
   });
 };
 
-export const reassignTask = (taskId, description, assignedAt) => {
+export const reassignTask = (taskId, description, assignedTo) => {
   check(taskId, String);
   check(description, String);
-  check(assignedAt, String);
+  check(assignedTo, String);
 
-  return Meteor.call('task.reassign', { taskId, description, assignedAt }, (err, res) => {
+  return Meteor.call('task.reassign', { taskId, description, assignedTo }, (err, res) => {
     if (err) {
       addNotice(err.error);
     }

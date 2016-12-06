@@ -33,7 +33,7 @@ export default createContainer(() => {
 
   const assignedTasks = tasksHandle.ready() ?
     Tasks.find({
-      projectId: { $in: userProjectIds }, assignedAt: userId, isAccepted: { $in: [null, false] }
+      projectId: { $in: userProjectIds }, assignedTo: userId, isAccepted: { $in: [null, false] }
     }).count() : 0;
 
   return {

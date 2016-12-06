@@ -35,7 +35,7 @@ export const create = new ValidatedMethod({
     const projectId = Projects.insert({
       name,
       description,
-      creationDate: new Date(),
+      createdAt: new Date(),
       users: [{
         id: this.userId,
         fullname: Meteor.user().profile.fullname || Meteor.user().username,
@@ -76,14 +76,13 @@ export const edit = new ValidatedMethod({
 
 });
 
-export const deactivate = new ValidatedMethod({
-  name: 'project.delete',
+export const remove = new ValidatedMethod({
+  name: 'project.remove',
   validate: new SimpleSchema({
     projectId: { type: String }
   }).validator(),
   run({ projectId }) {
-    const project = Projects.findOne({ _id: projectId });
-    const owner = project.users.find(u => u.role === 'owner');
+    const owner = Projects.findOne({ _id: projectId }).ownerInfo();
 
     if (owner.id !== this.userId) {
       throw new Meteor.Error('This is not your project');

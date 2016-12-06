@@ -8,18 +8,22 @@ import NotificationsList from '/imports/ui/components/side-content/notifications
 
 export default createContainer(() => {
   const notificationsHandle = Meteor.subscribe('notifications');
-  const notifications = notificationsHandle.ready() ?
-    Notifications.find({}, { sort: { creationDate: -1 }, limit: 15, skip: 0 }).fetch() : [];
+  const notifications = notificationsHandle.ready() ? Notifications.find({}, {
+    sort: { createdAt: -1 }, limit: 15, skip: 0
+  }).fetch() : [];
 
   const notificationsCount = notificationsHandle.ready() ? Notifications.find().count() : 0;
 
   const invitationsHandle = Meteor.subscribe('invitations');
-  const invitations = invitationsHandle.ready() ?
-    Invitations.find({ 'project.ownerId': { $ne: Meteor.userId() }, replied: false, 'user.id': Meteor.userId() }, { sort: { creationDate: -1 }, limit: 15, skip: 0 }).fetch() : [];
-  const invitationsCount = invitationsHandle.ready() ? Invitations.find().count() : 0;
+  const invitations = invitationsHandle.ready() ? Invitations.find({
+    'project.ownerId': { $ne: Meteor.userId() },
+    replied: false,
+    'user.id': Meteor.userId()
+  }, { sort: { createdAt: -1 }, limit: 15, skip: 0 }).fetch() : [];
 
+  const invitationsCount = invitationsHandle.ready() ? Invitations.find().count() : 0;
   const count = notificationsCount + invitationsCount;
-  // const notifInvit = notifications.concat(invitations).slice(0, 15);
+
   return {
     notifications,
     invitations,
