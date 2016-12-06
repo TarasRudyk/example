@@ -13,10 +13,10 @@ export default class SingleProject extends React.Component {
     super(props);
 
     Tabs.setUseDefaultStyles(false);
-    this.deleteHandler = this.deleteHandler.bind(this);
+    this.removeHandler = this.removeHandler.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
   }
-  deleteHandler(e) {
+  removeHandler(e) {
     const id = e.target.value;
     const conf = confirm('Are you sure?'); // eslint-disable-line
     if (conf) {
@@ -36,7 +36,7 @@ export default class SingleProject extends React.Component {
           {this.props.isOwner ?
             <div>
               <a href={`/project/edit/${project._id}`} className="button green">Edit</a>
-              <button className="button red" value={project._id} onClick={this.deleteHandler}>Remove</button>
+              <button className="button red" value={project._id} onClick={this.removeHandler}>Remove</button>
             </div>
             : null}
         </PageHeader>

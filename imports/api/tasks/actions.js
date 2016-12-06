@@ -51,10 +51,10 @@ export const editTask = (task) => {
   });
 };
 
-export const deleteTask = (taskId) => {
+export const removeTask = (taskId) => {
   check(taskId, String);
 
-  return Meteor.call('task.delete', { taskId }, (err, res) => {
+  return Meteor.call('task.remove', { taskId }, (err, res) => {
     if (err) {
       addNotice(err.error);
     }

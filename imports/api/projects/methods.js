@@ -92,8 +92,8 @@ export const remove = new ValidatedMethod({
   }
 });
 
-export const deleteUserFromProject = new ValidatedMethod({
-  name: 'project.deleteUser',
+export const removeUserFromProject = new ValidatedMethod({
+  name: 'project.removeUser',
   validate: new SimpleSchema({
     projectId: { type: String },
     userId: { type: String }

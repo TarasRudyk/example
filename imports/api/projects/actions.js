@@ -45,11 +45,11 @@ export const removeProject = (projectId) => {
   });
 };
 
-export const deleteUserFromProject = (projectId, userId) => {
+export const removeUserFromProject = (projectId, userId) => {
   check(projectId, String);
   check(userId, String);
 
-  return Meteor.call('project.deleteUser', { projectId, userId }, (err) => {
+  return Meteor.call('project.removeUser', { projectId, userId }, (err) => {
     if (err) {
       addNotice(err.error);
     }

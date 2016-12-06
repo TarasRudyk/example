@@ -73,8 +73,8 @@ export const edit = new ValidatedMethod({
   }
 });
 
-export const deleteTask = new ValidatedMethod({
-  name: 'task.delete',
+export const removeTask = new ValidatedMethod({
+  name: 'task.remove',
   validate: new SimpleSchema({
     taskId: {
       type: String
@@ -90,7 +90,7 @@ export const deleteTask = new ValidatedMethod({
     if ((this.userId === task.author.id) || (this.userId === task.assignedTo)) {
       Tasks.remove({ _id: taskId });
     } else {
-      throw new Meteor.Error("You can't delete this task!");
+      throw new Meteor.Error("You can't remove this task!");
     }
 
     return `/project/${task.projectId}`;

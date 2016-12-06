@@ -16,7 +16,7 @@ export default class AssignedUser extends React.Component {
           <div className="fullname">{fullname}</div>
           <div className="username">{this.props.user.username}</div>
         </div>
-        <button type="button" onClick={e => this.props.onDelete(e)}>
+        <button type="button" onClick={e => this.props.onRemove(e)}>
           <i className="material-icons">cancel</i>
         </button>
       </div>
@@ -26,5 +26,5 @@ export default class AssignedUser extends React.Component {
 
 AssignedUser.propTypes = {
   user: React.PropTypes.object,
-  onDelete: React.PropTypes.func
+  onRemove: React.PropTypes.func
 };

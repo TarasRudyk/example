@@ -32,9 +32,9 @@ export const getTaskViewText = (historyItem) => {
     ${currentState.name}</a>`;
   }
 
-  if (action === 'DELETE') {
+  if (action === 'REMOVE') {
     return `<a href="/profile/${editor.id}">${editor.fullname}</a> 
-    delete task <a href="/project/${prevState.projectId}/task/${prevState.id}">
+    remove task <a href="/project/${prevState.projectId}/task/${prevState.id}">
     ${prevState.name}</a>`;
   }
 

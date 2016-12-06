@@ -90,8 +90,8 @@ export const logEdit = new ValidatedMethod({
   }
 });
 
-export const logDelete = new ValidatedMethod({
-  name: 'history.logDelete',
+export const logRemove = new ValidatedMethod({
+  name: 'history.logRemove',
   validate: (new SimpleSchema({
     userId: { type: String },
     doc: { type: Object, blackbox: true },
@@ -107,7 +107,7 @@ export const logDelete = new ValidatedMethod({
     const itemToInsert = {
       type: docType,
       createdAt: new Date(),
-      action: 'DELETE',
+      action: 'REMOVE',
       currentState: null,
       prevState: doc,
       changedField: null,

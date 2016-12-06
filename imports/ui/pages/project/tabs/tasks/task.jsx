@@ -5,7 +5,7 @@ import PageHeader from '/imports/ui/components/header/pageHeader';
 import AcceptTask from '/imports/ui/containers/pages/project/tabs/tasks/accept-task';
 import ReassignTask from '/imports/ui/containers/pages/project/tabs/tasks/reassign-task';
 import History from '/imports/ui/containers/pages/project/tabs/tasks/history';
-import { deleteTask, reassignTask } from '/imports/api/tasks/actions';
+import { removeTask, reassignTask } from '/imports/api/tasks/actions';
 
 export default class Task extends React.Component {
   constructor(props) {
@@ -18,7 +18,7 @@ export default class Task extends React.Component {
       itemsToLoad: this.limit
     };
 
-    this.handleDelete = this.handleDelete.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
     this.handleReassign = this.handleReassign.bind(this);
     this.handleAccept = this.handleAccept.bind(this);
     this.handleReassignSubmit = this.handleReassignSubmit.bind(this);
@@ -34,10 +34,10 @@ export default class Task extends React.Component {
     }
     return false;
   }
-  handleDelete() {
-    const conf = confirm('Delete this task?'); // eslint-disable-line
+  handleRemove() {
+    const conf = confirm('Remove this task?'); // eslint-disable-line
     if (conf) {
-      deleteTask(this.props.task._id);
+      removeTask(this.props.task._id);
     }
   }
   handleReassign() {
@@ -94,7 +94,7 @@ export default class Task extends React.Component {
             <p>description: {description}</p>
             <p>Start at: {startAt ? startAt.toString() : ''}</p>
             <p>Assigned at: {assignedTo}</p>
-            {this.canEdit() ? <button onClick={this.handleDelete}>Delete</button> : ''}
+            {this.canEdit() ? <button onClick={this.handleRemove}>Remove</button> : ''}
             {this.canEdit() ? <button onClick={this.handleReassign}>Reassign</button> : ''}
             {this.canEdit() ? <button onClick={this.handleAccept}>Accept</button> : ''}
           </TabPanel>
