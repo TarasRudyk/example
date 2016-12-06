@@ -6,6 +6,7 @@ import AcceptTask from '/imports/ui/containers/pages/project/tabs/tasks/accept-t
 import ReassignTask from '/imports/ui/containers/pages/project/tabs/tasks/reassign-task';
 import History from '/imports/ui/containers/pages/project/tabs/tasks/history';
 import { deleteTask, reassignTask } from '/imports/api/tasks/actions';
+import TaskTimelogs from '/imports/ui/containers/pages/project/tabs/tasks/time-logs';
 
 export default class Task extends React.Component {
   constructor(props) {
@@ -85,6 +86,7 @@ export default class Task extends React.Component {
           <TabList>
             <Tab>Overview</Tab>
             <Tab>History</Tab>
+            <Tab>Time logs</Tab>
           </TabList>
           <TabPanel>
             <p>name: {name}</p>
@@ -100,6 +102,11 @@ export default class Task extends React.Component {
               taskId={_id}
               limit={this.state.itemsToLoad}
               onLoadMore={this.handleHistoryLoadMore}
+            />
+          </TabPanel>
+          <TabPanel>
+            <TaskTimelogs
+              taskId={_id}
             />
           </TabPanel>
         </Tabs>
