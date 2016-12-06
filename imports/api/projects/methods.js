@@ -18,7 +18,7 @@ export const create = new ValidatedMethod({
       throw new Meteor.Error('User not authorized');
     }
 
-    const project = Projects.findOne({ name, 'users.id': this.userId, active: true });
+    const project = Projects.findOne({ name, 'users.id': this.userId, isActive: true });
 
     if (project) {
       throw new Meteor.Error('Project with the same name exists');
@@ -65,7 +65,7 @@ export const edit = new ValidatedMethod({
       throw new Meteor.Error('User not authorized');
     }
 
-    const project = Projects.findOne({ name, 'users.id': this.userId, active: true });
+    const project = Projects.findOne({ name, 'users.id': this.userId, isActive: true });
 
     if (project && project._id !== projectId) {
       throw new Meteor.Error('Project with the same name exists');
@@ -88,7 +88,7 @@ export const remove = new ValidatedMethod({
       throw new Meteor.Error('This is not your project');
     }
 
-    return Projects.update({ _id: projectId }, { $set: { active: false } });
+    return Projects.update({ _id: projectId }, { $set: { isActive: false } });
   }
 });
 

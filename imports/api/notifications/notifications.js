@@ -25,7 +25,7 @@ Notifications.schema = new SimpleSchema({
       return new Date();
     }
   },
-  read: {
+  isReaded: {
     type: Boolean
   }
 });

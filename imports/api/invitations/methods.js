@@ -18,7 +18,7 @@ export const create = new ValidatedMethod({
       throw new Meteor.Error('User not authorized');
     }
 
-    const project = Projects.findOne({ _id: projectId, active: true });
+    const project = Projects.findOne({ _id: projectId, isActive: true });
     const ownerId = project.ownerInfo().id;
 
     if (!project || ownerId !== this.userId) {
@@ -90,7 +90,7 @@ export const accept = new ValidatedMethod({
     Invitations.update({
       _id: invitationId
     }, {
-      $set: { replied: true }
+      $set: { replied: 'accept' }
     });
 
     Projects.update({
@@ -114,12 +114,12 @@ export const accept = new ValidatedMethod({
     createNotification.call({
       description: `${invitation.user.fullname} accept your invitation`,
       type: 'Invitation',
-      action: 'Invitation',
       recipientId: invitation.project.ownerId
     });
   }
 });
 
+// refuce just delete invitation
 export const refuse = new ValidatedMethod({
   name: 'invitation.refuse',
   validate: new SimpleSchema({

@@ -20,7 +20,7 @@ export const create = new ValidatedMethod({
       description,
       type,
       recipientId,
-      read: false
+      isReaded: false
     });
   }
 });
@@ -35,9 +35,9 @@ export const allRead = new ValidatedMethod({
 
     return Notifications.update({
       recipientId: this.userId,
-      read: false
+      isReaded: false
     }, {
-      $set: { read: true }
+      $set: { isReaded: true }
     }, {
       multi: true
     });

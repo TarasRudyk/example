@@ -10,11 +10,11 @@ Meteor.publish('notifications', function (limit = 0, skip = 0) {
 });
 
 Meteor.publish('notifications-new', function () {
-  return Notifications.find({ recipientId: this.userId, read: false },
+  return Notifications.find({ recipientId: this.userId, isReaded: false },
     { sort: { createdAt: -1 } });
 });
 
-Meteor.publish('notifications-read', function (limit = 0, skip = 0) {
-  return Notifications.find({ recipientId: this.userId, read: true },
+Meteor.publish('notifications-isReaded', function (limit = 0, skip = 0) {
+  return Notifications.find({ recipientId: this.userId, isReaded: true },
     { sort: { createdAt: -1 }, limit, skip });
 });

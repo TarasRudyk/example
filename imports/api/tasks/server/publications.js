@@ -7,13 +7,13 @@ import { Tasks } from '../tasks';
 Meteor.publish('tasks.byProject', function (projectId) {
   check(projectId, String);
 
-  return Tasks.find({ projectId, active: true });
+  return Tasks.find({ projectId, isActive: true });
 });
 
 Meteor.publish('task.byId', function (taskId) {
   check(taskId, String);
 
-  return Tasks.find({ _id: taskId, active: true });
+  return Tasks.find({ _id: taskId, isActive: true });
 });
 
 Meteor.publish('tasks.byAssignedUser', function (userId) {

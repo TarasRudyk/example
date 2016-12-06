@@ -48,7 +48,7 @@ Projects.schema = new SimpleSchema({
   createdAt: {
     type: Date
   },
-  active: {
+  isActive: {
     type: Boolean,
     defaultValue: true
   },
