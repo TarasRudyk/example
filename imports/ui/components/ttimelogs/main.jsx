@@ -71,35 +71,21 @@ export default class Ttimelogs extends React.Component {
         <table>
           <tbody>
             <tr className="time">
-              <td>Time: </td>
               <td>00:00</td>
-              <td>01:00</td>
               <td>02:00</td>
-              <td>03:00</td>
               <td>04:00</td>
-              <td>05:00</td>
               <td>06:00</td>
-              <td>07:00</td>
               <td>08:00</td>
-              <td>09:00</td>
               <td>10:00</td>
-              <td>11:00</td>
               <td>12:00</td>
-              <td>13:00</td>
               <td>14:00</td>
-              <td>15:00</td>
               <td>16:00</td>
-              <td>17:00</td>
               <td>18:00</td>
-              <td>19:00</td>
               <td>20:00</td>
-              <td>21:00</td>
               <td>22:00</td>
-              <td>23:00</td>
             </tr>
-            <tr >
-              <td>Task #1</td>
-              <td colSpan="24">
+            <tr>
+              <td colSpan="12">
                 <div className="timelogs-track">
                   <div
                     className="timelogs-time"
