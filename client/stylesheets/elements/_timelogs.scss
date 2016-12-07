@@ -1,21 +1,25 @@
 .timelogs {
-  padding: 20px;
-}
-.timelogs table {
   width: 100%;
   user-select: none;
+  margin: 10px 0;
 
-  .time td {
-    font-size: 12px;
-    padding: 15px 0 5px;
+  .time {
+    overflow: hidden;
+    padding: 5px 0;
+
+    div {
+      width: 8.33333333%;
+      float: left;
+      font-size: 10px;
+    }
   }
 }
 .timelogs-track {
   background: #eee;
+  overflow: hidden;
 }
 .timelogs-time {
   width: 100px;
   height: 18px;
   background: pink;
-  cursor: grab;
 }

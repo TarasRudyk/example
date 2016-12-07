@@ -1,3 +1,5 @@
+/* global window */
+
 import React from 'react';
 import interact from 'interact.js';
 
@@ -6,26 +8,24 @@ export default class Ttimelogs extends React.Component {
     super(props);
     this.state = {
       x: 0,
+      tempX: 0,
       width: 100,
       cellWidth: 0
     };
 
     this.getStyle = this.getStyle.bind(this);
-    this.onMove = this.onMove.bind(this);
     this.onDrag = this.onDrag.bind(this);
+    this.onResize = this.onResize.bind(this);
+    this.updateTracks = this.updateTracks.bind(this);
+  }
+  componentWillMount() {
+    window.addEventListener('resize', this.updateTracks);
   }
   componentDidMount() {
     const parentNode = this.textInput.parentNode;
-    const cellWidth = parentNode.offsetWidth / 96;
 
     interact(this.textInput).draggable({
-      onmove: this.onMove,
-      snap: {
-        targets: [
-          interact.createSnapGrid({ x: cellWidth })
-        ],
-        range: Infinity
-      },
+      onmove: this.onDrag,
       restrict: {
         restriction: parentNode,
         elementRect: { left: 0, right: 1, top: 0, bottom: 0 }
@@ -33,28 +33,33 @@ export default class Ttimelogs extends React.Component {
       axis: 'x'
     }).resizable({
       edges: { right: true }
-    }).on('resizemove', this.onDrag);
+    }).on('resizemove', this.onResize);
   }
-  onMove(e) {
-    let posX = this.state.x + e.dx;
-
-    if (posX < 0) {
-      posX = 0;
-    }
-
-    this.setState({
-      x: posX
-    });
+  componentWillUnmount() {
+    window.addEventListener('resize', this.updateTracks);
   }
   onDrag(e) {
     const parentNode = this.textInput.parentNode;
     const cellWidth = parentNode.offsetWidth / 96;
 
-    const width = e.rect.width;
+    const posX = this.state.tempX + e.dx;
+    const result = Math.floor(posX / cellWidth) * cellWidth;
 
-    if (width % cellWidth > 5) {
+    this.setState({
+      tempX: posX,
+      x: result
+    });
+  }
+  onResize(e) {
+    const parentNode = this.textInput.parentNode;
+    const cellWidth = parentNode.offsetWidth / 96;
+
+    const width = e.rect.width;
+    const result = Math.floor(width / cellWidth) * cellWidth;
+
+    if (result !== this.state.width) {
       this.setState({
-        width: Math.round(width / cellWidth) * 12
+        width: result
       });
     }
   }
@@ -64,39 +69,35 @@ export default class Ttimelogs extends React.Component {
       width: `${this.state.width}px`
     };
   }
+  updateTracks() {
+    console.log('update tracks');
+  }
   render() {
     return (
-      <div className="timelogs">
-        <h1>Time logs</h1>
-        <table>
-          <tbody>
-            <tr className="time">
-              <td>00:00</td>
-              <td>02:00</td>
-              <td>04:00</td>
-              <td>06:00</td>
-              <td>08:00</td>
-              <td>10:00</td>
-              <td>12:00</td>
-              <td>14:00</td>
-              <td>16:00</td>
-              <td>18:00</td>
-              <td>20:00</td>
-              <td>22:00</td>
-            </tr>
-            <tr>
-              <td colSpan="12">
-                <div className="timelogs-track">
-                  <div
-                    className="timelogs-time"
-                    ref={(input) => { this.textInput = input; }}
-                    style={this.getStyle()}
-                  />
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div className="container">
+        <div className="timelogs">
+          <div className="time">
+            <div>00:00</div>
+            <div>02:00</div>
+            <div>04:00</div>
+            <div>06:00</div>
+            <div>08:00</div>
+            <div>10:00</div>
+            <div>12:00</div>
+            <div>14:00</div>
+            <div>16:00</div>
+            <div>18:00</div>
+            <div>20:00</div>
+            <div>22:00</div>
+          </div>
+          <div className="timelogs-track">
+            <div
+              className="timelogs-time"
+              ref={(input) => { this.textInput = input; }}
+              style={this.getStyle()}
+            />
+          </div>
+        </div>
       </div>
     );
   }
