@@ -9,11 +9,11 @@ export const create = new ValidatedMethod({
   validate: new SimpleSchema({
     name: { type: String },
     description: { type: String },
-    assignedAt: { type: String },
+    assignedTo: { type: String },
     startAt: { type: Date, optional: true },
     projectId: { type: String }
   }).validator(),
-  run({ name, description, assignedAt, startAt, projectId }) {
+  run({ name, description, assignedTo, startAt, projectId }) {
     if (!this.userId) {
       throw new Meteor.Error('User not authorized');
     }
@@ -22,12 +22,14 @@ export const create = new ValidatedMethod({
       name,
       description,
       projectId,
-      ownerId: this.userId,
-      ownerName: Meteor.user().profile.fullname,
-      active: true,
-      creationDate: new Date(),
+      author: {
+        id: this.userId,
+        fullname: Meteor.user().profile.fullname
+      },
+      isRemoved: false,
+      createdAt: new Date(),
       startAt,
-      assignedAt
+      assignedTo
     });
   }
 });
@@ -49,30 +51,30 @@ export const edit = new ValidatedMethod({
       type: Date,
       optional: true
     },
-    assignedAt: {
+    assignedTo: {
       type: String,
       optional: true
     }
   }).validator(),
-  run({ taskId, name, description, startAt, assignedAt }) {
+  run({ taskId, name, description, startAt, assignedTo }) {
     if (!this.userId) {
       throw new Meteor.Error('User not authorized');
     }
 
     const task = Tasks.findOne({ _id: taskId });
 
-    if ((this.userId === task.ownerId) || (this.userId === task.assignedAt)) {
-      Tasks.update({ _id: taskId }, { $set: { name, description, startAt, assignedAt } });
+    if ((this.userId === task.author.id) || (this.userId === task.assignedTo)) {
+      Tasks.update({ _id: taskId }, { $set: { name, description, startAt, assignedTo } });
     } else {
       throw new Meteor.Error("You can't update this task!");
     }
 
-    return `/project/${task.projectId}/task/${task._id}`;
+    return `/task/${task._id}`;
   }
 });
 
-export const deleteTask = new ValidatedMethod({
-  name: 'task.delete',
+export const removeTask = new ValidatedMethod({
+  name: 'task.remove',
   validate: new SimpleSchema({
     taskId: {
       type: String
@@ -85,10 +87,10 @@ export const deleteTask = new ValidatedMethod({
       throw new Meteor.Error('User not authorized');
     }
 
-    if ((this.userId === task.ownerId) || (this.userId === task.assignedAt)) {
+    if ((this.userId === task.author.id) || (this.userId === task.assignedTo)) {
       Tasks.remove({ _id: taskId });
     } else {
-      throw new Meteor.Error("You can't delete this task!");
+      throw new Meteor.Error("You can't remove this task!");
     }
 
     return `/project/${task.projectId}`;
@@ -119,7 +121,7 @@ export const acceptTask = new ValidatedMethod({
     if ((task.isAccepted !== true && estimate >= 15)) {
       Tasks.update({ _id: taskId }, {
         $set: {
-          isAccepted: true, assignedAt: this.userId, estimate, startAt: startAt || new Date()
+          isAccepted: true, assignedTo: this.userId, estimate, startAt: startAt || new Date()
         }
       });
     } else {
@@ -135,29 +137,29 @@ export const reassign = new ValidatedMethod({
     taskId: {
       type: String
     },
-    assignedAt: {
+    assignedTo: {
       type: String
     },
     description: {
       type: String
     }
   }).validator(),
-  run({ taskId, assignedAt, description }) {
+  run({ taskId, assignedTo, description }) {
     const task = Tasks.findOne({ _id: taskId });
 
     if (!this.userId) {
       throw new Meteor.Error('User not authorized');
     }
 
-    if ((this.userId === task.ownerId) || (this.userId === task.assignedAt)) {
+    if ((this.userId === task.author.id) || (this.userId === task.assignedTo)) {
       Tasks.update({ _id: taskId }, {
-        $set: { assignedAt, lastReassignReason: description }
+        $set: { assignedTo, lastReassignReason: description }
       });
     } else {
       throw new Meteor.Error("You can't reassign user in this task!");
     }
 
-    const assignedUser = Meteor.users.findOne({ _id: assignedAt });
+    const assignedUser = Meteor.users.findOne({ _id: assignedTo });
 
     return `Task reassigned at ${assignedUser.profile.fullname}`;
   }

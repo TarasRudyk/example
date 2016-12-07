@@ -35,10 +35,14 @@ Invitations.schema = new SimpleSchema({
     type: String
   },
   replied: {
-    type: Boolean,
+    type: String,
+    allowedValues: ['pending', 'accept', 'refuse']
+  },
+  repliedAt: {
+    type: Date,
     optional: true
   },
-  creationDate: {
+  createdAt: {
     type: Date,
     autoValue() {
       return new Date();

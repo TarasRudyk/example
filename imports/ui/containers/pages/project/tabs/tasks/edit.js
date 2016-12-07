@@ -5,15 +5,18 @@ import { Tasks } from '/imports/api/tasks/tasks';
 
 import EditTask from '/imports/ui/pages/project/tabs/tasks/edit';
 
-export default createContainer(({ projectId, taskId }) => {
-  const projectHandle = Meteor.subscribe('project', projectId);
-  const project = projectHandle.ready() ? Projects.findOne() : {};
-
+export default createContainer(({ taskId }) => {
   const taskHandle = Meteor.subscribe('task.byId', taskId);
   const task = taskHandle.ready() ? Tasks.findOne({ _id: taskId }) : null;
 
+  let project;
+  if (task) {
+    const projectHandle = Meteor.subscribe('project', task.projectId);
+    project = projectHandle.ready() ? Projects.findOne({ _id: task.projectId }) : {};
+  }
+
   return {
-    project: project,
-    task: task
+    project: project || {},
+    task
   };
 }, EditTask);

@@ -9,10 +9,9 @@ export const create = new ValidatedMethod({
   validate: new SimpleSchema({
     description: { type: String },
     type: { type: String },
-    action: { type: String },
     recipientId: { type: String }
   }).validator(),
-  run({ description, type, action, recipientId }) {
+  run({ description, type, recipientId }) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
@@ -20,9 +19,8 @@ export const create = new ValidatedMethod({
     return Notifications.insert({
       description,
       type,
-      action,
       recipientId,
-      read: false
+      isReaded: false
     });
   }
 });
@@ -37,9 +35,9 @@ export const allRead = new ValidatedMethod({
 
     return Notifications.update({
       recipientId: this.userId,
-      read: false
+      isReaded: false
     }, {
-      $set: { read: true }
+      $set: { isReaded: true }
     }, {
       multi: true
     });

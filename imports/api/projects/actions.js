@@ -32,10 +32,10 @@ export const editProject = (name, description, projectId) => {
   });
 };
 
-export const deleteProject = (projectId) => {
+export const removeProject = (projectId) => {
   check(projectId, String);
 
-  Meteor.call('project.delete', { projectId }, (err, res) => {
+  Meteor.call('project.remove', { projectId }, (err, res) => {
     if (err) {
       addNotice(err.error);
     }
@@ -45,11 +45,11 @@ export const deleteProject = (projectId) => {
   });
 };
 
-export const deleteUserFromProject = (projectId, userId) => {
+export const removeUserFromProject = (projectId, userId) => {
   check(projectId, String);
   check(userId, String);
 
-  return Meteor.call('project.deleteUser', { projectId, userId }, (err) => {
+  return Meteor.call('project.removeUser', { projectId, userId }, (err) => {
     if (err) {
       addNotice(err.error);
     }

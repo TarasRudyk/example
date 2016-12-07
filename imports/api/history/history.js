@@ -26,7 +26,7 @@ History.schema = new SimpleSchema({
     type: String,
     allowedValues: ['task', 'project']
   },
-  date: {
+  createdAt: {
     type: Date
   },
   action: {
@@ -49,7 +49,7 @@ History.schema = new SimpleSchema({
     optional: true,
     defaultValue: null
   },
-  view: {
+  message: {
     type: String
   },
   editor: {

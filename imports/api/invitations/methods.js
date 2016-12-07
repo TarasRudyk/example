@@ -5,7 +5,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { Projects } from '/imports/api/projects/projects';
 import { Invitations } from './invitations';
 import { create as createNotification } from '../notifications/methods';
-import { Colors } from '../colors/colors';
+import { Gradients } from '../gradients/gradients';
 
 export const create = new ValidatedMethod({
   name: 'invitation.create',
@@ -18,7 +18,7 @@ export const create = new ValidatedMethod({
       throw new Meteor.Error('User not authorized');
     }
 
-    const project = Projects.findOne({ _id: projectId, active: true });
+    const project = Projects.findOne({ _id: projectId, isActive: true });
     const ownerId = project.ownerInfo().id;
 
     if (!project || ownerId !== this.userId) {
@@ -48,7 +48,7 @@ export const create = new ValidatedMethod({
         fullname: user.profile.fullname,
         avatar: user.profile.avatar || '/images/avatar.png'
       },
-      replied: false
+      replied: 'pending'
     });
   }
 });
@@ -79,18 +79,18 @@ export const accept = new ValidatedMethod({
     }
 
     const userGradients = Meteor.users.findOne({ _id: this.userId }).getGradientsIds();
-    const colors = Colors.find({ _id: { $nin: userGradients } }).fetch();
+    const gradients = Gradients.find({ _id: { $nin: userGradients } }).fetch();
 
-    if (!colors.length) {
+    if (!gradients.length) {
       throw new Meteor.Error('Too much projects was created');
     }
 
-    const random = Math.floor(Math.random() * (colors.length + 1));
+    const random = Math.floor(Math.random() * (gradients.length + 1));
 
     Invitations.update({
       _id: invitationId
     }, {
-      $set: { replied: true }
+      $set: { replied: 'accept' }
     });
 
     Projects.update({
@@ -102,10 +102,10 @@ export const accept = new ValidatedMethod({
           fullname: Meteor.user().profile.fullname || Meteor.user().username,
           role: 'user',
           gradient: {
-            id: colors[random]._id,
-            direction: colors[random].gradient.direction,
-            start: colors[random].gradient.start,
-            stop: colors[random].gradient.stop
+            id: gradients[random]._id,
+            direction: gradients[random].gradient.direction,
+            start: gradients[random].gradient.start,
+            stop: gradients[random].gradient.stop
           }
         }
       }
@@ -114,12 +114,12 @@ export const accept = new ValidatedMethod({
     createNotification.call({
       description: `${invitation.user.fullname} accept your invitation`,
       type: 'Invitation',
-      action: 'Invitation',
       recipientId: invitation.project.ownerId
     });
   }
 });
 
+// refuce just delete invitation
 export const refuse = new ValidatedMethod({
   name: 'invitation.refuse',
   validate: new SimpleSchema({
@@ -147,7 +147,6 @@ export const refuse = new ValidatedMethod({
     createNotification.call({
       description: `${invitation.user.fullname} refused your invitation to ${invitation.project.name}`,
       type: 'Invitation',
-      action: 'Invitation',
       recipientId: invitation.project.ownerId
     });
   }

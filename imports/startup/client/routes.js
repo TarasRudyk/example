@@ -99,7 +99,7 @@ privateRoutes.route('/project/:projectId/task/create', {
   }
 });
 
-privateRoutes.route('/project/:projectId/task/:taskId/edit', {
+privateRoutes.route('/task/:taskId/edit', {
   action(params) {
     mount(MainLayout, {
       content: <EditTask {...params} />
@@ -107,7 +107,7 @@ privateRoutes.route('/project/:projectId/task/:taskId/edit', {
   }
 });
 
-privateRoutes.route('/project/:projectId/task/:taskId', {
+privateRoutes.route('/task/:taskId', {
   action(params) {
     mount(MainLayout, {
       content: <Task {...params} />

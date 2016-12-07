@@ -4,12 +4,12 @@ import { createContainer } from 'meteor/react-meteor-data';
 import TaskItem from '/imports/ui/pages/project/tabs/tasks/item';
 
 export default createContainer(({ task }) => {
-  if (!task.assignedAt) return {};
+  if (!task.assignedTo) return {};
 
-  const userHandle = Meteor.subscribe('userById', task.assignedAt);
-  const assignedAt = userHandle.ready() ? Meteor.users.findOne({ _id: task.assignedAt }) : {};
+  const userHandle = Meteor.subscribe('userById', task.assignedTo);
+  const assignedTo = userHandle.ready() ? Meteor.users.findOne({ _id: task.assignedTo }) : {};
 
   return {
-    assignedAt
+    assignedTo
   };
 }, TaskItem);

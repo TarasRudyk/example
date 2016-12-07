@@ -5,7 +5,7 @@ import PageHeader from '/imports/ui/components/header/pageHeader';
 import AcceptTask from '/imports/ui/containers/pages/project/tabs/tasks/accept-task';
 import ReassignTask from '/imports/ui/containers/pages/project/tabs/tasks/reassign-task';
 import History from '/imports/ui/containers/pages/project/tabs/tasks/history';
-import { deleteTask, reassignTask } from '/imports/api/tasks/actions';
+import { removeTask, reassignTask } from '/imports/api/tasks/actions';
 
 export default class Task extends React.Component {
   constructor(props) {
@@ -18,7 +18,7 @@ export default class Task extends React.Component {
       itemsToLoad: this.limit
     };
 
-    this.handleDelete = this.handleDelete.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
     this.handleReassign = this.handleReassign.bind(this);
     this.handleAccept = this.handleAccept.bind(this);
     this.handleReassignSubmit = this.handleReassignSubmit.bind(this);
@@ -28,13 +28,16 @@ export default class Task extends React.Component {
     this.canEdit = this.canEdit.bind(this);
   }
   canEdit() {
-    return (Meteor.userId() === this.props.task.ownerId) ||
-      (Meteor.userId() === this.props.task.assignedAt);
+    if (this.props.task._id) {
+      return (Meteor.userId() === this.props.task.author.id) ||
+      (Meteor.userId() === this.props.task.assignedTo);
+    }
+    return false;
   }
-  handleDelete() {
-    const conf = confirm('Delete this task?'); // eslint-disable-line
+  handleRemove() {
+    const conf = confirm('Remove this task?'); // eslint-disable-line
     if (conf) {
-      deleteTask(this.props.task._id);
+      removeTask(this.props.task._id);
     }
   }
   handleReassign() {
@@ -47,9 +50,9 @@ export default class Task extends React.Component {
       isAcceptModalOpen: true
     });
   }
-  handleReassignSubmit({ assignedAt, description }) {
-    if (this.props.task.assignedAt !== assignedAt) {
-      reassignTask(this.props.task._id, description, assignedAt);
+  handleReassignSubmit({ assignedTo, description }) {
+    if (this.props.task.assignedTo !== assignedTo) {
+      reassignTask(this.props.task._id, description, assignedTo);
     }
   }
   handleReassignClose() {
@@ -66,7 +69,7 @@ export default class Task extends React.Component {
     this.setState({ itemsToLoad: loadedItemsCount + this.limit });
   }
   render() {
-    const { _id, name, description, startAt, assignedAt } = this.props.task;
+    const { _id, name, description, startAt, assignedTo } = this.props.task;
     return (
       <div className="page-main-content page-create-project">
         <PageHeader header={name} hx={1} />
@@ -90,8 +93,8 @@ export default class Task extends React.Component {
             <p>name: {name}</p>
             <p>description: {description}</p>
             <p>Start at: {startAt ? startAt.toString() : ''}</p>
-            <p>Assigned at: {assignedAt}</p>
-            {this.canEdit() ? <button onClick={this.handleDelete}>Delete</button> : ''}
+            <p>Assigned at: {assignedTo}</p>
+            {this.canEdit() ? <button onClick={this.handleRemove}>Remove</button> : ''}
             {this.canEdit() ? <button onClick={this.handleReassign}>Reassign</button> : ''}
             {this.canEdit() ? <button onClick={this.handleAccept}>Accept</button> : ''}
           </TabPanel>

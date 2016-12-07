@@ -17,8 +17,7 @@ export default createContainer((params) => {
 
   const tasks = tasksHandle.ready() ?
     Tasks.find({ projectId: { $in: userProjectIds },
-      assignedAt: userId,
-      active: true,
+      assignedTo: userId,
       isAccepted: true,
       estimate: { $ne: null },
       startAt: { $gte: startOfDay, $lte: endOfDay }

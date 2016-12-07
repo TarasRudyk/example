@@ -2,7 +2,7 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-import { logCreate, logEdit, logDelete } from '/imports/api/history/methods';
+import { logCreate, logEdit, logRemove } from '/imports/api/history/methods';
 
 export const Tasks = new Mongo.Collection('tasks');
 
@@ -20,26 +20,29 @@ Tasks.schema = new SimpleSchema({
     type: String,
     optional: true
   },
-  ownerId: {
+  author: {
+    type: Object
+  },
+  'author.id': {
     type: String
   },
-  ownerName: {
+  'author.fullname': {
     type: String
   },
-  active: {
+  isRemoved: {
     type: Boolean
   },
   projectId: {
     type: String
   },
-  creationDate: {
+  createdAt: {
     type: Date
   },
   startAt: {
     type: Date,
     optional: true
   },
-  assignedAt: {
+  assignedTo: {
     type: String,
     optional: true,
     label: '_id of assigned user'
@@ -72,7 +75,7 @@ Tasks.after.update(function (userId, doc, fieldNames) {
 });
 
 Tasks.after.remove((userId, doc) => {
-  logDelete.call({ userId, doc, docType: 'task' });
+  logRemove.call({ userId, doc, docType: 'task' });
 });
 
 Tasks.attachSchema(Tasks.schema);

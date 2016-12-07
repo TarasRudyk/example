@@ -1,15 +1,15 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-export const Colors = new Mongo.Collection('colors');
+export const Gradients = new Mongo.Collection('gradients');
 
-Colors.deny({
+Gradients.deny({
   insert() { return true; },
   update() { return true; },
   remove() { return true; }
 });
 
-Colors.schema = new SimpleSchema({
+Gradients.schema = new SimpleSchema({
   gradient: {
     type: Object
   },
@@ -24,4 +24,4 @@ Colors.schema = new SimpleSchema({
   }
 });
 
-Colors.attachSchema(Colors.schema);
+Gradients.attachSchema(Gradients.schema);

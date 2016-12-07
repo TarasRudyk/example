@@ -22,7 +22,7 @@ export default createContainer(({ projectId }) => {
 
   const invitationsHandle = Meteor.subscribe('invitationsByProject', projectId);
   const invitations = invitationsHandle.ready() ? Invitations.find(
-    { 'project.id': projectId, replied: false }
+    { 'project.id': projectId, replied: 'pending' }
   ).fetch() : [];
   const invitationsUsersIds = invitations.map(u => u.user.id);
   const allUsersList = usersIds.concat(invitationsUsersIds);

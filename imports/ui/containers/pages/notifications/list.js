@@ -7,7 +7,7 @@ import NotificationsList from '/imports/ui/pages/notifications/list';
 
 export default createContainer(({ page }) => {
   const skip = ((parseInt((page), 10) * 25) - 25);
-  const query = { sort: { creationDate: -1 }, skip, limit: 25 };
+  const query = { sort: { createdAt: -1 }, skip, limit: 25 };
 
   const notificationsHandle = Meteor.subscribe('notifications');
   const notifications = notificationsHandle.ready() ? Notifications.find({}, query).fetch() : [];

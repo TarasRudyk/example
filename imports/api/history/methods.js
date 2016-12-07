@@ -24,7 +24,7 @@ export const logCreate = new ValidatedMethod({
         if (doc[fieldKey]) {
           const itemToInsert = {
             type: docType,
-            date: new Date(),
+            createdAt: new Date(),
             action: 'CREATE',
             currentState: doc,
             prevState: null,
@@ -35,7 +35,7 @@ export const logCreate = new ValidatedMethod({
               fullname: user.profile.fullname
             }
           };
-          itemToInsert.view = getViewText(itemToInsert);
+          itemToInsert.message = getViewText(itemToInsert);
 
           History.insert(itemToInsert);
         }
@@ -69,7 +69,7 @@ export const logEdit = new ValidatedMethod({
         if (doc[fieldKey] !== prevDoc[fieldKey]) {
           const itemToInsert = {
             type: docType,
-            date: new Date(),
+            createdAt: new Date(),
             action: 'EDIT',
             currentState: doc,
             prevState: prevDoc,
@@ -81,7 +81,7 @@ export const logEdit = new ValidatedMethod({
             }
           };
           itemToInsert.additional = getAdditionalData(itemToInsert);
-          itemToInsert.view = getViewText(itemToInsert);
+          itemToInsert.message = getViewText(itemToInsert);
 
           History.insert(itemToInsert);
         }
@@ -90,8 +90,8 @@ export const logEdit = new ValidatedMethod({
   }
 });
 
-export const logDelete = new ValidatedMethod({
-  name: 'history.logDelete',
+export const logRemove = new ValidatedMethod({
+  name: 'history.logRemove',
   validate: (new SimpleSchema({
     userId: { type: String },
     doc: { type: Object, blackbox: true },
@@ -106,8 +106,8 @@ export const logDelete = new ValidatedMethod({
 
     const itemToInsert = {
       type: docType,
-      date: new Date(),
-      action: 'DELETE',
+      createdAt: new Date(),
+      action: 'REMOVE',
       currentState: null,
       prevState: doc,
       changedField: null,
@@ -117,7 +117,7 @@ export const logDelete = new ValidatedMethod({
         fullname: user.profile.fullname
       }
     };
-    itemToInsert.view = getViewText(itemToInsert);
+    itemToInsert.message = getViewText(itemToInsert);
 
     History.insert(itemToInsert);
   }
