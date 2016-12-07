@@ -14,7 +14,7 @@ export default createContainer(() => {
 
   const notificationsHandle = Meteor.subscribe('notifications');
   const notificationsCount = notificationsHandle.ready() ?
-    Notifications.find({ read: false }).count() : 0;
+    Notifications.find({ isReaded: false }).count() : 0;
 
   const invitationsHandle = Meteor.subscribe('invitations');
   const invitationsCount = invitationsHandle.ready() ?
