@@ -59,7 +59,7 @@ export const getTaskViewText = (historyItem) => {
         const assignedUserName =
           Meteor.users.findOne({ _id: currentState.assignedTo }).profile.fullname;
 
-        const reason = additional.reason ? `Reason is : ${additional.reason}` : '';
+        const reason = (additional && additional.reason) ? `Reason is : ${additional.reason}` : '';
 
         return `<a href="/profile/${editor.id}">${editor.fullname}</a> 
           assign task <a href="/project/${currentState.projectId}/task/${currentState.id}">
