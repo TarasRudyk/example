@@ -24,7 +24,6 @@ export default createContainer(({ startOfWeek, chosenDay }) => {
       const endOfDay = moment(day).endOf('day').toDate();
       const dayTasks = Tasks.find({ projectId: { $in: userProjectIds },
         assignedTo: userId,
-        isActive: true,
         isAccepted: true,
         estimate: { $ne: null },
         startAt: { $gte: startOfDay, $lte: endOfDay }
