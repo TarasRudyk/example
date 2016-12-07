@@ -18,7 +18,7 @@ export default createContainer(() => {
 
   const invitationsHandle = Meteor.subscribe('invitations');
   const invitationsCount = invitationsHandle.ready() ?
-    Invitations.find({ 'user.id': Meteor.userId(), replied: false }).count() : 0;
+    Invitations.find({ 'user.id': Meteor.userId(), replied: 'pending' }).count() : 0;
 
   const count = notificationsCount + invitationsCount;
 

@@ -17,7 +17,7 @@ export default createContainer(() => {
   const invitationsHandle = Meteor.subscribe('invitations');
   const invitations = invitationsHandle.ready() ? Invitations.find({
     'project.ownerId': { $ne: Meteor.userId() },
-    replied: false,
+    replied: 'pending',
     'user.id': Meteor.userId()
   }, { sort: { createdAt: -1 }, limit: 15, skip: 0 }).fetch() : [];
 
