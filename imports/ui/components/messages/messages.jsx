@@ -13,8 +13,9 @@ export class Messages extends React.Component {
   }
 
   handleOnMessageSubmit(message) {
+    // TODO: EDIT THIS SHIT
     createMessage(
-      this.props.taskId,
+      this.props.target._id,
       'task',
       message
     );
@@ -24,13 +25,17 @@ export class Messages extends React.Component {
     return (
       <div className="messages-container">
         <MessagesList messages={this.props.messages} />
-        <MessageInput onSubmit={this.handleOnMessageSubmit} />
+        <MessageInput
+          onSubmit={this.handleOnMessageSubmit}
+          disabled={this.props.enableToWrite}
+        />
       </div>
     );
   }
 }
 
 Messages.propTypes = {
-  taskId: React.PropTypes.string,
-  messages: React.PropTypes.array
+  target: React.PropTypes.object,
+  messages: React.PropTypes.array,
+  enableToWrite: React.PropTypes.bool
 };

@@ -5,13 +5,16 @@ import { Messages } from '/imports/api/messages/messages';
 
 import { Messages as MessagesComponent } from '/imports/ui/components/messages/messages';
 
-export default createContainer(({ taskId }) => {
-  const handleTaskMessages = Meteor.subscribe('taskMessages', taskId);
+export default createContainer(({ target }) => {
+  const handleTaskMessages = Meteor.subscribe('taskMessages', target._id);
 
   const messages = handleTaskMessages.ready() ?
-    Messages.find({ targetType: 'task', targetId: taskId }).fetch() : [];
+    Messages.find({ targetType: 'task', targetId: target._id }).fetch() : [];
+
+  const enableToWrite = target.workedOnThat ? target.workedOnThat.includes(Meteor.userId()) : false;
 
   return {
-    messages
+    messages,
+    enableToWrite
   };
 }, MessagesComponent);

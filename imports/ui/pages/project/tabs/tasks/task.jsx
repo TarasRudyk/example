@@ -115,7 +115,7 @@ export default class Task extends React.Component {
             />
           </TabPanel>
           <TabPanel>
-            <Messages taskId={_id} />
+            <Messages target={this.props.task} />
           </TabPanel>
         </Tabs>
       </div>
