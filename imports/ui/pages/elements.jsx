@@ -2,6 +2,8 @@ import React from 'react';
 
 import Button from '/imports/ui/components/button';
 
+import Timelogs from '/imports/ui/components/timelogs/main';
+
 const Elements = () => (
   <div className="page-main-content page-elements">
     <div className="separator">
@@ -10,6 +12,18 @@ const Elements = () => (
           <h1>UI style guide <span>Version 0.1</span></h1>
         </div>
       </div>
+    </div>
+    <div className="container">
+      <div className="title">
+        <h2>Time logs</h2>
+      </div>
+      <Timelogs
+        timelogs={[
+          { id: 1, startAt: 'Thu Dec 08 2016 10:00:00 GMT+0200 (EET)', endAt: 'Thu Dec 08 2016 11:00:00 GMT+0200 (EET)' },
+          { id: 2, startAt: 'Thu Dec 08 2016 12:00:00 GMT+0200 (EET)', endAt: 'Thu Dec 08 2016 12:30:00 GMT+0200 (EET)' },
+          { id: 3, startAt: 'Thu Dec 08 2016 14:00:00 GMT+0200 (EET)', endAt: 'Thu Dec 08 2016 14:15:00 GMT+0200 (EET)' }
+        ]}
+      />
     </div>
     <div className="container">
       <div className="title">

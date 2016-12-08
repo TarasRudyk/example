@@ -3,9 +3,8 @@
   user-select: none;
   margin: 10px 0;
 
-  .time {
+  .timelogs-header {
     overflow: hidden;
-    padding: 5px 0;
 
     div {
       width: 8.33333333%;
@@ -16,10 +15,9 @@
 }
 .timelogs-track {
   background: #eee;
-  overflow: hidden;
 }
-.timelogs-time {
-  width: 100px;
+.timelogs-slider {
   height: 18px;
   background: pink;
+  margin: 10px 0;
 }
