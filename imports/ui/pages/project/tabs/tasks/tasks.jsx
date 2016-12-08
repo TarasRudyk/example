@@ -8,7 +8,7 @@ export default class Tasks extends React.Component {
   }
 
   render() {
-    const { projectId, isProjectOwner } = this.props;
+    const { projectId, canTaskBeCreated } = this.props;
 
     return (
       <div className="project-tasks">
@@ -16,7 +16,7 @@ export default class Tasks extends React.Component {
           <div className="container">
             <div className="title">
               <h3>All tasks</h3>
-              {isProjectOwner ?
+              {canTaskBeCreated ?
                 <div className="title-right-block">
                   <a href={`/project/${projectId}/task/create`} className="button green small">New task</a>
                 </div> : null}
@@ -41,5 +41,5 @@ export default class Tasks extends React.Component {
 Tasks.propTypes = {
   projectId: React.PropTypes.string,
   tasks: React.PropTypes.array,
-  isProjectOwner: React.PropTypes.bool
+  canTaskBeCreated: React.PropTypes.bool
 };

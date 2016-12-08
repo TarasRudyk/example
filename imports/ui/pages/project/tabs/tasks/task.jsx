@@ -30,7 +30,7 @@ export default class Task extends React.Component {
   canEdit() {
     if (this.props.task._id) {
       return (Meteor.userId() === this.props.task.author.id) ||
-      (Meteor.userId() === this.props.task.assignedTo);
+        (Meteor.userId() === this.props.task.assignedTo);
     }
     return false;
   }
@@ -68,6 +68,13 @@ export default class Task extends React.Component {
   handleHistoryLoadMore(loadedItemsCount) {
     this.setState({ itemsToLoad: loadedItemsCount + this.limit });
   }
+  isAcceptVisible() {
+    return (
+      this.canEdit() &&
+      Meteor.userId() === this.props.task.assignedTo &&
+      !this.props.task.isAccepted
+    );
+  }
   render() {
     const { _id, name, description, startAt, assignedTo } = this.props.task;
     return (
@@ -96,7 +103,7 @@ export default class Task extends React.Component {
             <p>Assigned at: {assignedTo}</p>
             {this.canEdit() ? <button onClick={this.handleRemove}>Remove</button> : ''}
             {this.canEdit() ? <button onClick={this.handleReassign}>Reassign</button> : ''}
-            {this.canEdit() ? <button onClick={this.handleAccept}>Accept</button> : ''}
+            {this.isAcceptVisible() ? <button onClick={this.handleAccept}>Accept</button> : ''}
           </TabPanel>
           <TabPanel>
             <History
