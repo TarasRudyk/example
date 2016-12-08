@@ -5,6 +5,7 @@ import PageHeader from '/imports/ui/components/header/pageHeader';
 import AcceptTask from '/imports/ui/containers/pages/project/tabs/tasks/accept-task';
 import ReassignTask from '/imports/ui/containers/pages/project/tabs/tasks/reassign-task';
 import History from '/imports/ui/containers/pages/project/tabs/tasks/history';
+import Messages from '/imports/ui/components/messages/messages';
 import { removeTask, reassignTask } from '/imports/api/tasks/actions';
 
 export default class Task extends React.Component {
@@ -95,6 +96,7 @@ export default class Task extends React.Component {
           <TabList>
             <Tab>Overview</Tab>
             <Tab>History</Tab>
+            <Tab>Messages</Tab>
           </TabList>
           <TabPanel>
             <p>name: {name}</p>
@@ -111,6 +113,9 @@ export default class Task extends React.Component {
               limit={this.state.itemsToLoad}
               onLoadMore={this.handleHistoryLoadMore}
             />
+          </TabPanel>
+          <TabPanel>
+            <Messages />
           </TabPanel>
         </Tabs>
       </div>

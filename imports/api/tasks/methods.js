@@ -29,7 +29,8 @@ export const create = new ValidatedMethod({
       isRemoved: false,
       createdAt: new Date(),
       startAt,
-      assignedTo
+      assignedTo,
+      workedOnThat: assignedTo ? [assignedTo] : []
     });
   }
 });
@@ -64,7 +65,12 @@ export const edit = new ValidatedMethod({
     const task = Tasks.findOne({ _id: taskId });
 
     if ((this.userId === task.author.id) || (this.userId === task.assignedTo)) {
-      Tasks.update({ _id: taskId }, { $set: { name, description, startAt, assignedTo } });
+      const query = { $set: { name, description, startAt, assignedTo } };
+      if (!task.workedOnThat.includes(assignedTo) && assignedTo) {
+        query.$push = { workedOnThat: assignedTo };
+      }
+
+      Tasks.update({ _id: taskId }, query);
     } else {
       throw new Meteor.Error("You can't update this task!");
     }
@@ -152,9 +158,11 @@ export const reassign = new ValidatedMethod({
     }
 
     if ((this.userId === task.author.id) || (this.userId === task.assignedTo)) {
-      Tasks.update({ _id: taskId }, {
-        $set: { assignedTo, lastReassignReason: description }
-      });
+      const query = { $set: { assignedTo, lastReassignReason: description } };
+      if (!task.workedOnThat.includes(assignedTo) && assignedTo) {
+        query.$push = { workedOnThat: assignedTo };
+      }
+      Tasks.update({ _id: taskId }, query);
     } else {
       throw new Meteor.Error("You can't reassign user in this task!");
     }
