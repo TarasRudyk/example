@@ -133,7 +133,7 @@ export default class LogsItem extends React.Component {
     return (
       <div className="timelogs-track-wrapper">
         <div className="timelogs-info">
-          <div className="timelogs-task-name">Task #{this.props.slider.id}</div>
+          <div className="timelogs-task-name">Task name: {this.props.slider.taskName}</div>
           <div className="timelogs-time-info">
             <div className="timelogs-time-start-at">Start at: {moment(this.state.startAt).format('HH:mm')}</div>
             <div className="timelogs-time-duration">

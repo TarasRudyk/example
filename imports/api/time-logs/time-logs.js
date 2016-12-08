@@ -24,9 +24,9 @@ TimeLogs.schema = new SimpleSchema({
     type: Date,
     label: 'startAt'
   },
-  finishAt: {
+  endAt: {
     type: Date,
-    label: 'finishAt'
+    label: 'endAt'
   }
 });
 

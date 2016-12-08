@@ -33,7 +33,7 @@ export default class Timelogs extends React.Component {
     }
 
     return this.props.timelogs.map(t => (
-      <LogsItem key={t.id} trackWidth={this.state.trackWidth} slider={t} />
+      <LogsItem key={t._id} trackWidth={this.state.trackWidth} slider={t} />
     ));
   }
   render() {
