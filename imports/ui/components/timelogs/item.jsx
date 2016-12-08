@@ -9,7 +9,9 @@ export default class LogsItem extends React.Component {
     this.state = {
       draggablePosX: 0,
       draggablePosDx: 0,
-      sliderWidth: 0
+      sliderWidth: 0,
+      trackWidth: this.props.trackWidth,
+      slider: this.props.slider
     };
 
     this.updateStyle = this.updateStyle.bind(this);
@@ -38,7 +40,14 @@ export default class LogsItem extends React.Component {
 
     this.updateStyle();
   }
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
+    const { trackWidth, slider } = nextProps;
+
+    this.setState({
+      trackWidth,
+      slider
+    });
+
     this.updateStyle();
   }
   onDrag(e) {
@@ -64,7 +73,7 @@ export default class LogsItem extends React.Component {
 
     if (result !== this.state.width) {
       this.setState({
-        width: result
+        sliderWidth: result
       });
     }
   }
@@ -77,7 +86,7 @@ export default class LogsItem extends React.Component {
     };
   }
   updateStyle() {
-    const { trackWidth, slider } = this.props;
+    const { trackWidth, slider } = this.state;
 
     const trackPartWidth = trackWidth / 96;
 
@@ -90,13 +99,23 @@ export default class LogsItem extends React.Component {
 
     this.setState({
       draggablePosX: Math.round(minutesAfterStartDay / 15) * trackPartWidth,
+      draggablePosDx: Math.round(minutesAfterStartDay / 15) * trackPartWidth,
       sliderWidth: Math.round(minutes / 15) * trackPartWidth
     });
   }
   render() {
     return (
-      <div className="timelogs-track">
-        <div className="timelogs-slider" ref={(slider) => { this.slider = slider; }} style={this.getStyle()} />
+      <div className="timelogs-track-wrapper">
+        <div className="timelogs-info">
+          <div className="timelogs-task-name">Task #{this.props.slider.id}</div>
+          <div className="timelogs-time-info">
+            <div className="timelogs-time-start-at">Start at: 10:00</div>
+            <div className="timelogs-time-duration">Duration: 2h 15m</div>
+          </div>
+        </div>
+        <div className="timelogs-track">
+          <div className="timelogs-slider" ref={(slider) => { this.slider = slider; }} style={this.getStyle()} />
+        </div>
       </div>
     );
   }
