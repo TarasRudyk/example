@@ -29,7 +29,7 @@ export default class SingleProject extends React.Component {
   }
   render() {
     const { project, owner, index } = this.props;
-    const tab = index ? parseInt(index.tab, 10) : 0;
+
     return (
       <div className="page-main-content page-project">
         <PageHeader header={project.name} subHeader={owner.fullname} hx={1}>
@@ -42,7 +42,7 @@ export default class SingleProject extends React.Component {
         </PageHeader>
         <Tabs
           onSelect={this.handleSelect}
-          selectedIndex={tab || 0}
+          selectedIndex={index || 0}
         >
           <TabList>
             <Tab>Overview</Tab>
