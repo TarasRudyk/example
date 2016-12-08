@@ -58,19 +58,25 @@ export default class LogsItem extends React.Component {
 
     if (draggablePosX !== this.state.draggablePosX) {
       const part = Math.floor(draggablePosX / trackPartWidth);
+      const durationDiff = moment(this.state.endAt).diff(this.state.startAt);
+      const durationAsMinutes = moment.duration(durationDiff).asMinutes();
 
       if (draggablePosX > this.state.draggablePosX) {
         const startAt = day.add(moment.duration(part * 15, 'm'));
+        const endAt = moment(startAt).add(moment.duration(durationAsMinutes, 'm'));
 
         this.setState({
           startAt: new Date(startAt),
+          endAt: new Date(endAt),
           draggablePosX
         });
       } else {
         const startAt = day.add(moment.duration(part * 15, 'm'));
+        const endAt = moment(startAt).add(moment.duration(durationAsMinutes, 'm'));
 
         this.setState({
           startAt: new Date(startAt),
+          endAt: new Date(endAt),
           draggablePosX
         });
       }
@@ -81,12 +87,16 @@ export default class LogsItem extends React.Component {
 
     const trackPartWidth = trackWidth / 96;
 
-    const width = e.rect.width;
-    const result = Math.floor(width / trackPartWidth) * trackPartWidth;
+    const currentWidth = e.rect.width;
+    const part = Math.floor(currentWidth / trackPartWidth);
+    const sliderWidth = part * trackPartWidth;
 
-    if (result !== this.state.width) {
+    if (sliderWidth !== this.state.width) {
+      const endAt = moment(this.state.startAt).add(moment.duration(part * 15, 'm'));
+
       this.setState({
-        sliderWidth: result
+        sliderWidth,
+        endAt
       });
     }
   }
@@ -117,13 +127,20 @@ export default class LogsItem extends React.Component {
     });
   }
   render() {
+    const diff = moment(this.state.endAt).diff(this.state.startAt);
+    const duration = moment.duration(diff);
+
     return (
       <div className="timelogs-track-wrapper">
         <div className="timelogs-info">
           <div className="timelogs-task-name">Task #{this.props.slider.id}</div>
           <div className="timelogs-time-info">
             <div className="timelogs-time-start-at">Start at: {moment(this.state.startAt).format('HH:mm')}</div>
-            <div className="timelogs-time-duration">Duration: 2h 15m</div>
+            <div className="timelogs-time-duration">
+              Duration:&nbsp;
+              {duration.hours() < 10 ? `0${duration.hours()}` : duration.hours()}h&nbsp;
+              {duration.minutes() < 10 ? `0${duration.minutes()}` : duration.minutes()}m
+            </div>
           </div>
         </div>
         <div className="timelogs-track">
