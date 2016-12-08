@@ -19,9 +19,10 @@ const Elements = () => (
       </div>
       <Timelogs
         timelogs={[
+          { id: 0, startAt: 'Thu Dec 08 2016 01:00:00 GMT+0200 (EET)', endAt: 'Thu Dec 08 2016 02:00:00 GMT+0200 (EET)' },
           { id: 1, startAt: 'Thu Dec 08 2016 10:00:00 GMT+0200 (EET)', endAt: 'Thu Dec 08 2016 11:00:00 GMT+0200 (EET)' },
           { id: 2, startAt: 'Thu Dec 08 2016 12:00:00 GMT+0200 (EET)', endAt: 'Thu Dec 08 2016 12:30:00 GMT+0200 (EET)' },
-          { id: 3, startAt: 'Thu Dec 08 2016 14:00:00 GMT+0200 (EET)', endAt: 'Thu Dec 08 2016 14:15:00 GMT+0200 (EET)' }
+          { id: 3, startAt: 'Thu Dec 08 2016 14:00:00 GMT+0200 (EET)', endAt: 'Thu Dec 08 2016 18:15:00 GMT+0200 (EET)' }
         ]}
       />
     </div>

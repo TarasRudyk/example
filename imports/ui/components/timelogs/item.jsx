@@ -42,11 +42,12 @@ export default class LogsItem extends React.Component {
     this.updateStyle();
   }
   onDrag(e) {
-    const parentNode = this.textInput.parentNode;
-    const cellWidth = parentNode.offsetWidth / 96;
+    const { trackWidth } = this.props;
+
+    const trackPartWidth = trackWidth / 96;
 
     const draggablePosDx = this.state.draggablePosDx + e.dx;
-    const draggablePosX = Math.floor(draggablePosDx / cellWidth) * cellWidth;
+    const draggablePosX = Math.floor(draggablePosDx / trackPartWidth) * trackPartWidth;
 
     this.setState({
       draggablePosX,
@@ -54,11 +55,12 @@ export default class LogsItem extends React.Component {
     });
   }
   onResize(e) {
-    const parentNode = this.textInput.parentNode;
-    const cellWidth = parentNode.offsetWidth / 96;
+    const { trackWidth } = this.props;
+
+    const trackPartWidth = trackWidth / 96;
 
     const width = e.rect.width;
-    const result = Math.floor(width / cellWidth) * cellWidth;
+    const result = Math.floor(width / trackPartWidth) * trackPartWidth;
 
     if (result !== this.state.width) {
       this.setState({
@@ -79,10 +81,15 @@ export default class LogsItem extends React.Component {
 
     const trackPartWidth = trackWidth / 96;
 
-    const diff = moment(new Date(slider.endAt)).diff(moment(new Date(slider.startAt)));
+    const diff = moment(new Date(slider.endAt)).diff(new Date(slider.startAt));
     const minutes = moment.duration(diff).asMinutes();
 
+    const day = moment(new Date(slider.startAt)).startOf('day');
+    const afterStartDay = moment(new Date(slider.startAt)).diff(day);
+    const minutesAfterStartDay = moment.duration(afterStartDay).asMinutes();
+
     this.setState({
+      draggablePosX: Math.round(minutesAfterStartDay / 15) * trackPartWidth,
       sliderWidth: Math.round(minutes / 15) * trackPartWidth
     });
   }
