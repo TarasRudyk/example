@@ -9,14 +9,19 @@ export default class MessagesList extends React.Component {
   }
 
   render() {
+    const { messages } = this.props;
+    const listContent = messages.length > 0 ? messages.map(m =>
+      <MessageListItem key={m._id} item={m} />
+    ) : (<div>Nothik here</div>);
     return (
       <div>
         <div>Messages list</div>
-        <MessageListItem />
-        <MessageListItem />
+        {listContent}
       </div>
     );
   }
 }
 
-MessagesList.propTypes = {};
+MessagesList.propTypes = {
+  messages: React.PropTypes.array
+};

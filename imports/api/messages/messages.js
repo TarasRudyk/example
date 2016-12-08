@@ -22,6 +22,9 @@ Messages.schema = new SimpleSchema({
   content: {
     type: String
   },
+  ownerId: {
+    type: String
+  },
   createdAt: {
     type: Date()
   }

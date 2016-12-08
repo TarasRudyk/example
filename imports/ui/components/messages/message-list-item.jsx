@@ -7,10 +7,16 @@ export default class MessageListItem extends React.Component {
   }
 
   render() {
+    const { content, createdAt } = this.props.item;
     return (
-      <div>Message list item</div>
+      <div className="message-list-item">
+        <div>{content}</div>
+        <date>{createdAt.toString()}</date>
+      </div>
     );
   }
 }
 
-MessageListItem.propTypes = {};
+MessageListItem.propTypes = {
+  item: React.PropTypes.object
+};

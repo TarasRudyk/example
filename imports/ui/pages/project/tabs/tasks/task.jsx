@@ -5,7 +5,7 @@ import PageHeader from '/imports/ui/components/header/pageHeader';
 import AcceptTask from '/imports/ui/containers/pages/project/tabs/tasks/accept-task';
 import ReassignTask from '/imports/ui/containers/pages/project/tabs/tasks/reassign-task';
 import History from '/imports/ui/containers/pages/project/tabs/tasks/history';
-import Messages from '/imports/ui/components/messages/messages';
+import Messages from '/imports/ui/containers/pages/project/tabs/tasks/messages';
 import { removeTask, reassignTask } from '/imports/api/tasks/actions';
 
 export default class Task extends React.Component {
@@ -115,7 +115,7 @@ export default class Task extends React.Component {
             />
           </TabPanel>
           <TabPanel>
-            <Messages />
+            <Messages taskId={_id} />
           </TabPanel>
         </Tabs>
       </div>

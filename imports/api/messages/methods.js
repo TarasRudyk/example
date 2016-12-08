@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 
-import { Messagess } from './messages';
+import { Messages } from './messages';
 
 export const create = new ValidatedMethod({
   name: 'message.create',
@@ -16,11 +16,12 @@ export const create = new ValidatedMethod({
       throw new Meteor.Error('User not authorized');
     }
 
-    return Messagess.insert({
+    return Messages.insert({
       targetId,
       targetType,
       content,
-      createdAt: new Date()
+      createdAt: new Date(),
+      ownerId: this.userId
     });
   }
 });
@@ -35,6 +36,6 @@ export const remove = new ValidatedMethod({
       throw new Meteor.Error('User not authorized');
     }
 
-    return Messagess.remove({ _id: messageId });
+    return Messages.remove({ _id: messageId });
   }
 });
