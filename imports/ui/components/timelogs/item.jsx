@@ -10,8 +10,8 @@ export default class LogsItem extends React.Component {
       draggablePosX: 0,
       draggablePosDx: 0,
       sliderWidth: 0,
-      trackWidth: this.props.trackWidth,
-      slider: this.props.slider
+      startAt: new Date(this.props.slider.startAt),
+      endAt: new Date(this.props.slider.endAt)
     };
 
     this.updateStyle = this.updateStyle.bind(this);
@@ -35,19 +35,12 @@ export default class LogsItem extends React.Component {
     interact(this.slider)
       .draggable(draggableOptions)
       .resizable(resizableOptions)
-      .on('resizemove', this.onResize)
-      .on('dragmove', this.onDrag);
+      .on('dragmove', this.onDrag)
+      .on('resizemove', this.onResize);
 
     this.updateStyle();
   }
-  componentWillReceiveProps(nextProps) {
-    const { trackWidth, slider } = nextProps;
-
-    this.setState({
-      trackWidth,
-      slider
-    });
-
+  componentWillReceiveProps() {
     this.updateStyle();
   }
   onDrag(e) {
@@ -57,11 +50,31 @@ export default class LogsItem extends React.Component {
 
     const draggablePosDx = this.state.draggablePosDx + e.dx;
     const draggablePosX = Math.floor(draggablePosDx / trackPartWidth) * trackPartWidth;
+    const day = moment(new Date(this.state.startAt)).startOf('day');
 
     this.setState({
-      draggablePosX,
       draggablePosDx
     });
+
+    if (draggablePosX !== this.state.draggablePosX) {
+      const part = Math.floor(draggablePosX / trackPartWidth);
+
+      if (draggablePosX > this.state.draggablePosX) {
+        const startAt = day.add(moment.duration(part * 15, 'm'));
+
+        this.setState({
+          startAt: new Date(startAt),
+          draggablePosX
+        });
+      } else {
+        const startAt = day.add(moment.duration(part * 15, 'm'));
+
+        this.setState({
+          startAt: new Date(startAt),
+          draggablePosX
+        });
+      }
+    }
   }
   onResize(e) {
     const { trackWidth } = this.props;
@@ -86,7 +99,7 @@ export default class LogsItem extends React.Component {
     };
   }
   updateStyle() {
-    const { trackWidth, slider } = this.state;
+    const { trackWidth, slider } = this.props;
 
     const trackPartWidth = trackWidth / 96;
 
@@ -109,7 +122,7 @@ export default class LogsItem extends React.Component {
         <div className="timelogs-info">
           <div className="timelogs-task-name">Task #{this.props.slider.id}</div>
           <div className="timelogs-time-info">
-            <div className="timelogs-time-start-at">Start at: 10:00</div>
+            <div className="timelogs-time-start-at">Start at: {moment(this.state.startAt).format('HH:mm')}</div>
             <div className="timelogs-time-duration">Duration: 2h 15m</div>
           </div>
         </div>
