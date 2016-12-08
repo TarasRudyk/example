@@ -10,3 +10,9 @@ Meteor.publish('timeLogs.byTaskId', function (taskId) {
   return TimeLogs.find({ taskId });
 });
 
+Meteor.publish('timeLogs.byUserProjects', function (userProjectIds) {
+  check(userProjectIds, Array);
+
+  return TimeLogs.find({ projectId: { $in: userProjectIds } });
+});
+

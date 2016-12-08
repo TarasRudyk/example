@@ -40,7 +40,7 @@ export default class DashboardCalendar extends React.Component {
                 {this.props.days.map((d, i) => (
                   <div key={i} className={`${this.dateIsSelected(d.isSelected)}`}>
                     <a href={`/?date=${moment(d.date).format('DD-MM-YYYY')}`} onClick={this.props.choseDay} data-date={d.date}>
-                      <div className="">
+                      <div className="calendar-day-content">
                         <p>{moment(d.date).format('DD-MM-YYYY')}</p>
                         <p>Tasks: {d.tasksCount || 0}</p>
                         <p>Estimate: {d.estimate.hh} hh, {d.estimate.mm} mm</p>

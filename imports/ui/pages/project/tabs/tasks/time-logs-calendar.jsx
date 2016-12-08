@@ -39,10 +39,14 @@ export default class TimeLogsCalendar extends React.Component {
                 {this.props.days.map((d, i) => (
                   <div key={i} className={`${this.dateIsSelected(d.isSelected)}`}>
                     <a href="" onClick={this.props.choseDay} data-date={d.date}>
-                      <div className="">
+                      <div className="calendar-day-content">
                         <p>{moment(d.date).format('DD-MM-YYYY')}</p>
-                        <p>Tasks: {d.tasksCount || 0}</p>
-                        <p>Estimate: {d.estimate.hh} hh, {d.estimate.mm} mm</p>
+                        {d.dayTimeLogs[0] ? 'Time logs: ' : ''}
+                        <div>{d.dayTimeLogs[0] ?
+                          d.dayTimeLogs.map((dayTasksTimeLogs, j) => (
+                            <p key={j}>{j}. Start at: {moment(dayTasksTimeLogs.startAt).format('DD-MM-YYYY: hh: mm')}</p>
+                          )) : ''
+                        }</div>
                       </div>
                     </a>
                   </div>

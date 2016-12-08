@@ -7,10 +7,14 @@ export default class TaskTimelogs extends React.Component {
     super(props);
 
     this.state = {
-      addingNewTimeLog: false
+      addingNewTimeLog: false,
+      chosenDay: moment().startOf('day')
     };
 
     this.addTimeLog = this.addTimeLog.bind(this);
+    this.handleChoseDay = this.handleChoseDay.bind(this);
+    this.handleClickNextWeek = this.handleClickNextWeek.bind(this);
+    this.handleClickPreviousWeek = this.handleClickPreviousWeek.bind(this);
   }
 
   addTimeLog() {
@@ -19,12 +23,37 @@ export default class TaskTimelogs extends React.Component {
     });
   }
 
+  handleChoseDay({ currentTarget }) {
+    const selectedDate = new Date(currentTarget.dataset.date);
+    this.setState({ chosenDay: selectedDate });
+  }
+
+  handleClickNextWeek() {
+    const startOfWeek = moment(this.state.startOfWeek).add(1, 'weeks');
+    this.setState({
+      startOfWeek: startOfWeek
+    });
+  }
+
+  handleClickPreviousWeek() {
+    const startOfWeek = moment(this.state.startOfWeek).subtract(1, 'weeks');
+    this.setState({
+      startOfWeek: startOfWeek
+    });
+  }
+
   render() {
     return (
       <div className="task-timelogs">
         {this.state.addingNewTimeLog ?
           <div>Adding new time log
-          <TimeLogsCalendar />
+          <TimeLogsCalendar
+            choseDay={this.handleChoseDay}
+            chosenDay={this.state.chosenDay}
+            goNextWeek={this.handleClickNextWeek}
+            goPreviousWeek={this.handleClickPreviousWeek}
+            startOfWeek={this.state.startOfWeek}
+          />
           </div> :
           <div>
             <table>
