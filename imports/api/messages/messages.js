@@ -20,10 +20,15 @@ Messages.schema = new SimpleSchema({
     ]
   },
   content: {
-    type: String
+    type: Object,
+    blackbox: true
   },
-  ownerId: {
-    type: String
+  mentionUsers: {
+    type: [String]
+  },
+  author: {
+    type: Object,
+    blackbox: true
   },
   createdAt: {
     type: Date()

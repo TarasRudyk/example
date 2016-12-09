@@ -13,11 +13,12 @@ export class Messages extends React.Component {
   }
 
   handleOnMessageSubmit(message) {
-    // TODO: EDIT THIS SHIT
+    const { target, targetType } = this.props;
     createMessage(
-      this.props.target._id,
-      'task',
-      message
+      target._id,
+      targetType,
+      message.content,
+      message.mentionUsers
     );
   }
 
@@ -36,6 +37,7 @@ export class Messages extends React.Component {
 }
 
 Messages.propTypes = {
+  targetType: React.PropTypes.string,
   target: React.PropTypes.object,
   messages: React.PropTypes.array,
   mentions: React.PropTypes.object,

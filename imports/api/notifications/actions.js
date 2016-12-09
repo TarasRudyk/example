@@ -6,10 +6,9 @@ import { addNotice } from '/imports/api/notices/actions';
 export const createNotification = (description, type, action, recipientId) => {
   check(description, String);
   check(type, String);
-  check(action, String);
   check(recipientId, String);
 
-  return Meteor.call('notification.create', { description, type, action, recipientId }, (err) => {
+  return Meteor.call('notification.create', { description, type, recipientId }, (err) => {
     if (err) {
       addNotice(err.message);
     }

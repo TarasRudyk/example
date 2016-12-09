@@ -14,8 +14,7 @@ export default class MessagesList extends React.Component {
       <MessageListItem key={m._id} item={m} />
     ) : (<div>Nothik here</div>);
     return (
-      <div>
-        <div>Messages list</div>
+      <div className="messages-list">
         {listContent}
       </div>
     );

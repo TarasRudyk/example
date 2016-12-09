@@ -29,14 +29,14 @@ export default createContainer(({ target }) => {
     {
       name: user.profile.fullname,
       link: `/profile/${user._id}`,
-      avatar: user.profile.avatar,
-      userId: user._id
+      avatar: user.profile.avatar
     }
   )));
 
   const enableToWrite = target.workedOnThat ? target.workedOnThat.includes(Meteor.userId()) : false;
 
   return {
+    targetType: 'task',
     mentions,
     messages,
     enableToWrite
