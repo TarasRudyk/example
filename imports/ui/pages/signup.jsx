@@ -92,7 +92,7 @@ export default class Signup extends React.Component {
   }
   render() {
     return (
-      <div className="page-main-content page-signin">
+      <div className="app-content app-signin">
         <div className="container">
           <div className="title">
             <h1>Sign up</h1>

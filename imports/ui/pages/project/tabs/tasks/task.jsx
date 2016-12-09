@@ -78,7 +78,7 @@ export default class Task extends React.Component {
   render() {
     const { _id, name, description, startAt, assignedTo } = this.props.task;
     return (
-      <div className="page-main-content page-create-project">
+      <div className="app-content app-create-project">
         <PageHeader header={name} hx={1} />
         <ReassignTask
           task={this.props.task}

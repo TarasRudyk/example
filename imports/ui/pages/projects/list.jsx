@@ -19,7 +19,7 @@ export default class Projects extends React.Component {
   }
   render() {
     return (
-      <div className="page-main-content page-projects">
+      <div className="app-content app-projects">
         <PageHeader header="Projects" subHeader="all your projects" hx={1}>
           <a href="/project/create" className="button green">New project</a>
         </PageHeader>

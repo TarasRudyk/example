@@ -16,7 +16,7 @@ export default class CreateTask extends React.Component {
   }
   render() {
     return (
-      <div className="page-main-content page-create-project">
+      <div className="app-content app-create-project">
         <div className="container">
           <div className="title">
             <h1>Create task</h1>

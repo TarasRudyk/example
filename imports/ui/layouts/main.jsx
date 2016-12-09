@@ -1,19 +1,18 @@
 import React from 'react';
 
-import Header from '/imports/ui/containers/components/header';
 import Notices from '/imports/ui/containers/components/notices';
-import SideContent from '/imports/ui/containers/components/side-content/main';
+import Navigation from '/imports/ui/containers/components/navigation';
 
 export default class MainLayout extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {};
-    this.getHeader = this.getHeader.bind(this);
+    this.getNavigation = this.getNavigation.bind(this);
   }
-  getHeader() {
+  getNavigation() {
     if (this.props.userIsLogin) {
-      return <Header
+      return <Navigation
         user={this.props.user}
         userIsLogin={this.props.userIsLogin}
         notificationsCount={this.props.notificationsCount}
@@ -25,12 +24,9 @@ export default class MainLayout extends React.Component {
   }
   render() {
     return (
-      <div className="the-karma">
-        {this.getHeader()}
-        <div className="page">
-          {this.props.content}
-          <SideContent />
-        </div>
+      <div className="app">
+        {this.getNavigation()}
+        {this.props.content}
         <Notices />
       </div>
     );

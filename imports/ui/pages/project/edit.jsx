@@ -71,7 +71,7 @@ export default class EditProject extends React.Component {
   }
   render() {
     return (
-      <div className="page-main-content page-create-project">
+      <div className="app-content app-create-project">
         <div className="container">
           <div className="title">
             <h1>Edit project</h1>

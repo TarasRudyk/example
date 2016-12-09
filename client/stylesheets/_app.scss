@@ -1,0 +1,14 @@
+.app {
+  overflow: hidden;
+}
+.app-navigation {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 260px;
+  height: 100vh;
+  background: #353535;
+}
+.app-content {
+  margin-left: 260px;
+}

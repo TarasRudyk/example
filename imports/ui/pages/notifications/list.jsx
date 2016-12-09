@@ -20,7 +20,7 @@ export default class Notifications extends React.Component {
 
   render() {
     return (
-      <div className="page-main-content page-projects">
+      <div className="app-content app-projects">
         <div className="separator">
           <div className="container">
             <div className="title">
