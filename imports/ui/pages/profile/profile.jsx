@@ -15,13 +15,13 @@ export default class Profile extends React.Component {
     return '';
   }
   render() {
-    const user = this.props.user;
+    const { user } = this.props;
     const username = user && user.username;
     const email = user && user.emails && user.emails[0].address;
     const fullname = user && user.profile && user.profile.fullname;
 
     return (
-      <main className="page-content">
+      <div className="app-content">
         <div className="container">
           <div className="page-title">
             <h1>Profile</h1>
@@ -33,7 +33,7 @@ export default class Profile extends React.Component {
           </p>
           { this.showButton() }
         </div>
-      </main>
+      </div>
     );
   }
 }

@@ -1,5 +1,9 @@
 .app {
-  overflow: hidden;
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
 }
 .app-navigation {
   position: fixed;
@@ -8,6 +12,63 @@
   width: 260px;
   height: 100vh;
   background: #353535;
+
+  .logo {
+    display: block;
+    margin: 12px 18px;
+    color: #fff;
+
+    span {
+      display: inline-block;
+      padding: 8px;
+      font-size: 18px;
+      margin: 1px 0 0;
+    }
+    img, span {
+      vertical-align: middle;
+    }
+  }
+  .user-info {
+    display: block;
+    background: rgba(255, 255, 255, .1);
+    padding: 6px;
+    margin: 18px 8px;
+    cursor: pointer;
+    border-radius: 6px;
+    overflow: hidden;
+    font-size: #fff;
+    font-family: 'Open Sans Light';
+
+    &:hover {
+      background: rgba(255, 255, 255, .2);
+    }
+
+    .avatar {
+      float: left;
+      margin: 0 6px 0 0;
+
+      img {
+        border-radius: 6px;
+      }
+    }
+    .fullname {
+      display: block;
+      font-size: 16px;
+      color: #fff;
+      margin: 3px 0 1px;
+    }
+    .username {
+      display: block;
+      font-size: 14px;
+      color: #aaa;
+    }
+  }
+  .main-nav a {
+    display: block;
+    color: #fff;
+    margin: 12px 18px;
+    font-family: 'Open Sans Light';
+  }
 }
 .app-content {
   margin-left: 260px;
