@@ -28,6 +28,7 @@ export class Messages extends React.Component {
         <MessageInput
           onSubmit={this.handleOnMessageSubmit}
           disabled={this.props.enableToWrite}
+          mentions={this.props.mentions}
         />
       </div>
     );
@@ -37,5 +38,6 @@ export class Messages extends React.Component {
 Messages.propTypes = {
   target: React.PropTypes.object,
   messages: React.PropTypes.array,
+  mentions: React.PropTypes.object,
   enableToWrite: React.PropTypes.bool
 };
