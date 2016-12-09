@@ -14,11 +14,11 @@ export default createContainer(() => {
 
   const notificationsHandle = Meteor.subscribe('notifications');
   const notificationsCount = notificationsHandle.ready() ?
-    Notifications.find({ read: false }).count() : 0;
+    Notifications.find({ isReaded: false }).count() : 0;
 
   const invitationsHandle = Meteor.subscribe('invitations');
   const invitationsCount = invitationsHandle.ready() ?
-    Invitations.find({ 'user.id': Meteor.userId(), replied: false }).count() : 0;
+    Invitations.find({ 'user.id': Meteor.userId(), replied: 'pending' }).count() : 0;
 
   const count = notificationsCount + invitationsCount;
 
@@ -33,7 +33,7 @@ export default createContainer(() => {
 
   const assignedTasks = tasksHandle.ready() ?
     Tasks.find({
-      projectId: { $in: userProjectIds }, assignedAt: userId, isAccepted: { $in: [null, false] }
+      projectId: { $in: userProjectIds }, assignedTo: userId, isAccepted: { $in: [null, false] }
     }).count() : 0;
 
   return {

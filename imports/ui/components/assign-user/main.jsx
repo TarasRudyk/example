@@ -60,7 +60,7 @@ class AssignUser extends React.Component {
     if (assignedUser) {
       view = <AssignedUser
         user={assignedUser}
-        onDelete={() => { this.handleUserSelect(null); }}
+        onRemove={() => { this.handleUserSelect(null); }}
       />;
     } else {
       view = (

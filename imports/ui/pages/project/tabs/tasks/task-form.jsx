@@ -19,7 +19,7 @@ export default class TaskForm extends React.Component {
         value: ''
       },
       taskId: '',
-      assignedAt: '',
+      assignedTo: '',
       startAt: null
     };
 
@@ -39,7 +39,7 @@ export default class TaskForm extends React.Component {
         description: {
           value: task.description || ''
         },
-        assignedAt: task.assignedAt || '',
+        assignedTo: task.assignedTo || '',
         startAt: task.startAt ? moment(task.startAt) : null,
         taskId: task._id
       });
@@ -63,12 +63,12 @@ export default class TaskForm extends React.Component {
     }
 
     if (!errors) {
-      const { name, description, assignedAt, startAt } = this.state;
+      const { name, description, assignedTo, startAt } = this.state;
       const startAtDate = startAt && startAt.toDate();
       const task = {
         name: name.value,
         description: description.value,
-        assignedAt,
+        assignedTo,
         startAt: startAtDate
       };
 
@@ -94,7 +94,7 @@ export default class TaskForm extends React.Component {
   handleOnAssigned(user) {
     const id = user ? user._id : '';
     this.setState({
-      assignedAt: id
+      assignedTo: id
     });
   }
   render() {
@@ -126,7 +126,7 @@ export default class TaskForm extends React.Component {
         <AssignUser
           project={this.props.project}
           onAssigned={this.handleOnAssigned}
-          assignedUserId={this.state.assignedAt}
+          assignedUserId={this.state.assignedTo}
         />
         <input
           type="submit"

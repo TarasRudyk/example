@@ -16,19 +16,16 @@ Notifications.schema = new SimpleSchema({
   type: {
     type: String
   },
-  action: {
+  recipientId: {
     type: String
   },
-  creationDate: {
+  createdAt: {
     type: Date,
     autoValue() {
       return new Date();
     }
   },
-  recipientId: {
-    type: String
-  },
-  read: {
+  isReaded: {
     type: Boolean
   }
 });

@@ -9,7 +9,7 @@ export const isTaskChanged = (fieldKey) => {
     'startAt',
     'estimate',
     'isAccepted',
-    'assignedAt'
+    'assignedTo'
   ];
 
   return watchedFields.indexOf(fieldKey) !== -1;
@@ -32,9 +32,9 @@ export const getTaskViewText = (historyItem) => {
     ${currentState.name}</a>`;
   }
 
-  if (action === 'DELETE') {
+  if (action === 'REMOVE') {
     return `<a href="/profile/${editor.id}">${editor.fullname}</a> 
-    delete task <a href="/project/${prevState.projectId}/task/${prevState.id}">
+    remove task <a href="/project/${prevState.projectId}/task/${prevState.id}">
     ${prevState.name}</a>`;
   }
 
@@ -54,23 +54,23 @@ export const getTaskViewText = (historyItem) => {
     case 'isAccepted': return `<a href="/profile/${editor.id}">${editor.fullname}</a> 
       accept task <a href="/project/${currentState.projectId}/task/${currentState.id}">
       ${currentState.name}</a>`;
-    case 'assignedAt': {
-      if (currentState.assignedAt) {
+    case 'assignedTo': {
+      if (currentState.assignedTo) {
         const assignedUserName =
-          Meteor.users.findOne({ _id: currentState.assignedAt }).profile.fullname;
+          Meteor.users.findOne({ _id: currentState.assignedTo }).profile.fullname;
 
-        const reason = additional.reason ? `Reason is : ${additional.reason}` : '';
+        const reason = (additional && additional.reason) ? `Reason is : ${additional.reason}` : '';
 
         return `<a href="/profile/${editor.id}">${editor.fullname}</a> 
           assign task <a href="/project/${currentState.projectId}/task/${currentState.id}">
-          ${currentState.name}</a> at <a href="/profile/${currentState.assignedAt}">${assignedUserName}</a>.
+          ${currentState.name}</a> at <a href="/profile/${currentState.assignedTo}">${assignedUserName}</a>.
            ${reason}`;
       }
       const assignedUserName =
-        Meteor.users.findOne({ _id: prevState.assignedAt }).profile.fullname;
+        Meteor.users.findOne({ _id: prevState.assignedTo }).profile.fullname;
       return `<a href="/profile/${editor.id}">${editor.fullname}</a> 
         unassign task <a href="/project/${currentState.projectId}/task/${currentState.id}">
-        ${currentState.name}</a> from <a href="/profile/${prevState.assignedAt}">${assignedUserName}</a>`;
+        ${currentState.name}</a> from <a href="/profile/${prevState.assignedTo}">${assignedUserName}</a>`;
     }
     default: return 'Unknown changes in the task';
   }
@@ -86,7 +86,7 @@ export const getViewText = (historyItem) => {
 // Additional data getters
 export const getTaskAdditionalData = (historyItem) => {
   switch (historyItem.changedField) {
-    case 'assignedAt': {
+    case 'assignedTo': {
       const reason = historyItem.currentState.lastReassignReason;
       return {
         reason

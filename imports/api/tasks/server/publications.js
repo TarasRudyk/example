@@ -7,19 +7,19 @@ import { Tasks } from '../tasks';
 Meteor.publish('tasks.byProject', function (projectId) {
   check(projectId, String);
 
-  return Tasks.find({ projectId, active: true });
+  return Tasks.find({ projectId, isActive: true });
 });
 
 Meteor.publish('task.byId', function (taskId) {
   check(taskId, String);
 
-  return Tasks.find({ _id: taskId, active: true });
+  return Tasks.find({ _id: taskId, isActive: true });
 });
 
 Meteor.publish('tasks.byAssignedUser', function (userId) {
   check(userId, String);
 
-  const tasks = Tasks.find({ assignedAt: userId });
+  const tasks = Tasks.find({ assignedTo: userId });
   return tasks;
 });
 
@@ -31,7 +31,7 @@ Meteor.publish('tasks.byUserProjects', function (selectedProjId, isAssigned) {
   if (isAssigned) {
     query = {
       projectId: { $in: selectedProjId },
-      assignedAt: this.userId
+      assignedTo: this.userId
     };
   }
   return Tasks.find(query);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 
-import { deleteUserFromProject } from '/imports/api/projects/actions';
+import { removeUserFromProject } from '/imports/api/projects/actions';
 
 
 export default class PeopleListItem extends Component {
@@ -9,16 +9,16 @@ export default class PeopleListItem extends Component {
     super();
     this.state = {};
 
-    this.delete = this.delete.bind(this);
-    this.getDeleteButton = this.getDeleteButton.bind(this);
+    this.remove = this.remove.bind(this);
+    this.getRemoveButton = this.getRemoveButton.bind(this);
     this.getUserStatus = this.getUserStatus.bind(this);
   }
-  getDeleteButton() {
+  getRemoveButton() {
     if (Meteor.userId() === this.props.id) {
       return null;
     }
     if (Meteor.userId() === this.props.owner.id) {
-      return <button className="button red small" onClick={this.delete}>Delete</button>;
+      return <button className="button red small" onClick={this.remove}>Remove</button>;
     }
 
     return null;
@@ -33,8 +33,8 @@ export default class PeopleListItem extends Component {
 
     return null;
   }
-  delete() {
-    deleteUserFromProject(this.props.project._id, this.props.id);
+  remove() {
+    removeUserFromProject(this.props.project._id, this.props.id);
   }
   render() {
     return (
@@ -50,7 +50,7 @@ export default class PeopleListItem extends Component {
             {this.getUserStatus()}
           </div>
           <div className="actions">
-            {this.getDeleteButton()}
+            {this.getRemoveButton()}
           </div>
         </div>
       </div>

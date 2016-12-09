@@ -9,8 +9,8 @@ export default class HistoryListItem extends React.Component {
   render() {
     return (
       <div className="history-list-item">
-        <div dangerouslySetInnerHTML={({ __html: this.props.item.view })} />
-        <div>{this.props.item.date.toString()}</div>
+        <div dangerouslySetInnerHTML={({ __html: this.props.item.message })} />
+        <div>{this.props.item.createdAt.toString()}</div>
       </div>
     );
   }
