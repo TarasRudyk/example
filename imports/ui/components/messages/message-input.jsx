@@ -5,7 +5,27 @@ import Editor from 'draft-js-plugins-editor';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import 'draft-js-mention-plugin/lib/plugin.css';
 
-const mentionPlugin = createMentionPlugin();
+const positionSuggestions = ({ state, props }) => {
+  let transform;
+  let transition;
+
+  if (state.isActive && props.suggestions.size > 0) {
+    transform = 'scaleY(1)';
+    transition = 'all 0.25s cubic-bezier(.3,1.2,.2,1)';
+  } else if (state.isActive) {
+    transform = 'scaleY(0)';
+    transition = 'all 0.25s cubic-bezier(.3,1,.2,1)';
+  }
+
+  return {
+    transform,
+    transition,
+    marginTop: '-20px'
+  };
+};
+const mentionPlugin = createMentionPlugin({
+  positionSuggestions
+});
 const { MentionSuggestions } = mentionPlugin;
 const plugins = [mentionPlugin];
 
@@ -88,16 +108,16 @@ export default class MessageInput extends React.Component {
     return (this.props.disabled ?
       <div className="message-input">
         <div className="editor-container">
+          <MentionSuggestions
+            onSearchChange={this.onSearchChange}
+            suggestions={this.state.suggestions}
+            onAddMention={this.onAddMention}
+          />
           <Editor
             editorState={this.state.editorState}
             onChange={this.onChange}
             plugins={plugins}
             ref={(element) => { this.editor = element; }}
-          />
-          <MentionSuggestions
-            onSearchChange={this.onSearchChange}
-            suggestions={this.state.suggestions}
-            onAddMention={this.onAddMention}
           />
         </div>
         <button onClick={this.handleOnSubmit}>Send</button>

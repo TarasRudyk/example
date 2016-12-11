@@ -10,14 +10,18 @@ export default class MessageListItem extends React.Component {
   }
 
   render() {
-    const { content, createdAt, author } = this.props.item;
+    const { _id, content, createdAt, author } = this.props.item;
     const html = stateToHTML(convertFromRaw(content));
     const authorClass = author && (Meteor.userId() === author.id) ? ' author' : '';
 
     return (
-      <div className={`message-list-item${authorClass}`}>
-        <div dangerouslySetInnerHTML={({ __html: html })} />
-        <date>{createdAt.toString()}</date>
+      <div id={_id} className={`message-list-item${authorClass}`}>
+        <img src={author.avatar} alt={author.fullname} />
+        <div className="message-data">
+          <span>{author.fullname}</span>
+          <div dangerouslySetInnerHTML={({ __html: html })} />
+          <date>{createdAt.toString()}</date>
+        </div>
       </div>
     );
   }

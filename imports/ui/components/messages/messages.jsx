@@ -13,23 +13,25 @@ export class Messages extends React.Component {
   }
 
   handleOnMessageSubmit(message) {
-    const { target, targetType } = this.props;
+    const { target, targetType, mentionNotification } = this.props;
     createMessage(
       target._id,
       targetType,
       message.content,
+      mentionNotification,
       message.mentionUsers
     );
   }
 
   render() {
+    const { enableToWrite, mentions } = this.props;
     return (
       <div className="messages-container">
         <MessagesList messages={this.props.messages} />
         <MessageInput
           onSubmit={this.handleOnMessageSubmit}
-          disabled={this.props.enableToWrite}
-          mentions={this.props.mentions}
+          disabled={enableToWrite}
+          mentions={mentions}
         />
       </div>
     );
@@ -37,6 +39,7 @@ export class Messages extends React.Component {
 }
 
 Messages.propTypes = {
+  mentionNotification: React.PropTypes.strign,
   targetType: React.PropTypes.string,
   target: React.PropTypes.object,
   messages: React.PropTypes.array,

@@ -33,9 +33,12 @@ export default createContainer(({ target }) => {
     }
   )));
 
+  const mentionNotification = `You are mention in message of ${target.name} task`;
+
   const enableToWrite = target.workedOnThat ? target.workedOnThat.includes(Meteor.userId()) : false;
 
   return {
+    mentionNotification,
     targetType: 'task',
     mentions,
     messages,

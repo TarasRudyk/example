@@ -12,28 +12,19 @@ export const create = new ValidatedMethod({
     targetId: { type: String },
     targetType: { type: String },
     content: { type: Object, blackbox: true },
+    notification: { type: String },
     mentionUsers: { type: [String] }
   }).validator(),
-  run({ targetId, targetType, content, mentionUsers }) {
+  run({ targetId, targetType, content, notification, mentionUsers }) {
     if (!this.userId) {
       throw new Meteor.Error('User not authorized');
-    }
-
-    if (mentionUsers.length > 0) {
-      mentionUsers.forEach((userId) => {
-        createNotification.call({
-          description: 'You are mention in the task',
-          type: 'message',
-          recipientId: userId
-        });
-      });
     }
 
     const author = Meteor.users.findOne({ _id: this.userId });
 
     const { avatar, fullname } = author.profile;
 
-    return Messages.insert({
+    const messageId = Messages.insert({
       targetId,
       targetType,
       content,
@@ -46,6 +37,18 @@ export const create = new ValidatedMethod({
         fullname
       }
     });
+
+    if (mentionUsers.length > 0) {
+      mentionUsers.forEach((userId) => {
+        createNotification.call({
+          description: notification,
+          type: 'message',
+          recipientId: userId
+        });
+      });
+    }
+
+    return messageId;
   }
 });
 
