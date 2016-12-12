@@ -1,3 +1,4 @@
+/* global window, document */
 import React from 'react';
 
 export default class Navigation extends React.Component {
@@ -5,8 +6,30 @@ export default class Navigation extends React.Component {
     super(props);
 
     this.state = {
-
+      height: 0
     };
+
+    this.getHeight = this.getHeight.bind(this);
+  }
+  componentWillMount() {
+    window.addEventListener('resize', this.getHeight);
+  }
+  componentDidMount() {
+    this.getHeight();
+  }
+  componentWillUnmount() {
+    window.addEventListener('resize', this.getHeight);
+  }
+  getHeight() {
+    const height = Math.max(
+      document.body.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.clientHeight,
+      document.documentElement.scrollHeight,
+      document.documentElement.offsetHeight
+    );
+
+    this.setState({ height });
   }
   render() {
     const { userIsLogin, user } = this.props;
@@ -16,7 +39,7 @@ export default class Navigation extends React.Component {
     }
 
     return (
-      <div className="app-navigation">
+      <div className="app-navigation" style={{ height: `${this.state.height}px` }}>
         <a href="/" className="logo">
           <img src="/images/logo.svg" width="28px" height="28px" alt="Karma" />
           <span>Karma</span>
