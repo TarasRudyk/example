@@ -40,6 +40,7 @@ export default class TimeLogsCalendar extends React.Component {
                   <div key={i} className={`${this.dateIsSelected(d.isSelected)}`}>
                     <a href="" onClick={this.props.choseDay} data-date={d.date}>
                       <div className="calendar-day-content">
+                        <p>{moment(d.date).format('dd')}</p>
                         <p>{moment(d.date).format('DD-MM-YYYY')}</p>
                         {d.dayTimeLogs[0] ? 'Time logs: ' : ''}
                         <div>{d.dayTimeLogs[0] ?

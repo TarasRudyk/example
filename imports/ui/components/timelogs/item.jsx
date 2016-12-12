@@ -73,6 +73,9 @@ export default class LogsItem extends React.Component {
       } else {
         const startAt = day.add(moment.duration(part * 15, 'm'));
         const endAt = moment(startAt).add(moment.duration(durationAsMinutes, 'm'));
+        this.props.callback({
+          startAt, endAt, id: this.props.id
+        });
 
         this.setState({
           startAt: new Date(startAt),
@@ -153,5 +156,7 @@ export default class LogsItem extends React.Component {
 
 LogsItem.propTypes = {
   trackWidth: React.PropTypes.number,
-  slider: React.PropTypes.object
+  id: React.PropTypes.string,
+  slider: React.PropTypes.object,
+  callback: React.PropTypes.func
 };

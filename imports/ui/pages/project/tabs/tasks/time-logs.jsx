@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import TimeLogsCalendar from '/imports/ui/containers/pages/project/tabs/tasks/time-logs-calendar';
-import Timelogs from '/imports/ui/containers/pages/project/tabs/tasks/day-time-logs.js';
+import Timelogs from '/imports/ui/containers/pages/project/tabs/tasks/day-time-logs';
 
 export default class TaskTimelogs extends React.Component {
   constructor(props) {
@@ -9,10 +9,12 @@ export default class TaskTimelogs extends React.Component {
 
     this.state = {
       addingNewTimeLog: false,
-      chosenDay: moment().startOf('day')
+      chosenDay: moment().startOf('day'),
+      startOfWeek: moment().startOf('isoweek')
     };
 
     this.addTimeLog = this.addTimeLog.bind(this);
+    this.cancelAddingNewTimeLog = this.cancelAddingNewTimeLog.bind(this);
     this.handleChoseDay = this.handleChoseDay.bind(this);
     this.handleClickNextWeek = this.handleClickNextWeek.bind(this);
     this.handleClickPreviousWeek = this.handleClickPreviousWeek.bind(this);
@@ -21,6 +23,12 @@ export default class TaskTimelogs extends React.Component {
   addTimeLog() {
     this.setState({
       addingNewTimeLog: true
+    });
+  }
+
+  cancelAddingNewTimeLog() {
+    this.setState({
+      addingNewTimeLog: false
     });
   }
 
@@ -46,42 +54,22 @@ export default class TaskTimelogs extends React.Component {
   render() {
     return (
       <div className="task-timelogs">
-        {this.state.addingNewTimeLog ?
-          <div>Adding new time log
-            <TimeLogsCalendar
-              choseDay={this.handleChoseDay}
-              chosenDay={this.state.chosenDay}
-              goNextWeek={this.handleClickNextWeek}
-              goPreviousWeek={this.handleClickPreviousWeek}
-              startOfWeek={this.state.startOfWeek}
-            />
-            <Timelogs
-              chosenDay={this.state.chosenDay}
-            />
-          </div> :
-          <div>
-            <table>
-              <tbody>
-                <tr>
-                  <th>Start at:</th>
-                  <th>Finish at:</th>
-                </tr>
-                {this.props.timeLogs.map((t, i) => (
-                  <tr key={i}>
-                    <td>{moment(t.startAt).format('DD/MM/YYYY: hh:mm:ss')}</td>
-                    <td>{moment(t.endAt).format('DD/MM/YYYY: hh:mm:ss')}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <button type="button" onClick={this.addTimeLog}>Add</button>
-          </div>
-        }
+        <TimeLogsCalendar
+          choseDay={this.handleChoseDay}
+          chosenDay={this.state.chosenDay}
+          goNextWeek={this.handleClickNextWeek}
+          goPreviousWeek={this.handleClickPreviousWeek}
+          startOfWeek={this.state.startOfWeek}
+        />
+        <Timelogs
+          chosenDay={this.state.chosenDay}
+        />
       </div>
     );
   }
 }
 
 TaskTimelogs.propTypes = {
+  taskId: React.PropTypes.string,
   timeLogs: React.PropTypes.array
 };
