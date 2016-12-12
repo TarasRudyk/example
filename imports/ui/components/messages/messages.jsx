@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { createMessage } from '/imports/api/messages/actions';
 
 import MessagesList from './messages-list';
@@ -39,7 +38,7 @@ export class Messages extends React.Component {
 }
 
 Messages.propTypes = {
-  mentionNotification: React.PropTypes.strign,
+  mentionNotification: React.PropTypes.string,
   targetType: React.PropTypes.string,
   target: React.PropTypes.object,
   messages: React.PropTypes.array,

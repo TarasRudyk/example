@@ -1,4 +1,5 @@
 import React from 'react';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 
 import MessageListItem from './message-list-item';
 
@@ -9,6 +10,14 @@ export default class MessagesList extends React.Component {
   }
 
   render() {
+    const scrollTo = FlowRouter.current().context.hash;
+    if (scrollTo) {
+      const messageElement = document.querySelector(`#${scrollTo}`); // eslint-disable-line
+      if (messageElement) {
+        messageElement.scrollIntoView();
+      }
+    }
+
     const { messages } = this.props;
     const listContent = messages.length > 0 ? messages.map(m =>
       <MessageListItem key={m._id} item={m} />

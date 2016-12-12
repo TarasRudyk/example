@@ -38,10 +38,19 @@ export const create = new ValidatedMethod({
       }
     });
 
+    let link;
+    switch (targetType) {
+      case 'task': {
+        link = `<a href="/task/${targetId}?tab=2#${messageId}"> Message link</a>`;
+        break;
+      }
+      default: link = '';
+    }
+
     if (mentionUsers.length > 0) {
       mentionUsers.forEach((userId) => {
         createNotification.call({
-          description: notification,
+          description: `${notification}.${link}`,
           type: 'message',
           recipientId: userId
         });
