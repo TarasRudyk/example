@@ -12,9 +12,7 @@ export default class NotificationItem extends React.Component {
     const styleClass = `notification-item' ${isReaded ? '' : 'unread'}`;
     return (
       <div className="list-item">
-        <div className={styleClass}>
-          {description}
-        </div>
+        <div dangerouslySetInnerHTML={({ __html: description })} className={styleClass} />
       </div>
     );
   }

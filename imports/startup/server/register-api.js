@@ -22,3 +22,6 @@ import '/imports/api/history/methods';
 
 import '/imports/api/time-logs/server/publications';
 import '/imports/api/time-logs/methods';
+
+import '/imports/api/messages/server/publications';
+import '/imports/api/messages/methods';
