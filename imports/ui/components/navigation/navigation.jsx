@@ -9,6 +9,7 @@ export default class MainNavigation extends React.Component {
   render() {
     return (
       <div className="main-nav">
+        <a href="/">Dashboard</a>
         <a href="/projects">Projects</a>
         <a href="/">Timelogs</a>
         <a href="/">People</a>

@@ -4,9 +4,9 @@ import { createContainer } from 'meteor/react-meteor-data';
 import Navigation from '/imports/ui/components/navigation/main';
 
 export default createContainer(() => {
-  const sideContentName = getLocalState().get('side-content');
+  const appNavigation = getLocalState().get('app-navigation') || 'navigation';
 
   return {
-    sideContentName
+    appNavigation
   };
 }, Navigation);

@@ -9,7 +9,7 @@ export default class Navigation extends React.Component {
     super(props);
 
     this.state = {
-      height: 0
+      appHeight: 0
     };
 
     this.getHeight = this.getHeight.bind(this);
@@ -24,7 +24,7 @@ export default class Navigation extends React.Component {
     window.addEventListener('resize', this.getHeight);
   }
   getHeight() {
-    const height = Math.max(
+    const appHeight = Math.max(
       document.body.scrollHeight,
       document.body.offsetHeight,
       document.documentElement.clientHeight,
@@ -32,7 +32,10 @@ export default class Navigation extends React.Component {
       document.documentElement.offsetHeight
     );
 
-    this.setState({ height });
+    this.setState({ appHeight });
+  }
+  getContent() {
+
   }
   render() {
     const { userIsLogin, user } = this.props;
@@ -42,13 +45,35 @@ export default class Navigation extends React.Component {
     }
 
     return (
-      <div className="app-navigation" style={{ height: `${this.state.height}px` }}>
-        <a href="/" className="logo">
-          <img src="/images/logo.svg" width="28px" height="28px" alt="Karma" />
-          <span>Karma</span>
-        </a>
-        <Profile user={user} />
-        <MainNavigation />
+      <div className="app-navigation" style={{ height: `${this.state.appHeight}px` }}>
+        <div className="app-navigation-content">
+          <a href="/" className="logo">
+            <img src="/images/logo.svg" width="28px" height="28px" alt="Karma" />
+            <span>Karma</span>
+          </a>
+          <Profile user={user} />
+          <MainNavigation />
+        </div>
+        <div className="app-navigation-tabs">
+          <a
+            href=""
+            data-name="notifications"
+          >
+            <i className="material-icons">notifications_none</i>
+          </a>
+          <a
+            href=""
+            data-name="tasks"
+          >
+            <i className="material-icons">inbox</i>
+          </a>
+          <a
+            href=""
+            data-name="comments"
+          >
+            <i className="material-icons">forum</i>
+          </a>
+        </div>
       </div>
     );
   }
