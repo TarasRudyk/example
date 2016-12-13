@@ -57,7 +57,6 @@ export default class AppNavigation extends React.Component {
     return this.props.appNavigation === currentTarget.dataset.name ? 'active' : '';
   }
   switchTabs({ currentTarget }) {
-    console.log(currentTarget);
     if (currentTarget && currentTarget.dataset.name) {
       const currentTab = this.props.appNavigation;
 
@@ -83,6 +82,8 @@ export default class AppNavigation extends React.Component {
         <div className="app-navigation-tabs">
           <a
             href=""
+            ref={(t) => { this.tasksTab = t; }}
+            className={`${this.getActiveClass(this.tasksTab)}`}
             data-name="tasks"
             onClick={this.switchTabs}
           >
@@ -90,6 +91,8 @@ export default class AppNavigation extends React.Component {
           </a>
           <a
             href=""
+            ref={(t) => { this.commentsTab = t; }}
+            className={`${this.getActiveClass(this.commentsTab)}`}
             data-name="comments"
             onClick={this.switchTabs}
           >
@@ -97,6 +100,8 @@ export default class AppNavigation extends React.Component {
           </a>
           <a
             href=""
+            ref={(t) => { this.notificationsTab = t; }}
+            className={`${this.getActiveClass(this.notificationsTab)}`}
             data-name="notifications"
             onClick={this.switchTabs}
           >

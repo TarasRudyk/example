@@ -151,6 +151,7 @@ export default class Dashboard extends React.Component {
           isOpen={this.state.isOpen}
           onRequestClose={this.closeModal}
           style={customModalStyles}
+          contentLabel={''}
         >
           <h1>Please, estimate this task</h1>
           <input
