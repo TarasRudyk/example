@@ -7,7 +7,7 @@ import AcceptTask from '/imports/ui/containers/pages/project/tabs/tasks/accept-t
 import ReassignTask from '/imports/ui/containers/pages/project/tabs/tasks/reassign-task';
 import History from '/imports/ui/containers/pages/project/tabs/tasks/history';
 import Messages from '/imports/ui/containers/pages/project/tabs/tasks/messages';
-import { removeTask, reassignTask } from '/imports/api/tasks/actions';
+import { removeTask, reassignTask, completeTask } from '/imports/api/tasks/actions';
 
 export default class Task extends React.Component {
   constructor(props) {
@@ -28,7 +28,10 @@ export default class Task extends React.Component {
     this.handleAcceptClose = this.handleAcceptClose.bind(this);
     this.handleHistoryLoadMore = this.handleHistoryLoadMore.bind(this);
     this.handleTabSelect = this.handleTabSelect.bind(this);
+    this.handleComplete = this.handleComplete.bind(this);
     this.canEdit = this.canEdit.bind(this);
+    this.isAcceptVisible = this.isAcceptVisible.bind(this);
+    this.isCompleteVisible = this.isCompleteVisible.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +50,15 @@ export default class Task extends React.Component {
       this.canEdit() &&
       Meteor.userId() === this.props.task.assignedTo &&
       !this.props.task.isAccepted
+    );
+  }
+  isCompleteVisible() {
+    const { isAccepted, completeness } = this.props.task;
+    return (
+      this.canEdit() &&
+      Meteor.userId() === this.props.task.assignedTo &&
+      !completeness.isCompleted &&
+      isAccepted
     );
   }
   handleRemove() {
@@ -87,6 +99,9 @@ export default class Task extends React.Component {
     this.tabIndex = index;
     FlowRouter.setQueryParams({ tab: index });
   }
+  handleComplete() {
+    completeTask(this.props.task._id);
+  }
   render() {
     const { _id, name, description, startAt, assignedTo } = this.props.task;
     return (
@@ -117,6 +132,7 @@ export default class Task extends React.Component {
             {this.canEdit() ? <button onClick={this.handleRemove}>Remove</button> : ''}
             {this.canEdit() ? <button onClick={this.handleReassign}>Reassign</button> : ''}
             {this.isAcceptVisible() ? <button onClick={this.handleAccept}>Accept</button> : ''}
+            {this.isCompleteVisible() ? <button onClick={this.handleComplete}>Complete</button> : ''}
           </TabPanel>
           <TabPanel>
             <History

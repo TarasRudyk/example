@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 
 
 // Dock change checks
-export const isTaskChanged = (fieldKey) => {
+export const isTaskChanged = (fieldKey, doc) => {
   const watchedFields = [
     'name',
     'description',
@@ -12,12 +12,17 @@ export const isTaskChanged = (fieldKey) => {
     'assignedTo'
   ];
 
+  console.log(doc);
+  if (fieldKey === 'completeness') {
+    return doc.completeness.isCompleted;
+  }
+
   return watchedFields.indexOf(fieldKey) !== -1;
 };
 
-export const isDockChanged = (fieldKey, docType) => {
+export const isDockChanged = (fieldKey, docType, doc) => {
   switch (docType) {
-    case 'task': return isTaskChanged(fieldKey);
+    case 'task': return isTaskChanged(fieldKey, doc);
     default: return false;
   }
 };
@@ -40,19 +45,19 @@ export const getTaskViewText = (historyItem) => {
 
   switch (changedField) {
     case 'name': return `<a href="/profile/${editor.id}">${editor.fullname}</a> 
-      changed task title: ${prevState.name} to <a href="/project/${currentState.projectId}/task/${currentState.id}">
+      changed task title: ${prevState.name} to <a href="/task/${currentState.id}">
       ${currentState.name}</a>`;
     case 'description': return `<a href="/profile/${editor.id}">${editor.fullname}</a> 
-      changed description of task <a href="/project/${currentState.projectId}/task/${currentState.id}">
+      changed description of task <a href="/task/${currentState.id}">
       ${currentState.name}</a>`;
     case 'startAt': return `<a href="/profile/${editor.id}">${editor.fullname}</a> 
-      change start date of task <a href="/project/${currentState.projectId}/task/${currentState.id}">
+      change start date of task <a href="/task/${currentState.id}">
       ${currentState.name}</a>`;
     case 'estimate': return `<a href="/profile/${editor.id}">${editor.fullname}</a> 
-      change estimates of task <a href="/project/${currentState.projectId}/task/${currentState.id}">
+      change estimates of task <a href="/task/${currentState.id}">
       ${currentState.name}</a>`;
     case 'isAccepted': return `<a href="/profile/${editor.id}">${editor.fullname}</a> 
-      accept task <a href="/project/${currentState.projectId}/task/${currentState.id}">
+      accept task <a href="/task/${currentState.id}">
       ${currentState.name}</a>`;
     case 'assignedTo': {
       if (currentState.assignedTo) {
@@ -62,7 +67,7 @@ export const getTaskViewText = (historyItem) => {
         const reason = (additional && additional.reason) ? `Reason is : ${additional.reason}` : '';
 
         return `<a href="/profile/${editor.id}">${editor.fullname}</a> 
-          assign task <a href="/project/${currentState.projectId}/task/${currentState.id}">
+          assign task <a href="/task/${currentState.id}">
           ${currentState.name}</a> at <a href="/profile/${currentState.assignedTo}">${assignedUserName}</a>.
            ${reason}`;
       }
@@ -72,6 +77,8 @@ export const getTaskViewText = (historyItem) => {
         unassign task <a href="/project/${currentState.projectId}/task/${currentState.id}">
         ${currentState.name}</a> from <a href="/profile/${prevState.assignedTo}">${assignedUserName}</a>`;
     }
+    case 'completeness': return `<a href="/profile/${editor.id}">${editor.fullname}</a> completed 
+    <a href="/task/${currentState.id}">${currentState.name}</a> task.`;
     default: return 'Unknown changes in the task';
   }
 };
