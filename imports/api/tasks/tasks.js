@@ -62,6 +62,10 @@ Tasks.schema = new SimpleSchema({
     type: Boolean,
     optional: true,
     label: 'Task is accepted by user'
+  },
+  workedOnThat: {
+    type: [String],
+    defaultValue: []
   }
 });
 

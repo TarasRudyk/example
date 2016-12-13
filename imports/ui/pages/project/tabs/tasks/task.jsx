@@ -1,10 +1,12 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import PageHeader from '/imports/ui/components/header/pageHeader';
 import AcceptTask from '/imports/ui/containers/pages/project/tabs/tasks/accept-task';
 import ReassignTask from '/imports/ui/containers/pages/project/tabs/tasks/reassign-task';
 import History from '/imports/ui/containers/pages/project/tabs/tasks/history';
+import Messages from '/imports/ui/containers/pages/project/tabs/tasks/messages';
 import { removeTask, reassignTask } from '/imports/api/tasks/actions';
 
 export default class Task extends React.Component {
@@ -25,7 +27,13 @@ export default class Task extends React.Component {
     this.handleReassignClose = this.handleReassignClose.bind(this);
     this.handleAcceptClose = this.handleAcceptClose.bind(this);
     this.handleHistoryLoadMore = this.handleHistoryLoadMore.bind(this);
+    this.handleTabSelect = this.handleTabSelect.bind(this);
     this.canEdit = this.canEdit.bind(this);
+  }
+
+  componentDidMount() {
+    this.tabIndex = Number(FlowRouter.getQueryParam('tab')) || 0;
+    FlowRouter.setQueryParams({ tab: this.tabIndex });
   }
   canEdit() {
     if (this.props.task._id) {
@@ -33,6 +41,13 @@ export default class Task extends React.Component {
         (Meteor.userId() === this.props.task.assignedTo);
     }
     return false;
+  }
+  isAcceptVisible() {
+    return (
+      this.canEdit() &&
+      Meteor.userId() === this.props.task.assignedTo &&
+      !this.props.task.isAccepted
+    );
   }
   handleRemove() {
     const conf = confirm('Remove this task?'); // eslint-disable-line
@@ -68,12 +83,9 @@ export default class Task extends React.Component {
   handleHistoryLoadMore(loadedItemsCount) {
     this.setState({ itemsToLoad: loadedItemsCount + this.limit });
   }
-  isAcceptVisible() {
-    return (
-      this.canEdit() &&
-      Meteor.userId() === this.props.task.assignedTo &&
-      !this.props.task.isAccepted
-    );
+  handleTabSelect(index) {
+    this.tabIndex = index;
+    FlowRouter.setQueryParams({ tab: index });
   }
   render() {
     const { _id, name, description, startAt, assignedTo } = this.props.task;
@@ -91,10 +103,11 @@ export default class Task extends React.Component {
           isOpen={this.state.isAcceptModalOpen}
           onClose={this.handleAcceptClose}
         />
-        <Tabs>
+        <Tabs selectedIndex={this.tabIndex} onSelect={this.handleTabSelect}>
           <TabList>
             <Tab>Overview</Tab>
             <Tab>History</Tab>
+            <Tab>Messages</Tab>
           </TabList>
           <TabPanel>
             <p>name: {name}</p>
@@ -111,6 +124,9 @@ export default class Task extends React.Component {
               limit={this.state.itemsToLoad}
               onLoadMore={this.handleHistoryLoadMore}
             />
+          </TabPanel>
+          <TabPanel>
+            <Messages target={this.props.task} />
           </TabPanel>
         </Tabs>
       </div>

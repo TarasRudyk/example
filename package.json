@@ -12,7 +12,12 @@
   "dependencies": {
     "babel-runtime": "^6.18.0",
     "bcrypt": "^0.8.7",
+    "draft-js": "^0.9.1",
+    "draft-js-export-html": "^0.5.2",
+    "draft-js-mention-plugin": "^2.0.0-beta7",
+    "draft-js-plugins-editor": "^2.0.0-beta7",
     "immutable": "^3.8.1",
+    "js-md5": "^0.4.1",
     "lodash": "^4.16.4",
     "meteor-node-stubs": "~0.2.0",
     "moment": "^2.16.0",
@@ -23,7 +28,7 @@
     "react-confirm": "^0.1.14",
     "react-datepicker": "^0.34.0",
     "react-delete-confirm": "^1.0.1",
-    "react-dom": "^15.3.2",
+    "react-dom": "^15.4.1",
     "react-drag-and-drop": "^2.2.0",
     "react-js-pagination": "^2.0.1",
     "react-modal": "^1.5.2",
@@ -32,8 +37,7 @@
     "react-tabs": "^0.8.2",
     "rp": "^0.2.0",
     "string-format-validation": "^2.0.2",
-    "unique-random-array": "^1.0.0",
-    "js-md5": "^0.4.1"
+    "unique-random-array": "^1.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.0.0",
