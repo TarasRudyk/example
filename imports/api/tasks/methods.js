@@ -29,6 +29,9 @@ export const create = new ValidatedMethod({
       isRemoved: false,
       createdAt: new Date(),
       startAt,
+      completeness: {
+        isCompleted: false
+      },
       assignedTo,
       workedOnThat: assignedTo ? [assignedTo] : []
     });
@@ -170,5 +173,41 @@ export const reassign = new ValidatedMethod({
     const assignedUser = Meteor.users.findOne({ _id: assignedTo });
 
     return `Task reassigned at ${assignedUser.profile.fullname}`;
+  }
+});
+
+
+export const complete = new ValidatedMethod({
+  name: 'task.complete',
+  validate: new SimpleSchema({
+    taskId: {
+      type: String
+    }
+  }).validator(),
+  run({ taskId }) {
+    if (!this.userId) {
+      throw new Meteor.Error('User not authorized');
+    }
+
+    const task = Tasks.findOne({ _id: taskId });
+
+    if (this.userId !== task.assignedTo || !task.isAccepted) {
+      throw new Meteor.Error('You can not complete this task');
+    }
+
+    Tasks.update({ _id: taskId }, {
+      $set: {
+        completeness: {
+          isCompleted: true,
+          completedAt: new Date(),
+          performer: {
+            id: this.userId,
+            fullname: Meteor.user().profile.fullname
+          }
+        }
+      }
+    });
+
+    return `Task ${task.name} is completed`;
   }
 });
