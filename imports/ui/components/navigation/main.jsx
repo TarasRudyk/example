@@ -1,6 +1,8 @@
 /* global window, document */
 import React from 'react';
 
+import { getLocalState } from '/imports/startup/client/local-state';
+
 import Navigation from '/imports/ui/components/navigation/navigation';
 import Notifications from '/imports/ui/containers/components/navigation/notifications';
 import Tasks from '/imports/ui/containers/components/navigation/tasks';
@@ -15,6 +17,8 @@ export default class AppNavigation extends React.Component {
 
     this.getContent = this.getContent.bind(this);
     this.getHeight = this.getHeight.bind(this);
+    this.getActiveClass = this.getActiveClass.bind(this);
+    this.switchTabs = this.switchTabs.bind(this);
   }
   componentWillMount() {
     window.addEventListener('resize', this.getHeight);
@@ -48,6 +52,22 @@ export default class AppNavigation extends React.Component {
 
     this.setState({ appHeight });
   }
+  getActiveClass(currentTarget) {
+    if (!currentTarget) return '';
+    return this.props.appNavigation === currentTarget.dataset.name ? 'active' : '';
+  }
+  switchTabs({ currentTarget }) {
+    console.log(currentTarget);
+    if (currentTarget && currentTarget.dataset.name) {
+      const currentTab = this.props.appNavigation;
+
+      if (currentTab && currentTab === currentTarget.dataset.name) {
+        getLocalState().set('app-navigation', 'navigation');
+      } else {
+        getLocalState().set('app-navigation', currentTarget.dataset.name);
+      }
+    }
+  }
   render() {
     const { userIsLogin, user } = this.props;
 
@@ -64,18 +84,21 @@ export default class AppNavigation extends React.Component {
           <a
             href=""
             data-name="tasks"
+            onClick={this.switchTabs}
           >
             <i className="material-icons">inbox</i>
           </a>
           <a
             href=""
             data-name="comments"
+            onClick={this.switchTabs}
           >
             <i className="material-icons">forum</i>
           </a>
           <a
             href=""
             data-name="notifications"
+            onClick={this.switchTabs}
           >
             <i className="material-icons">notifications_none</i>
           </a>
