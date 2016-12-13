@@ -18,7 +18,8 @@ export default class MessagesList extends React.Component {
       }
     }
 
-    const { messages } = this.props;
+    const messages = this.props.messages || [];
+    debugger
     const listContent = messages.length > 0 ? messages.map(m =>
       <MessageListItem key={m._id} item={m} />
     ) : (<div>Nothik here</div>);
