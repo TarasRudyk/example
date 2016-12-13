@@ -5,7 +5,7 @@ import { getLocalState } from '/imports/startup/client/local-state';
 import { Tasks } from '/imports/api/tasks/tasks';
 import { Projects } from '/imports/api/projects/projects';
 
-import TasksList from '/imports/ui/components/side-content/tasks';
+import TasksList from '/imports/ui/components/navigation/tasks';
 
 export default createContainer(() => {
   const userId = Meteor.userId();

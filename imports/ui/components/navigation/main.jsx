@@ -1,10 +1,11 @@
 /* global window, document */
 import React from 'react';
 
-import Profile from '/imports/ui/components/navigation/profile';
-import MainNavigation from '/imports/ui/components/navigation/navigation';
+import Navigation from '/imports/ui/components/navigation/navigation';
+import Notifications from '/imports/ui/containers/components/navigation/notifications';
+import Tasks from '/imports/ui/containers/components/navigation/tasks';
 
-export default class Navigation extends React.Component {
+export default class AppNavigation extends React.Component {
   constructor(props) {
     super(props);
 
@@ -12,6 +13,7 @@ export default class Navigation extends React.Component {
       appHeight: 0
     };
 
+    this.getContent = this.getContent.bind(this);
     this.getHeight = this.getHeight.bind(this);
   }
   componentWillMount() {
@@ -22,6 +24,18 @@ export default class Navigation extends React.Component {
   }
   componentWillUnmount() {
     window.addEventListener('resize', this.getHeight);
+  }
+  getContent() {
+    switch (this.props.appNavigation) {
+      case 'notifications':
+        return <Notifications />;
+      case 'tasks':
+        return <Tasks />;
+      case 'comments':
+        return <Tasks />;
+      default:
+        return <Navigation user={this.props.user} />;
+    }
   }
   getHeight() {
     const appHeight = Math.max(
@@ -34,9 +48,6 @@ export default class Navigation extends React.Component {
 
     this.setState({ appHeight });
   }
-  getContent() {
-
-  }
   render() {
     const { userIsLogin, user } = this.props;
 
@@ -47,20 +58,9 @@ export default class Navigation extends React.Component {
     return (
       <div className="app-navigation" style={{ height: `${this.state.appHeight}px` }}>
         <div className="app-navigation-content">
-          <a href="/" className="logo">
-            <img src="/images/logo.svg" width="28px" height="28px" alt="Karma" />
-            <span>Karma</span>
-          </a>
-          <Profile user={user} />
-          <MainNavigation />
+          {this.getContent()}
         </div>
         <div className="app-navigation-tabs">
-          <a
-            href=""
-            data-name="notifications"
-          >
-            <i className="material-icons">notifications_none</i>
-          </a>
           <a
             href=""
             data-name="tasks"
@@ -73,13 +73,20 @@ export default class Navigation extends React.Component {
           >
             <i className="material-icons">forum</i>
           </a>
+          <a
+            href=""
+            data-name="notifications"
+          >
+            <i className="material-icons">notifications_none</i>
+          </a>
         </div>
       </div>
     );
   }
 }
 
-Navigation.propTypes = {
+AppNavigation.propTypes = {
+  appNavigation: React.PropTypes.string,
   userIsLogin: React.PropTypes.bool,
   user: React.PropTypes.object
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Notices from '/imports/ui/containers/components/notices';
-import Navigation from '/imports/ui/containers/components/navigation';
+import AppNavigation from '/imports/ui/containers/components/navigation';
 
 export default class MainLayout extends React.Component {
   constructor(props) {
@@ -12,7 +12,7 @@ export default class MainLayout extends React.Component {
   }
   getNavigation() {
     if (this.props.userIsLogin) {
-      return <Navigation
+      return <AppNavigation
         user={this.props.user}
         userIsLogin={this.props.userIsLogin}
         notificationsCount={this.props.notificationsCount}
