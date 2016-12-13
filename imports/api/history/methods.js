@@ -20,7 +20,7 @@ export const logCreate = new ValidatedMethod({
     const user = Meteor.users.findOne({ _id: userId });
 
     Object.keys(doc).forEach((fieldKey) => {
-      if (isDockChanged(fieldKey, docType)) {
+      if (isDockChanged(fieldKey, docType, doc)) {
         if (doc[fieldKey]) {
           const itemToInsert = {
             type: docType,
@@ -65,7 +65,7 @@ export const logEdit = new ValidatedMethod({
     const user = Meteor.users.findOne({ _id: userId });
 
     fieldNames.forEach((fieldKey) => {
-      if (isDockChanged(fieldKey, docType)) {
+      if (isDockChanged(fieldKey, docType, doc)) {
         if (doc[fieldKey] !== prevDoc[fieldKey]) {
           const itemToInsert = {
             type: docType,
