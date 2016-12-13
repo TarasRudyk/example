@@ -7,6 +7,7 @@ export default class LogsItem extends React.Component {
     super(props);
 
     this.state = {
+      _id: this.props.slider._id || 0,
       draggablePosX: 0,
       draggablePosDx: 0,
       sliderWidth: 0,
@@ -18,6 +19,7 @@ export default class LogsItem extends React.Component {
     this.getStyle = this.getStyle.bind(this);
     this.onDrag = this.onDrag.bind(this);
     this.onResize = this.onResize.bind(this);
+    this.onActionEnd = this.onActionEnd.bind(this);
   }
   componentDidMount() {
     const track = this.slider.parentNode;
@@ -36,12 +38,14 @@ export default class LogsItem extends React.Component {
       .draggable(draggableOptions)
       .resizable(resizableOptions)
       .on('dragmove', this.onDrag)
-      .on('resizemove', this.onResize);
+      .on('dragend', this.onActionEnd)
+      .on('resizemove', this.onResize)
+      .on('resizeend', this.onActionEnd);
 
     this.updateStyle();
   }
-  componentWillReceiveProps() {
-    this.updateStyle();
+  componentWillReceiveProps(nextProps) {
+    this.updateStyle(nextProps);
   }
   onDrag(e) {
     const { trackWidth } = this.props;
@@ -73,9 +77,6 @@ export default class LogsItem extends React.Component {
       } else {
         const startAt = day.add(moment.duration(part * 15, 'm'));
         const endAt = moment(startAt).add(moment.duration(durationAsMinutes, 'm'));
-        this.props.callback({
-          startAt, endAt, id: this.props.id
-        });
 
         this.setState({
           startAt: new Date(startAt),
@@ -103,6 +104,15 @@ export default class LogsItem extends React.Component {
       });
     }
   }
+  onActionEnd() {
+    const { _id, startAt, endAt } = this.state;
+
+    this.props.callback({
+      _id,
+      startAt,
+      endAt
+    });
+  }
   getStyle() {
     return {
       MsTransform: `translate(${this.state.draggablePosX}px)`,
@@ -111,8 +121,10 @@ export default class LogsItem extends React.Component {
       width: `${this.state.sliderWidth}px`
     };
   }
-  updateStyle() {
-    const { trackWidth, slider } = this.props;
+  updateStyle(nextProps) {
+    const { trackWidth } = this.props;
+
+    const { slider } = nextProps || this.props;
 
     const trackPartWidth = trackWidth / 96;
 
@@ -156,7 +168,6 @@ export default class LogsItem extends React.Component {
 
 LogsItem.propTypes = {
   trackWidth: React.PropTypes.number,
-  id: React.PropTypes.string,
   slider: React.PropTypes.object,
   callback: React.PropTypes.func
 };

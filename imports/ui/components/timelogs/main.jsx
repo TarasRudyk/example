@@ -1,7 +1,8 @@
 /* global window */
 
 import React from 'react';
-
+import update from 'react-addons-update';
+import _ from 'lodash';
 import LogsItem from '/imports/ui/components/timelogs/item';
 
 import moment from 'moment';
@@ -15,10 +16,9 @@ export default class Timelogs extends React.Component {
     };
 
     this.getTrackWidth = this.getTrackWidth.bind(this);
-    this.renderTimelogsTrack = this.renderTimelogsTrack.bind(this);
-    this.addTimeLog = this.addTimeLog.bind(this);
-    this.cancelAddingNewTimeLog = this.cancelAddingNewTimeLog.bind(this);
-    this.updateTimelogs = this.updateTimelogs.bind(this);
+    this.renderTimelogs = this.renderTimelogs.bind(this);
+    this.addTimelog = this.addTimelog.bind(this);
+    this.updateTimelog = this.updateTimelog.bind(this);
   }
   componentWillMount() {
     window.addEventListener('resize', this.getTrackWidth);
@@ -41,50 +41,27 @@ export default class Timelogs extends React.Component {
 
     this.setState({ trackWidth });
   }
-  cancelAddingNewTimeLog() {
-    this.setState({
-      addingNewTimeLog: false
-    });
-  }
-  addTimeLog() {
+  addTimelog() {
     const defaultLog = {
       _id: new Date().getTime().toString(),
-      startAt: moment().add(1, 'hours').toDate(),
-      endAt: moment().add(2, 'hours').toDate()
+      startAt: moment(new Date()).startOf('day'),
+      endAt: moment(new Date()).startOf('day').add(1, 'hours').toDate()
     };
-    const timeLogs = this.state.timelogs;
-    timeLogs.push(defaultLog);
+
     this.setState({
-      addingNewTimeLog: true,
-      timelogs: timeLogs
+      timelogs: update(this.state.timelogs, { $push: [defaultLog] })
     });
   }
+  updateTimelog(log) {
+    const index = _.findIndex(this.state.timelogs, l => l._id === log._id);
 
-  updateTimelogs(newLog) {
-    const oldLogs = this.state.timelogs;
-    let index = -1;
-    for (let i = 0, len = oldLogs.length; i < len; i += 1) {
-      if (oldLogs[i]._id === newLog.id) {
-        index = i;
-        break;
-      }
-    }
-
-    if (index > -1) {
-      oldLogs.splice(index, 1);
-      oldLogs.push({
-        _id: newLog.id,
-        startAt: moment(newLog.startAt).toDate(),
-        endAt: moment(newLog.endAt).toDate()
-      });
-      this.setState({
-        timelogs: oldLogs
-      });
-    }
+    this.setState({
+      timelogs: update(this.state.timelogs, { [index]: {
+        $merge: { startAt: log.startAt, endAt: log.endAt }
+      } })
+    });
   }
-
-
-  renderTimelogsTrack() {
+  renderTimelogs() {
     if (!this.state.trackWidth) {
       return null;
     }
@@ -92,13 +69,12 @@ export default class Timelogs extends React.Component {
     return this.state.timelogs.map(t => (
       <LogsItem
         key={t._id}
+        slider={t}
         trackWidth={this.state.trackWidth}
-        slider={t} id={t._id}
-        callback={this.updateTimelogs}
+        callback={this.updateTimelog}
       />
     ));
   }
-
   render() {
     return (
       <div className="timelogs" ref={(timelogs) => { this.timelogs = timelogs; }}>
@@ -117,10 +93,10 @@ export default class Timelogs extends React.Component {
           <div>22:00</div>
         </div>
         <div className="timelogs-content">
-          {this.renderTimelogsTrack()}
+          {this.renderTimelogs()}
         </div>
-        <button type="button" onClick={this.addTimeLog}>Add</button>
-        <button type="button" onClick={this.cancelAddingNewTimeLog}>Cancel</button>
+        <button type="button" onClick={this.addTimelog}>Add</button>
+        <button type="button" onClick={this.cancelAddingNewTimeLog}>Save</button>
       </div>
     );
   }

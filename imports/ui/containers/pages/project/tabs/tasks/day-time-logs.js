@@ -17,8 +17,7 @@ export default createContainer(({ chosenDay }) => {
   const endOfDay = moment(chosenDay).endOf('day').toDate();
 
   const timelogs = timeLogsHandle.ready() && tasksHandle.ready() ?
-    TimeLogs.find({ startAt: { $gte: startOfDay, $lte: endOfDay } })
-    .map((timeLog) => {
+    TimeLogs.find({ startAt: { $gte: startOfDay, $lte: endOfDay } }).map((timeLog) => {
       const taskName = Tasks.findOne({ _id: timeLog.taskId }).name;
       return _.assign(timeLog, { taskName });
     }) : [];
