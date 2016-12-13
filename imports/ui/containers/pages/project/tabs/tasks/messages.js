@@ -14,10 +14,9 @@ export default createContainer(({ target }) => {
 
   const handleProject = Meteor.subscribe('project', target.projectId);
   const project = handleProject.ready() ?
-    Projects.findOne({ _id: target.projectId }) : {};
+    Projects.findOne({ _id: target.projectId }) : [];
   const usersIds = project.users ? project.users.map(u => u.id) : [];
 
-  if (!project._id) return {};
   const handleProjectUsers = Meteor.subscribe('usersInProject', project);
   const users = handleProjectUsers.ready() ?
    Meteor.users.find({
