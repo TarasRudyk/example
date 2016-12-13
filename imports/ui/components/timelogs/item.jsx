@@ -106,7 +106,6 @@ export default class LogsItem extends React.Component {
   }
   onActionEnd() {
     const { _id, startAt, endAt } = this.state;
-
     this.props.callback({
       _id,
       startAt,

@@ -4,7 +4,7 @@ import React from 'react';
 import update from 'react-addons-update';
 import _ from 'lodash';
 import LogsItem from '/imports/ui/components/timelogs/item';
-
+import { createLog, editLog, removeLog } from '/imports/api/time-logs/actions';
 import moment from 'moment';
 
 export default class Timelogs extends React.Component {
@@ -19,6 +19,7 @@ export default class Timelogs extends React.Component {
     this.renderTimelogs = this.renderTimelogs.bind(this);
     this.addTimelog = this.addTimelog.bind(this);
     this.updateTimelog = this.updateTimelog.bind(this);
+    this.removeTimelog = this.removeTimelog.bind(this);
   }
   componentWillMount() {
     window.addEventListener('resize', this.getTrackWidth);
@@ -42,10 +43,11 @@ export default class Timelogs extends React.Component {
     this.setState({ trackWidth });
   }
   addTimelog() {
+    const tempId = `tempId_${new Date().getTime().toString()}`;
     const defaultLog = {
-      _id: new Date().getTime().toString(),
-      startAt: moment(new Date()).startOf('day'),
-      endAt: moment(new Date()).startOf('day').add(1, 'hours').toDate()
+      _id: tempId,
+      startAt: moment(this.props.chosenDay).startOf('day').toDate(),
+      endAt: moment(this.props.chosenDay).startOf('day').add(1, 'hours').toDate()
     };
 
     this.setState({
@@ -55,11 +57,29 @@ export default class Timelogs extends React.Component {
   updateTimelog(log) {
     const index = _.findIndex(this.state.timelogs, l => l._id === log._id);
 
+    const updatedLogs = update(this.state.timelogs, { [index]: {
+      $merge: { startAt: log.startAt, endAt: log.endAt }
+    } });
+    if (this.state.timelogs[index]._id.substring(0, 6) === 'tempId') {
+      createLog(this.props.projectId, this.props.taskId, log.startAt, new Date(log.endAt));
+    } else {
+      editLog(log._id, log.startAt, new Date(log.endAt));
+    }
     this.setState({
-      timelogs: update(this.state.timelogs, { [index]: {
-        $merge: { startAt: log.startAt, endAt: log.endAt }
-      } })
+      timelogs: updatedLogs
     });
+  }
+  removeTimelog({ currentTarget }) {
+    if (currentTarget.dataset.id.substring(0, 6) === 'tempId') {
+      const index = this.state.timelogs.indexOf(currentTarget.dataset.id);
+      const logs = this.state.timelogs;
+      logs.splice(index, 1);
+      this.setState({
+        timelogs: logs
+      });
+    } else {
+      removeLog(currentTarget.dataset.id);
+    }
   }
   renderTimelogs() {
     if (!this.state.trackWidth) {
@@ -67,12 +87,14 @@ export default class Timelogs extends React.Component {
     }
 
     return this.state.timelogs.map(t => (
-      <LogsItem
-        key={t._id}
-        slider={t}
-        trackWidth={this.state.trackWidth}
-        callback={this.updateTimelog}
-      />
+      <div key={t._id} className="log-content">
+        <LogsItem
+          slider={t}
+          trackWidth={this.state.trackWidth}
+          callback={this.updateTimelog}
+        />
+        <button type="button" onClick={this.removeTimelog} className="remove-log" data-id={t._id} title="remove log">x</button>
+      </div>
     ));
   }
   render() {
@@ -95,13 +117,15 @@ export default class Timelogs extends React.Component {
         <div className="timelogs-content">
           {this.renderTimelogs()}
         </div>
-        <button type="button" onClick={this.addTimelog}>Add</button>
-        <button type="button" onClick={this.cancelAddingNewTimeLog}>Save</button>
+        <button type="button" onClick={this.addTimelog} className="add-log" title="add new log">+</button>
       </div>
     );
   }
 }
 
 Timelogs.propTypes = {
-  timelogs: React.PropTypes.array
+  timelogs: React.PropTypes.array,
+  projectId: React.PropTypes.string,
+  taskId: React.PropTypes.string,
+  chosenDay: React.PropTypes.object
 };

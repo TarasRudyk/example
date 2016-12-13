@@ -6,3 +6,18 @@
     }
   }
 }
+
+button.remove-log {
+  float: right;
+  margin-top: -27px;
+  position: relative;
+  color: red;
+  background: transparent;
+  cursor: pointer;
+  border: none;
+}
+
+button.add-log {
+  background: #52e408;
+  cursor: pointer;
+}

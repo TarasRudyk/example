@@ -62,6 +62,8 @@ export default class TaskTimelogs extends React.Component {
           startOfWeek={this.state.startOfWeek}
         />
         <Timelogs
+          taskId={this.props.taskId}
+          projectId={this.props.projectId}
           chosenDay={this.state.chosenDay}
         />
       </div>
@@ -71,5 +73,5 @@ export default class TaskTimelogs extends React.Component {
 
 TaskTimelogs.propTypes = {
   taskId: React.PropTypes.string,
-  timeLogs: React.PropTypes.array
+  projectId: React.PropTypes.string
 };

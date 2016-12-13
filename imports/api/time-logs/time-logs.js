@@ -4,10 +4,6 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 export const TimeLogs = new Mongo.Collection('timeLogs');
 
 TimeLogs.schema = new SimpleSchema({
-  id: {
-    type: String,
-    label: '_id of the time-log'
-  },
   projectId: {
     type: String,
     label: 'projectId'

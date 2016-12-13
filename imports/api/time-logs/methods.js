@@ -8,17 +8,16 @@ export const create = new ValidatedMethod({
   name: 'timelog.create',
   validate: new SimpleSchema({
     projectId: { type: String },
-    userId: { type: String },
     taskId: { type: String },
     startAt: { type: Date },
     endAt: { type: Date }
   }).validator(),
-  run({ projectId, userId, taskId, startAt, endAt }) {
+  run({ projectId, taskId, startAt, endAt }) {
     if (!this.userId) {
       throw new Meteor.Error('User not authorized');
     }
 
-    const logId = TimeLogs.insert({ projectId, userId, taskId, startAt, endAt });
+    const logId = TimeLogs.insert({ projectId, userId: this.userId, taskId, startAt, endAt });
 
     return logId;
   }
@@ -31,12 +30,12 @@ export const edit = new ValidatedMethod({
     startAt: { type: Date },
     endAt: { type: Date }
   }).validator(),
-  run({ id, startAt, andAt }) {
+  run({ id, startAt, endAt }) {
     if (!this.userId) {
       throw new Meteor.Error('User not authorized');
     }
 
-    return TimeLogs.update({ _id: id }, { $set: { startAt, andAt } });
+    return TimeLogs.update({ _id: id }, { $set: { startAt, endAt } });
   }
 
 });

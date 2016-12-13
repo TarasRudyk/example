@@ -117,6 +117,7 @@ export default class Task extends React.Component {
           <TabPanel>
             <TaskTimelogs
               taskId={_id}
+              projectId={this.props.task.projectId}
             />
           </TabPanel>
         </Tabs>
