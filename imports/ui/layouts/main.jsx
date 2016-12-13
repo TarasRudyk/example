@@ -20,7 +20,7 @@ export default class MainLayout extends React.Component {
       />;
     }
 
-    return '';
+    return null;
   }
   render() {
     return (
