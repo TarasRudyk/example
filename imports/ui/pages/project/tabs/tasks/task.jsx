@@ -104,6 +104,7 @@ export default class Task extends React.Component {
     completeTask(this.props.task._id);
   }
   render() {
+    if (!this.props.task) return null;
     const { _id, name, description, startAt, assignedTo } = this.props.task;
     return (
       <div className="page-main-content page-create-project">
@@ -148,6 +149,8 @@ export default class Task extends React.Component {
               taskId={_id}
               projectId={this.props.task.projectId}
             />
+          </TabPanel>
+          <TabPanel>
             <Messages target={this.props.task} />
           </TabPanel>
         </Tabs>
