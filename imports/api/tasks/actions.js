@@ -101,3 +101,17 @@ export const reassignTask = (taskId, description, assignedTo) => {
     }
   });
 };
+
+export const completeTask = (taskId) => {
+  check(taskId, String);
+
+  return Meteor.call('task.complete', { taskId }, (err, res) => {
+    if (err) {
+      addNotice(err.error);
+    }
+
+    if (res) {
+      addNotice(res);
+    }
+  });
+};

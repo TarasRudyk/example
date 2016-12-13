@@ -1,8 +1,7 @@
 import React from 'react';
 import moment from 'moment';
-import 'moment-range';
 
-export default class DashboardCalendar extends React.Component {
+export default class TimeLogsCalendar extends React.Component {
   constructor(props) {
     super(props);
 
@@ -39,11 +38,16 @@ export default class DashboardCalendar extends React.Component {
                 <button type="button" onClick={this.props.goPreviousWeek}>&#171;</button>
                 {this.props.days.map((d, i) => (
                   <div key={i} className={`${this.dateIsSelected(d.isSelected)}`}>
-                    <a href={`/?date=${moment(d.date).format('DD-MM-YYYY')}`} onClick={this.props.choseDay} data-date={d.date}>
+                    <a href="" onClick={this.props.choseDay} data-date={d.date}>
                       <div className="calendar-day-content">
+                        <p>{moment(d.date).format('dd')}</p>
                         <p>{moment(d.date).format('DD-MM-YYYY')}</p>
-                        <p>Tasks: {d.tasksCount || 0}</p>
-                        <p>Estimate: {d.estimate.hh} hh, {d.estimate.mm} mm</p>
+                        {d.dayTimeLogs[0] ? 'Time logs: ' : ''}
+                        <div>{d.dayTimeLogs[0] ?
+                          d.dayTimeLogs.map((dayTasksTimeLogs, j) => (
+                            <p key={j}>{j}. Start at: {moment(dayTasksTimeLogs.startAt).format('DD-MM-YYYY: hh: mm')}</p>
+                          )) : ''
+                        }</div>
                       </div>
                     </a>
                   </div>
@@ -57,7 +61,7 @@ export default class DashboardCalendar extends React.Component {
     );
   }
 }
-DashboardCalendar.propTypes = {
+TimeLogsCalendar.propTypes = {
   days: React.PropTypes.array,
   choseDay: React.PropTypes.func,
   goPreviousWeek: React.PropTypes.func,

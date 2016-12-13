@@ -1,0 +1,43 @@
+.timelogs {
+  width: 100%;
+  user-select: none;
+  margin: 10px 0;
+
+  .timelogs-header {
+    overflow: hidden;
+    margin: 0 0 5px;
+    
+    div {
+      width: 8.33333333%;
+      float: left;
+      font-size: 10px;
+    }
+  }
+}
+.timelogs-track {
+  background: #eee;
+}
+.timelogs-slider {
+  height: 18px;
+  background: pink;
+  margin: 2px 0 8px;
+}
+.timelogs-info {
+  overflow: hidden;
+  font-size: 10px;
+  color: #aaa;
+  padding: 5px 0 0;
+}
+.timelogs-task-name {
+  float: left;
+}
+.timelogs-time-info {
+  float: right;
+}
+.timelogs-time-start-at {
+  display: inline-block;
+  margin: 0 5px 0 0;
+}
+.timelogs-time-duration {
+  display: inline-block;
+}

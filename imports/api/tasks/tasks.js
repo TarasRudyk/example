@@ -62,6 +62,30 @@ Tasks.schema = new SimpleSchema({
     type: Boolean,
     optional: true,
     label: 'Task is accepted by user'
+  },
+  completeness: {
+    type: Object
+  },
+  'completeness.isCompleted': {
+    type: Boolean
+  },
+  'completeness.completedAt': {
+    type: Date,
+    optional: true
+  },
+  'completeness.performer': {
+    type: Object,
+    optional: true
+  },
+  'completeness.performer.id': {
+    type: String
+  },
+  'completeness.performer.fullname': {
+    type: String
+  },
+  workedOnThat: {
+    type: [String],
+    defaultValue: []
   }
 });
 
