@@ -143,6 +143,7 @@ export default class AcceptTask extends React.Component {
           isOpen={this.props.isOpen}
           onRequestClose={this.handleClose}
           style={this.modalStyles}
+          contentLabel={''}
         >
           <div className="accept-modal-content">
             <form onSubmit={this.handleFormSubmit}>

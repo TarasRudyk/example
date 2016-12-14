@@ -20,6 +20,7 @@ export default class Timelogs extends React.Component {
     this.addTimelog = this.addTimelog.bind(this);
     this.updateTimelog = this.updateTimelog.bind(this);
     this.removeTimelog = this.removeTimelog.bind(this);
+    this.saveTimelogs = this.saveTimelogs.bind(this);
   }
   componentWillMount() {
     window.addEventListener('resize', this.getTrackWidth);
@@ -47,7 +48,8 @@ export default class Timelogs extends React.Component {
     const defaultLog = {
       _id: tempId,
       startAt: moment(this.props.chosenDay).startOf('day').toDate(),
-      endAt: moment(this.props.chosenDay).startOf('day').add(1, 'hours').toDate()
+      endAt: moment(this.props.chosenDay).startOf('day').add(1, 'hours').toDate(),
+      status: 'new'
     };
 
     this.setState({
@@ -80,6 +82,9 @@ export default class Timelogs extends React.Component {
     } else {
       removeLog(currentTarget.dataset.id);
     }
+  }
+  saveTimelogs() {
+    console.log(this.state.timelogs);
   }
   renderTimelogs() {
     if (!this.state.trackWidth) {
@@ -118,6 +123,7 @@ export default class Timelogs extends React.Component {
           {this.renderTimelogs()}
         </div>
         <button type="button" onClick={this.addTimelog} className="add-log" title="add new log">+</button>
+        <button type="button" onClick={this.saveTimelogs}>Save</button>
       </div>
     );
   }
