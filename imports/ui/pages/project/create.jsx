@@ -58,7 +58,7 @@ export default class CreateProject extends React.Component {
   }
   render() {
     return (
-      <div className="page-main-content page-create-project">
+      <div className="app-content app-create-project">
         <div className="container">
           <div className="title">
             <h1>New project</h1>

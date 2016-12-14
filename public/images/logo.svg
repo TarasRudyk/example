@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="200px" height="200px" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 40.1 (33804) - http://www.bohemiancoding.com/sketch -->
-    <title>logo</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Group-2" transform="translate(-25.000000, -25.000000)" fill="#6B6B6B">
-            <g id="Group-3" transform="translate(25.000000, 25.000000)">
-                <path d="M100,200 C155.228475,200 200,155.228475 200,100 C200,44.771525 155.228475,0 100,0 C44.771525,0 0,44.771525 0,100 C0,155.228475 44.771525,200 100,200 Z M100,181 C144.735065,181 181,144.735065 181,100 C181,55.2649353 144.735065,19 100,19 C55.2649353,19 19,55.2649353 19,100 C19,144.735065 55.2649353,181 100,181 Z" id="Combined-Shape"></path>
-                <path d="M100,176 C141.421356,176 175,142.421356 175,101 C175,59.5786438 141.421356,107.820317 100,107.820317 C58.5786438,107.820317 25,59.5786438 25,101 C25,142.421356 58.5786438,176 100,176 Z" id="Oval-2"></path>
-            </g>
-        </g>
-    </g>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">
+    <path id="Combined-Shape" d="M100,200C155.228,200 200,155.228 200,100C200,44.772 155.228,0 100,0C44.772,0 0,44.772 0,100C0,155.228 44.772,200 100,200ZM100,181C144.735,181 181,144.735 181,100C181,55.265 144.735,19 100,19C55.265,19 19,55.265 19,100C19,144.735 55.265,181 100,181Z" style="fill:white;"/>
+    <path id="Oval-2" d="M100,176C141.421,176 175,142.421 175,101C175,59.579 141.421,107.82 100,107.82C58.579,107.82 25,59.579 25,101C25,142.421 58.579,176 100,176Z" style="fill:white;"/>
 </svg>

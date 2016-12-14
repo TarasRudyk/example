@@ -1,0 +1,107 @@
+.app {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+.app-navigation {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 260px;
+  background: #353535;
+  overflow: hidden;
+
+  .app-navigation-content {
+    width: 260px;
+    padding: 0 100px 0 0;
+    max-height: 100%;
+    overflow-y: auto;
+  }
+  .app-navigation-content::-webkit-scrollbar {
+    display: none;
+  }
+  .app-navigation-tabs {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 260px;
+    border-top: 1px solid rgba(255, 255, 255, .1);
+    overflow: hidden;
+
+    a {
+      position: relative;
+      display: block;
+      float: left;
+      width: 33.33%;
+      text-align: center;
+      color: #fff;
+      font-size: 22px;
+      margin: 12px 0 10px;
+
+      &:hover {
+        color: #ddd;
+      }
+    }
+  }
+  .logo {
+    display: block;
+    margin: 12px 18px;
+    color: #fff;
+
+    span {
+      display: inline-block;
+      padding: 8px;
+      font-size: 18px;
+      margin: 1px 0 0;
+    }
+    img, span {
+      vertical-align: middle;
+    }
+  }
+  .profile {
+    display: block;
+    background: rgba(255, 255, 255, .1);
+    padding: 6px;
+    margin: 18px 8px;
+    cursor: pointer;
+    border-radius: 6px;
+    overflow: hidden;
+    font-size: #fff;
+    font-family: 'Open Sans Light';
+
+    &:hover {
+      background: rgba(255, 255, 255, .2);
+    }
+
+    .avatar {
+      float: left;
+      margin: 0 6px 0 0;
+
+      img {
+        border-radius: 6px;
+      }
+    }
+    .fullname {
+      display: block;
+      font-size: 16px;
+      color: #fff;
+      margin: 3px 0 1px;
+    }
+    .username {
+      display: block;
+      font-size: 14px;
+      color: #aaa;
+    }
+  }
+  .main-nav a {
+    display: block;
+    color: #fff;
+    margin: 12px 18px;
+    font-family: 'Open Sans Light';
+  }
+}
+.app-content {
+  margin-left: 260px;
+}

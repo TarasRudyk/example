@@ -54,7 +54,7 @@ export default class Notices extends React.Component {
 
   render() {
     return (
-      <div className="notices">
+      <div className="app-notices">
         <NotificationStack
           notifications={this.state.notices.toArray()}
           onDismiss={notice => this.setState({

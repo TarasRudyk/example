@@ -3,7 +3,7 @@ import React from 'react';
 import { allReadNotifications } from '/imports/api/notifications/actions';
 
 import NotificationItem from '/imports/ui/pages/notifications/item';
-import InvitationItem from '/imports/ui/components/side-content/items/invitation';
+import InvitationItem from '/imports/ui/components/navigation/items/invitation';
 
 export default class Notifications extends React.Component {
   constructor(props) {

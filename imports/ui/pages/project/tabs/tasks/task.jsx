@@ -107,7 +107,7 @@ export default class Task extends React.Component {
     if (!this.props.task) return null;
     const { _id, name, description, startAt, assignedTo } = this.props.task;
     return (
-      <div className="page-main-content page-create-project">
+      <div className="app-content app-create-project">
         <PageHeader header={name} hx={1} />
         <ReassignTask
           task={this.props.task}
@@ -123,26 +123,18 @@ export default class Task extends React.Component {
         <Tabs selectedIndex={this.tabIndex} onSelect={this.handleTabSelect}>
           <TabList>
             <Tab>Overview</Tab>
-            <Tab>History</Tab>
-            <Tab>Time logs</Tab>
+            <Tab>Timelogs</Tab>
             <Tab>Messages</Tab>
+            <Tab>History</Tab>
           </TabList>
           <TabPanel>
-            <p>name: {name}</p>
-            <p>description: {description}</p>
+            <p>{description}</p>
             <p>Start at: {startAt ? startAt.toString() : ''}</p>
             <p>Assigned at: {assignedTo}</p>
             {this.canEdit() ? <button onClick={this.handleRemove}>Remove</button> : ''}
             {this.canEdit() ? <button onClick={this.handleReassign}>Reassign</button> : ''}
             {this.isAcceptVisible() ? <button onClick={this.handleAccept}>Accept</button> : ''}
             {this.isCompleteVisible() ? <button onClick={this.handleComplete}>Complete</button> : ''}
-          </TabPanel>
-          <TabPanel>
-            <History
-              taskId={_id}
-              limit={this.state.itemsToLoad}
-              onLoadMore={this.handleHistoryLoadMore}
-            />
           </TabPanel>
           <TabPanel>
             <TaskTimelogs
@@ -152,6 +144,13 @@ export default class Task extends React.Component {
           </TabPanel>
           <TabPanel>
             <Messages target={this.props.task} />
+          </TabPanel>
+          <TabPanel>
+            <History
+              taskId={_id}
+              limit={this.state.itemsToLoad}
+              onLoadMore={this.handleHistoryLoadMore}
+            />
           </TabPanel>
         </Tabs>
       </div>

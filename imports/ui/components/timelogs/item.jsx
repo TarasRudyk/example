@@ -113,7 +113,9 @@ export default class LogsItem extends React.Component {
     });
   }
   getStyle() {
+    const background = this.props.slider.status && this.props.slider.status === 'new' ? 'green' : 'opacity';
     return {
+      background: background,
       MsTransform: `translate(${this.state.draggablePosX}px)`,
       WebkitTransform: `translate(${this.state.draggablePosX}px)`,
       transform: `translate(${this.state.draggablePosX}px)`,

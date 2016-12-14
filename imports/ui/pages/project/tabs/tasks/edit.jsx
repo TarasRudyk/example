@@ -16,7 +16,7 @@ export default class EditTask extends React.Component {
   }
   render() {
     return (
-      <div className="page-main-content page-edit-project">
+      <div className="app-content app-edit-project">
         <div className="container">
           <div className="title">
             <h1>Edit task</h1>

@@ -56,7 +56,7 @@ export default class Signin extends React.Component {
   }
   render() {
     return (
-      <div className="page-main-content page-signin">
+      <div className="app-content app-signin">
         <div className="container">
           <div className="title">
             <h1>Sign in</h1>

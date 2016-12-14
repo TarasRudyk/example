@@ -119,7 +119,7 @@ export default class Dashboard extends React.Component {
 
   render() {
     return (
-      <div className="page-main-content page-dashboard">
+      <div className="app-content app-dashboard">
         <PageHeader header={'Dashboard'} subHeader={'all your today tasks'} hx={1}>
           <DashboardCalendar
             choseDay={this.handleChoseDay}
@@ -151,6 +151,7 @@ export default class Dashboard extends React.Component {
           isOpen={this.state.isOpen}
           onRequestClose={this.closeModal}
           style={customModalStyles}
+          contentLabel={''}
         >
           <h1>Please, estimate this task</h1>
           <input

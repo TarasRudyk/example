@@ -80,6 +80,7 @@ export default class ReassignTask extends React.Component {
           isOpen={this.props.isOpen}
           onRequestClose={this.handleClose}
           style={this.modalStyles}
+          contentLabel={''}
         >
           <div className="reassign-modal-content">
             <form onSubmit={this.handleFormSubmit}>
@@ -103,7 +104,7 @@ export default class ReassignTask extends React.Component {
 }
 
 ReassignTask.propTypes = {
-  task: React.PropTypes.object, // eslint-disable-line 
+  task: React.PropTypes.object, // eslint-disable-line
   project: React.PropTypes.object,
   isOpen: React.PropTypes.bool,
   onSubmit: React.PropTypes.func,

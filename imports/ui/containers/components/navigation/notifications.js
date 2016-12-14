@@ -4,7 +4,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Notifications } from '/imports/api/notifications/notifications';
 import { Invitations } from '/imports/api/invitations/invitations';
 
-import NotificationsList from '/imports/ui/components/side-content/notifications';
+import NotificationsList from '/imports/ui/components/navigation/notifications';
 
 export default createContainer(() => {
   const notificationsHandle = Meteor.subscribe('notifications');

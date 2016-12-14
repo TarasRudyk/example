@@ -8,7 +8,7 @@ export default class Landing extends React.Component {
   }
   render() {
     return (
-      <div className="page-main-content page-landing">
+      <div className="app-content app-landing">
         <div className="container">
           <div className="title">
             <h1>Landing page</h1>

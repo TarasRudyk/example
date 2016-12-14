@@ -5,7 +5,7 @@ import Button from '/imports/ui/components/button';
 import Timelogs from '/imports/ui/components/timelogs/main';
 
 const Elements = () => (
-  <div className="page-main-content page-elements">
+  <div className="app-content app-elements">
     <div className="separator">
       <div className="container">
         <div className="title">

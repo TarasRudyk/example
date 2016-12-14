@@ -31,7 +31,7 @@ export default class SingleProject extends React.Component {
     const { project, owner, index } = this.props;
 
     return (
-      <div className="page-main-content page-project">
+      <div className="app-content app-project">
         <PageHeader header={project.name} subHeader={owner.fullname} hx={1}>
           {this.props.isOwner ?
             <div>
