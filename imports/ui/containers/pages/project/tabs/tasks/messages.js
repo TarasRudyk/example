@@ -13,17 +13,8 @@ export default createContainer(({ target }) => {
     Messages.find({ targetType: 'task', targetId: target._id }).fetch() : [];
 
   const handleProject = Meteor.subscribe('project', target.projectId);
-  const project = handleProject.ready() ?
-    Projects.findOne({ _id: target.projectId }) : [];
-  const usersIds = project.users ? project.users.map(u => u.id) : [];
-
-  const handleProjectUsers = Meteor.subscribe('usersInProject', project);
-  const users = handleProjectUsers.ready() ?
-   Meteor.users.find({
-     _id: {
-       $in: usersIds
-     }
-   }).fetch() : [];
+  const users = handleProject.ready() ?
+    Projects.findOne({ _id: target.projectId }).usersOfProject() : [];
 
   const mentions = fromJS(users.map(user => (
     {
