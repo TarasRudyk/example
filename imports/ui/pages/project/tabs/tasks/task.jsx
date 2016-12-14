@@ -122,9 +122,9 @@ export default class Task extends React.Component {
         <Tabs selectedIndex={this.tabIndex} onSelect={this.handleTabSelect}>
           <TabList>
             <Tab>Overview</Tab>
-            <Tab>History</Tab>
             <Tab>Time logs</Tab>
             <Tab>Messages</Tab>
+            <Tab>History</Tab>
           </TabList>
           <TabPanel>
             <p>name: {name}</p>
@@ -137,18 +137,20 @@ export default class Task extends React.Component {
             {this.isCompleteVisible() ? <button onClick={this.handleComplete}>Complete</button> : ''}
           </TabPanel>
           <TabPanel>
+            <TaskTimelogs
+              taskId={_id}
+              projectId={this.props.task.projectId}
+            />
+          </TabPanel>
+          <TabPanel>
+            <Messages target={this.props.task} />
+          </TabPanel>
+          <TabPanel>
             <History
               taskId={_id}
               limit={this.state.itemsToLoad}
               onLoadMore={this.handleHistoryLoadMore}
             />
-          </TabPanel>
-          <TabPanel>
-            <TaskTimelogs
-              taskId={_id}
-              projectId={this.props.task.projectId}
-            />
-            <Messages target={this.props.task} />
           </TabPanel>
         </Tabs>
       </div>
